@@ -1,4 +1,4 @@
-#Das ist die Dockerfile
+#Das ist die Dockerfile für das FrontEnd
 #Basis Image von Docker: Ubuntu 
 #Darauf baut alles auf
 FROM ubuntu:16.04
