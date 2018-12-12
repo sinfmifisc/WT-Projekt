@@ -3,9 +3,18 @@ import path from 'path';
 
 const app = express();
 
-
+const fs = require('fs');
 const mysql = require('mysql2/promise');
-const host = "localhost";
+const host = 'localhost';
+
+
+//read SQL instructions for creating the tables
+
+let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
+
+//read SQL instructions for filling up data
+//let databaseFillUpData = fs.readFileSync('databsefillupdata').toString();
+
 
 
 let db  // will be set below!
@@ -13,12 +22,13 @@ mysql.createConnection({
 		host: host,
 		user: 'root',
 		password: '',
-		database: 'test'
+		database: 'test',
+		multipleStatements: true
 		
 	})
 	.then((connection) => {
 		db = connection  // remember the db-handle!
-		return db.query('CREATE TABLE students (id varchar(10) not null, name varchar(20), primary key (id))')
+		return db.query(databaseTableCreating);
 	})
 	.then((result) => {
 		console.log(result)
