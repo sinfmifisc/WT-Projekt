@@ -5,8 +5,8 @@ Die Datei databasecreatetestuser.txt enthält die SQL Anweisungen zum Generieren
 Die Passwörter werden mit bcrypt gehasht und abgespeichert.
 
 ## Testuser:
-### klaus pw: 0000
-### john pw: 1234
-### max pw: 9999 
-### lisa pw: 2468
-### anne pw: test
+### user_name: klaus pw: 0000
+### user_name: john pw: 1234
+### user_name: max pw: 9999 
+### user_name: lisa pw: 2468
+### user_name: anne pw: test
