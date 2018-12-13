@@ -1,7 +1,7 @@
-Die Datei databasecreatetables.txt erstellt alle Tabllen auf den Datenbankserver
+Die Datei databasecreatetables.txt enthält die SQL Anweisungen um alle nötigen Tabellen zu erzeugen.
 
-Die Datei databasecreattestuser.txt generiert uns Testuser:
-Die Passwörter wurden mit der Methode hashSync("passwort", 10) von bcrypt gehasht und dann auf der Datenbank gespeichert.
+Die Datei databasecreattestuser.txt enthält die SQL Anweisungen zum Generieren der Testuser:
+Die Passwörter werden mit bcrypt gehasht abgespeichert.
 
 user_name:      passwort:
 'klaus'           '0000'
