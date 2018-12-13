@@ -1,0 +1,6 @@
+INSERT INTO users (user_name, password_hash)
+VALUES('klaus', '$2b$10$JbBaB.i9XhcIDi.Dm5D5PeZJ7V.iaKTadL3ynare1afLjCeeRT3IG'),
+('john', '$2b$10$oqvNfTCokQtZNdcQsPXUT.wdmKmtrQfeUbV14d3zuyNhnPmebNOcy'),
+('max', '$2b$10$pi9ojXq2vdYyl6zrrLo.u.MKujjVOsqsQBgb8kYVC1VBAS3NCAvPe'),
+('lisa', '$2b$10$wci.R9614PxFht0lNcrM0e6roDeH/OR4XGwVhdMEcb8dxnZGCIzMq'),
+('anne', '$2b$10$hg4yFqtcuP0PrfSTYbJVc.d9mPQ6GuIwtpiHC74FdmD3tXoXSwZNW')

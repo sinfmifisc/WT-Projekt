@@ -13,7 +13,7 @@ const host = 'localhost';
 let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
 
 //read SQL instructions for filling up data
-//let databaseFillUpData = fs.readFileSync('databsefillupdata').toString();
+let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toString();
 
 
 
@@ -23,12 +23,15 @@ mysql.createConnection({
 		user: 'root',
 		password: '',
 		database: 'test',
+
+		
 		multipleStatements: true
 		
 	})
 	.then((connection) => {
-		db = connection  // remember the db-handle!
-		return db.query(databaseTableCreating);
+		db = connection;  // remember the db-handle!
+		db.query(databaseTableCreating);
+		return db.query(databaseCreateTestUsers);
 	})
 	.then((result) => {
 		console.log(result)
