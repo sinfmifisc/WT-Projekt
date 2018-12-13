@@ -1,6 +1,6 @@
 Die Datei databasecreatetables.txt enthält die SQL Anweisungen um alle nötigen Tabellen zu erzeugen.
 
-Die Datei databasecreattestuser.txt enthält die SQL Anweisungen zum Generieren der Testuser.
+Die Datei databasecreatetestuser.txt enthält die SQL Anweisungen zum Generieren der Testuser.
 Die Passwörter werden mit bcrypt gehasht und abgespeichert.
 
 ## Testuser:
