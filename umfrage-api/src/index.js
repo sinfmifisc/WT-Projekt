@@ -6,6 +6,7 @@ const app = express();
 const fs = require('fs');
 const mysql = require('mysql2/promise');
 const host = 'localhost';
+const bcrypt = require('bcrypt');
 
 
 //read SQL instructions for creating the tables
@@ -16,7 +17,7 @@ let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString
 let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toString();
 
 
-
+/*
 let db  // will be set below!
 mysql.createConnection({
 		host: host,
@@ -39,6 +40,56 @@ mysql.createConnection({
 	})
 	.catch((err) => console.log(err));
 
+*/
+
+	const pool = mysql.createPool({
+		host: host,
+		user: 'root',
+		password: '',
+		database: 'test',
+		waitForConnections: true,
+		connectionLimit: 10,
+		queueLimit: 0,
+		multipleStatements: true
+	  });
+	
+	
+	pool.query(databaseTableCreating) 
+	
+	 .then((result) => {
+		 console.log(result);
+		 console.log('Database and table created');
+	 })
+	
+	.then(() => {
+	pool.query(databaseCreateTestUsers)
+	})
+	.then((result) => {
+		console.log(result);
+		console.log('Testuser created');
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+	
+	
+
+
+pool.query('SELECT * FROM users WHERE user_name = "klaus"') 
+	.then((result) => {
+		console.log(result[0][0].user_name);
+		
+		bcrypt.compare('0000', result[0][0].password_hash)
+		.then(function(res) {
+			if(res == true){
+				console.log('Passwort ist korrekt');
+			}
+			else if(res == false){
+				console.log('ERROR falsches Passwort!');
+			}
+		
+		})
+	});
 
 
 
