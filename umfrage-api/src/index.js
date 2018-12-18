@@ -1,12 +1,14 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
+import mysql from 'mysql2/promise';
+import bcrypt from 'bcrypt';
 
 const app = express();
-
-const fs = require('fs');
-const mysql = require('mysql2/promise');
 const host = 'localhost';
-const bcrypt = require('bcrypt');
+
+
+
 
 
 //read SQL instructions for creating the tables
@@ -74,7 +76,7 @@ mysql.createConnection({
 	
 	
 
-
+//Example function to check password
 pool.query('SELECT * FROM users WHERE user_name = "klaus"') 
 	.then((result) => {
 		console.log(result[0][0].user_name);
