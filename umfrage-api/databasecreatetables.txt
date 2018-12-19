@@ -1,9 +1,9 @@
-CREATE TABLE groups(
+CREATE TABLE IF NOT EXISTS groups(
     group_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (group_name)
 );
 
-CREATE TABLE users(
+CREATE TABLE IF NOT EXISTS users(
     user_name VARCHAR(25) NOT NULL,
     password_hash VARCHAR(70) NOT NULL,
     email VARCHAR(40),
@@ -13,7 +13,7 @@ CREATE TABLE users(
     PRIMARY KEY (user_name)
 );
 
-CREATE TABLE surveys(
+CREATE TABLE IF NOT EXISTS surveys(
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     matter VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -21,7 +21,7 @@ CREATE TABLE surveys(
     number_of_answers INT NOT NULL
 );
 
-CREATE TABLE answers(
+CREATE TABLE IF NOT EXISTS answers(
     content VARCHAR(50) NOT NULL,
     survey_id INT NOT NULL,
     
@@ -31,7 +31,7 @@ CREATE TABLE answers(
 );
 
 
-CREATE TABLE user_is_allowed_to_vote_for(
+CREATE TABLE IF NOT EXISTS user_is_allowed_to_vote_for(
     user_name VARCHAR(25) NOT NULL,
     survey INT NOT NULL,
 
@@ -41,7 +41,7 @@ CREATE TABLE user_is_allowed_to_vote_for(
 
 );
 
-CREATE TABLE group_memberships(
+CREATE TABLE IF NOT EXISTS group_memberships(
     user_name VARCHAR(25) NOT NULL,
     group_name VARCHAR(50) NOT NULL,
 
@@ -52,7 +52,7 @@ CREATE TABLE group_memberships(
 
 
 
-CREATE TABLE user_has_voted_for(
+CREATE TABLE IF NOT EXISTS user_has_voted_for(
     user_name VARCHAR(25) NOT NULL,
     content VARCHAR(50) NOT NULL,
     survey INT NOT NULL,

@@ -18,31 +18,6 @@ let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString
 let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toString();
 
 
-
-let db  // will be set below!
-mysql.createConnection({
-		host: host,
-		user: 'root',
-		password: '',
-		database: 'test',
-
-		
-		multipleStatements: true
-		
-	})
-	.then((connection) => {
-		db = connection;  // remember the db-handle!
-		db.query(databaseTableCreating);
-		return db.query(databaseCreateTestUsers);
-	})
-	.then((result) => {
-		console.log(result)
-		console.log('Database and table created.')
-	})
-	.catch((err) => console.log(err));
-
-
-
 	const pool = mysql.createPool({
 		host: host,
 		user: 'root',
@@ -83,6 +58,7 @@ app.post("/api/auth", (req, res) => {
 	let password = req.body.credentials.password;
 	let username = req.body.credentials.username;
 	let respond = res;
+
 	
 	pool.query('SELECT * FROM users WHERE user_name = ?', [username])
 	.then((result) => {

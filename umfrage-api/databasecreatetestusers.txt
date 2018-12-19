@@ -1,4 +1,4 @@
-INSERT INTO users (user_name, password_hash)
+INSERT IGNORE INTO users (user_name, password_hash)
 VALUES('klaus', '$2b$10$JbBaB.i9XhcIDi.Dm5D5PeZJ7V.iaKTadL3ynare1afLjCeeRT3IG'),
 ('john', '$2b$10$oqvNfTCokQtZNdcQsPXUT.wdmKmtrQfeUbV14d3zuyNhnPmebNOcy'),
 ('max', '$2b$10$pi9ojXq2vdYyl6zrrLo.u.MKujjVOsqsQBgb8kYVC1VBAS3NCAvPe'),
