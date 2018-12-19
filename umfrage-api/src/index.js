@@ -86,7 +86,6 @@ app.post("/api/auth", (req, res) => {
 	
 	pool.query('SELECT * FROM users WHERE user_name = ?', [username])
 	.then((result) => {
-		
 		bcrypt.compare(password, result[0][0].password_hash)
 		.then(function(res) {
 			if(res == true){
@@ -103,7 +102,12 @@ app.post("/api/auth", (req, res) => {
 		.catch((err) => {
 			console.log(err);
 		})
-	});
+	})
+	.catch((err) => {
+		console.log('User existiert nicht');
+		console.log(err);
+		respond.status(400).json({errors: {global: "Invalid credentials"} });
+	})
 	
 	
 });
