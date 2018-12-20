@@ -11,7 +11,7 @@ class LoginPage extends Component {
   render() {
     return (
 		<div>
-		 <h1> Login </h1>
+		 <h1 className="login"> Login </h1>
 		 <LoginForm submit={this.submit} />
 		</div>
     );

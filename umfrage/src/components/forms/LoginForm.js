@@ -9,7 +9,7 @@ class LoginForm extends Component {
 		data: {
 			username: '',
 			email: '',
-			password: ''
+//			password: ''
 		},
 	    loading: false,
 	    errors: {},
@@ -33,7 +33,7 @@ class LoginForm extends Component {
 	validate = data => {
 		const errors = {};
 	    if (!data.username) errors.username = "Can't be blank";
-	    if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
+//	    if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
 	    if (!data.password) errors.password = "Can't be blank";
 	    //if (!data.password).length <= 8) = "It is to short";
 	    //if (!data.username).length <= 4) = "You need more then 4 charecters";
@@ -62,18 +62,6 @@ class LoginForm extends Component {
 		  />
 		  {errors.username && <InlineError text={errors.username} />}
 		  </Form.Field>
-		  <Form.Field error={!!errors.email}>
-		    <label htmlFor="email">Email</label>
-			<input
-			  type="email"
-			  id="email"
-			  name="email"
-			  placeholder="example@examle.com"
-			  value={data.email}
-			  onChange={this.onChange}
-		  />
-		  {errors.email && <InlineError text={errors.email} />}
-		  </Form.Field>
 		  <Form.Field error={!!errors.password}>
 		    <label htmlFor="password">Password</label>
 			<input
@@ -97,3 +85,19 @@ LoginForm.propTypes = {
 };
 
 export default LoginForm;
+
+/*
+ -- ich speicher das hier nur kurz falls ich es später brauche.
+		  <Form.Field error={!!errors.email}>
+		    <label htmlFor="email">Email</label>
+			<input
+			  type="email"
+			  id="email"
+			  name="email"
+			  placeholder="example@examle.com"
+			  value={data.email}
+			  onChange={this.onChange}
+		  />
+		  {errors.email && <InlineError text={errors.email} />}
+		  </Form.Field>
+*/

@@ -1,0 +1,27 @@
+.homepage {
+	text-align: center;
+	margin-top: 100px;
+}
+
+#homepage_title {
+	font-size: 100px;
+	margin-bottom: 70px;
+	font-family: cursive;
+}
+#homepage_link{
+	color: black;
+	border: solid 2px black;
+	border-radius: 15px;
+	padding: 30px;
+	font-size: 30px;
+
+}
+#homepage_link:hover{
+	background-color: #E7EEF1;
+}
+#root{
+	margin-top: 40px;
+}
+.login{
+	text-align: center;
+}
