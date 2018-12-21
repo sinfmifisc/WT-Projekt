@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import Validator from 'validator';
+//import Validator from 'validator';
 import PropTypes from "prop-types";
 import InlineError from "../messages/InlineError";
 
@@ -8,8 +8,8 @@ class LoginForm extends Component {
 	state = {
 		data: {
 			username: '',
-			email: '',
-//			password: ''
+//			email: '',
+			password: ''
 		},
 	    loading: false,
 	    errors: {},
