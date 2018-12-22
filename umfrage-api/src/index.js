@@ -48,7 +48,8 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 		console.log(err);
 	});
 	
-	
+
+
 
 
 app.use(express.json());
@@ -59,32 +60,44 @@ app.post("/api/auth", (req, res) => {
 	let username = req.body.credentials.username;
 	let respond = res;
 
-	
-	pool.query('SELECT * FROM users WHERE user_name = ?', [username])
+	//Testen ob User überhaupt existiert
+	pool.query('SELECT COUNT(*) AS user_exists FROM users WHERE user_name = ?', [username])
 	.then((result) => {
-		bcrypt.compare(password, result[0][0].password_hash)
-		.then(function(res) {
-			if(res == true){
-				console.log('Passwort ist korrekt');
-				//TODO Webtoken setzen und weiterleiten an den umfrage>seite
-				respond.status(400).json({ errors: { global: 'korrektes Passwort'} });
-			}
-			else if(res == false){
-				console.log('ERROR falsches Passwort!');
-				respond.status(400).json({errors: {global: "Invalid credentials"} });
-			}
-		
-		})
-		.catch((err) => {
-			console.log(err);
-		})
+		if(result[0][0].user_exists === 1){
+			
+			//Gehashte Passwort aus Datenbank laden
+			pool.query('SELECT * FROM users WHERE user_name = ?', [username])	
+			.then((result) => {				
+				
+				//Checken ob User das richtige Passwort eingegeben hat
+				bcrypt.compare(password, result[0][0].password_hash)
+				.then(function(res) {
+
+					if(res == true){
+					console.log('Passwort ist korrekt');
+						//TODO Webtoken setzen und weiterleiten an den umfrage>seite
+						respond.status(400).json({ errors: { global: 'korrektes Passwort'} });
+					}
+					else if(res == false){
+						console.log('Falsches Passwort!');
+						respond.status(400).json({errors: {global: "Invalid credentials"} });
+					}		
+				})
+				.catch((err) => {
+					console.log(err);
+				})
+			})
+			.catch((err) => {	
+				console.log(err);		
+			})	
+		}
+		else{
+			console.log('User existiert nicht');
+			respond.status(400).json({errors: {global: "Invalid credentials"} });
+		}
 	})
-	.catch((err) => {
-		console.log('User existiert nicht');
-		console.log(err);
-		respond.status(400).json({errors: {global: "Invalid credentials"} });
-	})
-	
+	.catch((err) => {console.log(err);})
+
 	
 });
 
@@ -93,3 +106,7 @@ app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
 
+
+
+
+				
