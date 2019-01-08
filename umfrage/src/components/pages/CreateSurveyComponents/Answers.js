@@ -16,9 +16,7 @@ class Answers extends Component {
         this.state = {count: 1,
                     answers: [<Answer id='0' key='0' />],
                     
-                data: {
-                    
-                }
+                
             };
 
             

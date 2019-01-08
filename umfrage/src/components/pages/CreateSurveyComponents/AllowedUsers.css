@@ -1,0 +1,13 @@
+#allowedusercontainer{
+    margin-top: 1em;
+}
+
+#alloweduserlist{
+    border-style: solid;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.item{
+    background-color: green;
+}

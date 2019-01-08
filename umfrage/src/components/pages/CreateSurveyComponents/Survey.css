@@ -1,8 +1,13 @@
 #submit_survey_button{
-    position: absolute;
-    top: 0px;
-    right: 0px;
+    float: right;
+    
 }
+
+#surveyheadline{
+    width: 65%;
+    float: left;
+}
+
 
 #surveyhead{
     margin-bottom: 50px;

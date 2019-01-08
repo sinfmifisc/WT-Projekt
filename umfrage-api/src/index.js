@@ -102,9 +102,23 @@ app.post("/api/auth", (req, res) => {
 });
 
 
+
+//Holt sich alle User aus Datenbank und gibt sie zurück
+app.get('/alluser', (req, res) => {
+	pool.query('SELECT user_name FROM users')
+	.then((result) => {
+		console.log(result[0]);
+		res.json(result[0]);
+	})
+	.catch((err) => {console.log(err);})
+}) 
+
+
+
 app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
+
 
 
 

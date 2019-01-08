@@ -21,7 +21,7 @@ class Survey extends Component{
     render(){
 
         return <div id='surveyhead'>
-            <h2>Was möchtest du fragen?</h2>
+            <h2 id='surveyheadline'>Was möchtest du fragen?</h2>
             <Button primary id='submit_survey_button'>Umfrage erstellen </Button>
             <Form.Field>
             <input

@@ -1,0 +1,11 @@
+#rightcontainer{
+    float: right;
+    width: 19%;
+    margin-left: 3%;  
+}
+
+#leftcontainer{
+    float: left;
+    width: 14%;
+    margin-right: 3%;
+}
