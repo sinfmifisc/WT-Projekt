@@ -48,7 +48,7 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	
 	function jwt_set(token){localStorage.setItem('jwt', token);}
 
-console.log('########..##');
+console.log('##########');
 app.use(express.json());
 app.listen(8080, () => console.log("Running on lokalhost: 8080"));
 

@@ -11,7 +11,7 @@ class LoginPage extends Component {
 	//hier findet eigentlich das rooten statt. => nur wenns geklappt hat
 	//leider geht das noch nicht -> wenn es bald immer noch nicht geht hart einen href bei Link reinhauen
   submit = data => {
-    this.props.login(data).then(() => { this.history.push("/")})
+    this.props.login(data).then(() => { this.history.push("/overlook")})
   };
 
   render() {
