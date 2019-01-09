@@ -148,7 +148,7 @@ const OverlookForm  = ({ logout }) => (
                     </Table>
                 </div>
                 );
-OverlookForm.PropTypes ={
+OverlookForm.propTypes ={
     logout: PropTypes.func.isRequired
 };
         

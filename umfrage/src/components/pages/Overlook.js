@@ -8,7 +8,7 @@ const Overlook  = ({ isConfirmed }) => (
     <div>{!isConfirmed && <OverlookForm />}</div>
 );
 
-Overlook.PropTypes ={
+Overlook.propTypes ={
    isConfirmed : PropTypes.bool.isRequired
 };
 

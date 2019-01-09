@@ -10,7 +10,7 @@ const UserRouter = ({ isAuth, component: Component, ...rest }) => (
         isAuth ? <Component {...props}/> :<Redirect to="/" />} 
     />
 );
-UserRouter.PropTypes ={
+UserRouter.propTypes ={
     component: PropTypes.func.isRequired,
     isAuth: PropTypes.bool.isRequired
 }
