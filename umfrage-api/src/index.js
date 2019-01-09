@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
+import CreateSurveyRoute from './Routes/CreateSurvey.js' ;
 
 const app = express();
 const host = 'localhost';
@@ -60,8 +61,13 @@ let databaseCreateTestSurveys = fs.readFileSync('databasecreatetestsurveys.txt')
 
 
 
+
 app.use(express.json());
 app.listen(1234, () => console.log("Running on lokalhost: 1234"));
+
+
+CreateSurveyRoute(app, pool);
+
 
 app.post("/api/auth", (req, res) => {
 	let password = req.body.credentials.password;
@@ -111,15 +117,7 @@ app.post("/api/auth", (req, res) => {
 
 
 
-//Holt sich alle User aus Datenbank und gibt sie zurück
-app.get('/alluser', (req, res) => {
-	pool.query('SELECT user_name FROM users')
-	.then((result) => {
-		console.log(result[0]);
-		res.json(result[0]);
-	})
-	.catch((err) => {console.log(err);})
-}) 
+
 
 
 

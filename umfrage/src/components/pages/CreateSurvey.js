@@ -13,6 +13,8 @@ import './CreateSurvey.css'
 
 class CreateSurvey extends Component {
 	
+	//redux thunks googlen
+
 	constructor(props){
 		super(props)
 
@@ -20,6 +22,7 @@ class CreateSurvey extends Component {
 		this.state = {
 			userList: [],
 			allowedUserList: []
+			
 		}
 
 		axios.get('/allUser')
