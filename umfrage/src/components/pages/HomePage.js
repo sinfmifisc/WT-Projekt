@@ -13,8 +13,7 @@ const HomePage =({ isAuth }) => (
 		  <h1 id="homepage_title">
 		   PinPoll
 		  </h1>
-		
-			{ isAuth ?  <Link class="link" id="overlook_link" to="/overlook"> Zu den Umfragen</Link> : <Link class ="link" id="homepage_link" to="/login"> Login </Link>}
+		 <Link class ="link" id="homepage_link" to="/login"> Login </Link>}
 		</div>
 			
 )
@@ -28,3 +27,5 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps) (HomePage);
+
+			//{ isAuth ?  <Link class="link" id="overlook_link" to="/overlook"> Zu den Umfragen</Link> : <Link class ="link" id="homepage_link" to="/login"> Login </Link>}
