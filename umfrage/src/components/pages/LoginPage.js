@@ -3,10 +3,16 @@ import LoginForm from  "../forms/LoginForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
+import { withRouter } from "react-router";
+
 
 class LoginPage extends Component {
 
-  submit = data => this.props.login(data).then(() => this.history.push("/"));
+	//hier findet eigentlich das rooten statt. => nur wenns geklappt hat
+	//leider geht das noch nicht -> wenn es bald immer noch nicht geht hart einen href bei Link reinhauen
+  submit = data => {
+    this.props.login(data).then(() => { this.history.push("/")})
+  };
 
   render() {
     return (
@@ -24,6 +30,4 @@ LoginPage.propTypes = {
   login: PropTypes.func.isRequired
 };
 
-
-
-export default connect(null, {login})(LoginPage);
+export default withRouter(connect(null, { login } )(LoginPage));

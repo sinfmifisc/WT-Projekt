@@ -1,22 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import icon from './title1.ico';
 import '../../App.css';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 
-class HomePage extends Component {
-  render() {
-    return (
-		<div className="homepage">
+const HomePage =({ isAuth }) => (
+  
+		  <div className="homepage">
 		  <img src={icon} width="150" height="120" alt="logo" />
 		  <h1 id="homepage_title">
 		   PinPoll
 		  </h1>
-		  <Link id="homepage_link" to="/login"> Login </Link>
+		
+			{ isAuth ?  <Link class="link" id="overlook_link" to="/overlook"> Zu den Umfragen</Link> : <Link class ="link" id="homepage_link" to="/login"> Login </Link>}
 		</div>
-    );
-  }
-
+			
+)
+HomePage.protoTypes = {
+	isAuth: PropTypes.bool.isRequired
+}
+function mapStateToProps(state){
+	return {
+		isAuth: !!state.user.token
+	};
 }
 
-export default HomePage;
+export default connect(mapStateToProps) (HomePage);
