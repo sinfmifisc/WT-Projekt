@@ -3,13 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
+const router = express.Router();
 const app = express();
 const host = 'localhost';
-
-
-
-
 
 //read SQL instructions for creating the tables
 let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
@@ -48,32 +46,31 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 		console.log(err);
 	});
 	
-	
+	function jwt_set(token){localStorage.setItem('jwt', token);}
 
-
+console.log('########..##');
 app.use(express.json());
-app.listen(1234, () => console.log("Running on lokalhost: 1234"));
+app.listen(8080, () => console.log("Running on lokalhost: 8080"));
 
 app.post("/api/auth", (req, res) => {
 	let password = req.body.credentials.password;
 	let username = req.body.credentials.username;
 	let respond = res;
 
-	
+
 	pool.query('SELECT * FROM users WHERE user_name = ?', [username])
 	.then((result) => {
 		bcrypt.compare(password, result[0][0].password_hash)
 		.then(function(res) {
 			if(res == true){
 				console.log('Passwort ist korrekt');
-				//TODO Webtoken setzen und weiterleiten an den umfrage>seite
-				respond.status(400).json({ errors: { global: 'korrektes Passwort'} });
+				let token = jwt.sign( { user: username },'secret');
+				respond.json({ user: {username: result[0][0].user_name, token: token } }); 
 			}
-			else if(res == false){
+			else if (res == false){
 				console.log('ERROR falsches Passwort!');
 				respond.status(400).json({errors: {global: "Invalid credentials"} });
 			}
-		
 		})
 		.catch((err) => {
 			console.log(err);
@@ -84,8 +81,6 @@ app.post("/api/auth", (req, res) => {
 		console.log(err);
 		respond.status(400).json({errors: {global: "Invalid credentials"} });
 	})
-	
-	
 });
 
 
