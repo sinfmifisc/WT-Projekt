@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-//import Validator from 'validator';
 import PropTypes from "prop-types";
 import InlineError from "../messages/InlineError";
+
 
 class LoginForm extends Component {
 	state = {
 		data: {
 			username: '',
-//			email: '',
 			password: ''
 		},
 	    loading: false,
@@ -26,17 +25,15 @@ class LoginForm extends Component {
 	   if(Object.keys(errors).length === 0){
 		   this.props
 			   .submit(this.state.data)
-			   .catch(err => this.setState({ errors: err.response.data.errors, loading: false }));
+			   .catch(err =>
+					   this.setState({ errors: err.response.data.errors, loading: false }));
 	   }
 	};
 
 	validate = data => {
 		const errors = {};
 	    if (!data.username) errors.username = "Can't be blank";
-//	    if (!Validator.isEmail(data.email)) errors.email = "Invalid email";
 	    if (!data.password) errors.password = "Can't be blank";
-	    //if (!data.password).length <= 8) = "It is to short";
-	    //if (!data.username).length <= 4) = "You need more then 4 charecters";
 	    return errors;
 	}
 
@@ -85,19 +82,3 @@ LoginForm.propTypes = {
 };
 
 export default LoginForm;
-
-/*
- -- ich speicher das hier nur kurz falls ich es später brauche.
-		  <Form.Field error={!!errors.email}>
-		    <label htmlFor="email">Email</label>
-			<input
-			  type="email"
-			  id="email"
-			  name="email"
-			  placeholder="example@examle.com"
-			  value={data.email}
-			  onChange={this.onChange}
-		  />
-		  {errors.email && <InlineError text={errors.email} />}
-		  </Form.Field>
-*/
