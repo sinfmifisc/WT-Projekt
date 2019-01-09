@@ -17,6 +17,7 @@ let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString
 //read SQL instructions for filling up data
 let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toString();
 
+let databaseCreateTestSurveys = fs.readFileSync('databasecreatetestsurveys.txt').toString();
 
 	const pool = mysql.createPool({
 		host: host,
@@ -43,6 +44,13 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	.then((result) => {
 		console.log(result);
 		console.log('Testuser created');
+	})
+	.then(() => {
+		pool.query(databaseCreateTestSurveys);
+	})
+	.then((result) => {
+		console.log.toString(result);
+		console.log('TestSurveys created');
 	})
 	.catch((err) => {
 		console.log(err);
