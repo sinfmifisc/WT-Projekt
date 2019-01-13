@@ -18,7 +18,10 @@ CREATE TABLE IF NOT EXISTS surveys(
     matter VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     end_at TIMESTAMP,
-    number_of_answers INT NOT NULL
+    number_of_answers INT NOT NULL,
+    creator VARCHAR(25) NOT NULL,
+
+    FOREIGN KEY (creator) REFERENCES users(user_name)
 );
 
 CREATE TABLE IF NOT EXISTS answers(

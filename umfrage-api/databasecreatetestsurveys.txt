@@ -1,0 +1,7 @@
+INSERT IGNORE INTO surveys (matter, end_at, number_of_answers, creator)
+VALUES ('Test 3', CURRENT_TIMESTAMP, 1, 'john'),
+('Frage 4', CURRENT_TIMESTAMP, 1, 'john'),
+('Frage 5', CURRENT_TIMESTAMP, 1, 'john'),
+('Frage 6', CURRENT_TIMESTAMP, 1, 'lisa'),
+('Frage 7', CURRENT_TIMESTAMP, 1, 'max'),
+('Frage 8', CURRENT_TIMESTAMP, 1, 'max')
