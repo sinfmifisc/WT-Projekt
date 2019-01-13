@@ -1,6 +1,8 @@
-import { SURVEYMATTER, ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION} from "../types";
+import { SURVEYMATTER, ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from "../types";
 
-export default function surveycreation(state = {surveymatter: '', allowedUser: [], answers: [], duration: 0}, action){
+const initialState = {surveymatter: '', allowedUser: [], answers: [], duration: 0};
+
+export default function surveycreation(state = initialState, action){
 	switch(action.type){
 		case SURVEYMATTER:
 				
@@ -37,7 +39,11 @@ export default function surveycreation(state = {surveymatter: '', allowedUser: [
 			  
 			  return Object.assign({}, state, {
 				duration: action.duration
-			  })
+				})
+				
+		case DELETE_SURVEY_DATA:
+				
+				return initialState
 
 		default: return state;
 	}

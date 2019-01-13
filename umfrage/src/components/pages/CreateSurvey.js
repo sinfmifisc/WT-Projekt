@@ -7,7 +7,7 @@ import SelectAllowedUsers from './CreateSurveyComponents/SelectAllowedUsers';
 import TimeSelection from './CreateSurveyComponents/TimeSelection';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {ALLOWED_USER} from '../../types.js'
+import {ALLOWED_USER, DELETE_SURVEY_DATA} from '../../types.js'
 import icon from './title1.ico'
 import './CreateSurvey.css'
 import {store} from '../../index.js'
@@ -23,7 +23,7 @@ class CreateSurvey extends Component {
 		this.state = {
 			userList: [],
 			allowedUserList: [],
-			test: []
+			errors: []
 		}
 
 
@@ -49,14 +49,13 @@ class CreateSurvey extends Component {
 	}
 
 
+	
 	allowAllUser = () => {
 		this.setState({
 			allowedUserList: [...this.state.allowedUserList.concat(this.state.userList)],
 			userList: []
 		})
 	}
-
-
 	allowUser = (name) => {
         this.setState({
             userList: this.state.userList.filter(el => el !== name),
@@ -66,7 +65,6 @@ class CreateSurvey extends Component {
 	
        
 	}
-
 	removeAllUser = () => {
 		this.setState({
 			userList: [...this.state.userList.concat(this.state.allowedUserList)],
@@ -83,6 +81,7 @@ class CreateSurvey extends Component {
 	}
 
 
+
 	componentDidUpdate(){
 		this.props.dispatch({type: ALLOWED_USER, user: this.state.allowedUserList});
 		
@@ -93,36 +92,64 @@ class CreateSurvey extends Component {
 
 	//Im Store gespeicherte Daten validieren, dann an Backend-Server senden
 	createSurvey = () =>{
-		//Todo: Fehlermeldungen als Pop up oder ähnliches ausgeben
+		
+		this.setState({errors: []});
+		
+
 		let survey = store.getState();
 		let dataValidated = true;
+		let tmpErrors = [];
+		let answerIsEmpty = false;
 		
 		if(survey.surveycreation.duration <= 0){
-			console.log('Die Dauer muss positiv sein');
+			
+			tmpErrors = tmpErrors.concat('Die Umfrage muss mindestens eine Stunde laufen');
 			dataValidated = false;
 		}
 		if(survey.surveycreation.surveymatter === ''){
-			console.log('Die Umfrage darf nicht leer sein');
+			
+			tmpErrors = tmpErrors.concat('Die Umfrage darf nicht leer sein');
 			dataValidated = false;
 		}
 		if(survey.surveycreation.allowedUser.length <= 1){
-			console.log('Es müssen mindestens 2 User an der Umfrage teilnehmen dürfen')
+			
+			tmpErrors = tmpErrors.concat('Es müssen mindestens zwei User an der Umfrage teilnehmen dürfen');
 			dataValidated = false;
 		}
 		survey.surveycreation.answers.forEach(answer => {
 			if(answer.content === ''){
-				console.log('Eine Antwort darf nicht leer sein');
+				
+				
+				answerIsEmpty = true;
+				dataValidated = false;
+				
 			}
 		})
 
+		if(answerIsEmpty){
+			tmpErrors = tmpErrors.concat('Eine Antwort darf nicht leer sein');
+		}
+
+		//Fehler im State speichern und ausgeben
+		this.setState({errors: tmpErrors})
+
+
+		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
 			axios.post("/createsurvey", survey)
-			.then(response => {console.log(response);
-			
+			.then(response => {
+				if(response.status === 201){
+					console.log(response.status);
+					this.props.dispatch({type: DELETE_SURVEY_DATA});
+					this.props.history.push('/surveycreated');
+					
+				}
 			})
 			.catch((err) => console.log(err));
 		}	
 	}
+
+
 
 
 	render() {	
@@ -130,6 +157,12 @@ class CreateSurvey extends Component {
     return (
 		<div>
 		<Form >
+			{this.state.errors.length !== 0 && 
+			<Message negative>
+			<Message.Header>Fehlerhafte Eingaben!</Message.Header>
+			<ul> {this.state.errors.map((error) => {
+			return <li key={error}>{error}</li> })}</ul> 
+		  </Message>}
 		<h2 id='surveyheadline'>Was möchtest du fragen? </h2>
             <Button primary onClick={this.createSurvey} id='submit_survey_button'>Umfrage erstellen </Button>
 			<Survey />

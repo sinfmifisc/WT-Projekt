@@ -42,7 +42,7 @@ class TimeSelection extends Component{
     render(){
 
         return <div id='timeselection'>
-          <h3>Wie lange soll die Umfrage dauern?</h3>
+          <h3>Wie lange soll die Umfrage laufen?</h3>
             <FormField>
               <h4>Stunden:</h4>
               <input
