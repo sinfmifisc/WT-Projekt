@@ -2,12 +2,13 @@ import React  from 'react';
 import PropTypes from "prop-types";
 import { Icon, Table } from 'semantic-ui-react';
 import { connect } from "react-redux"
+import '../../App.css';
 import * as actions from '../../actions/auth'
-
+// <button className="ui primary big button" id="new_btn" onClick={() => newPoll()} to="/">Neue Umfrage erstellen</button>
 const OverlookForm  = ({ logout }) => (
             <div className="semantic ui">
                 <h1>Homepage</h1>
-                <button onClick={() => logout()} to="/">Logout</button>
+                <button className="ui inverted secondary button" id="logout_btn" onClick={() => logout()} to="/">Logout</button>
                 <Table color="orange" selectable>
                     <Table.Header>
                         <Table.Row>

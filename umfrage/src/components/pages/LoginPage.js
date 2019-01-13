@@ -8,10 +8,9 @@ import { withRouter } from "react-router";
 
 class LoginPage extends Component {
 
-	//hier findet eigentlich das rooten statt. => nur wenns geklappt hat
-	//leider geht das noch nicht -> wenn es bald immer noch nicht geht hart einen href bei Link reinhauen
   submit = data => {
-    this.props.login(data).then(() => { this.history.push("/overlook")})
+   this.props.login(data).then(() => this.props.history.push("/overlook"))
+   //routet bei erneutem Laden
   };
 
   render() {
@@ -25,9 +24,12 @@ class LoginPage extends Component {
 }
 LoginPage.propTypes = {
   history: PropTypes.shape({
-		  push: PropTypes.func.isRequired
-		}).isRequired,
+    push: PropTypes.func.isRequired
+  }).isRequired,
   login: PropTypes.func.isRequired
 };
 
-export default withRouter(connect(null, { login } )(LoginPage));
+export default withRouter( connect( null, { login } )(LoginPage));
+//import { compose } from 'redux'//geht nicht
+//export default compose( withRouter, connect( null, { login } )(LoginPage));//so gehts leider nicht(seite wird nicht geladen)
+//export default  connect( null, { login } )(LoginPage);

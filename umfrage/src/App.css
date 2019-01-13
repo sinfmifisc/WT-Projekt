@@ -3,6 +3,13 @@
 	margin-top: 100px;
 }
 
+#logout_btn{
+	position: absolute; 
+	right: 10%;
+	margin: 10px;
+	top: 20px;
+}
+
 #homepage_title {
 	font-size: 100px;
 	margin-bottom: 70px;
