@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
+import {connect} from 'react-redux'
+import {updateAnswer} from '../../../actions/surveycreation.js'
 import './Answers.css';
+
+
+
 
 class Answer extends Component{
 
@@ -17,6 +22,11 @@ class Answer extends Component{
 
     handleChange = e => {
         this.setState({...this.state, content: e.target.value});
+    }
+
+
+    componentDidUpdate(){
+        this.props.dispatch(updateAnswer(this.state.id, this.state.content));
     }
 
 
@@ -37,4 +47,4 @@ class Answer extends Component{
     }
 }
 
-export default Answer;
+export default connect() (Answer);

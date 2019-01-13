@@ -1,0 +1,35 @@
+#time{
+    width: 32%;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#dechours{
+    width: 32%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#inchours{
+    width: 32%;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#days{
+    width: 32%;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#decdays{
+    width: 32%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#incdays{
+    width: 32%;
+    margin-right: 0px;
+    margin-left: 0px;
+}

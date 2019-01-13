@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
-import CreateSurveyRoute from './Routes/CreateSurvey.js' ;
+import initCreateSurveyroute from './Routes/CreateSurvey.js' ;
 
 const app = express();
 const host = 'localhost';
@@ -46,13 +46,13 @@ let databaseCreateTestSurveys = fs.readFileSync('databasecreatetestsurveys.txt')
 		console.log(result);
 		console.log('Testuser created');
 	})
-	.then(() => {
+	/*.then(() => {
 		pool.query(databaseCreateTestSurveys);
 	})
 	.then((result) => {
 		console.log.toString(result);
-		console.log('TestSurveys created');
-	})
+		console.log('TestSurveys created'); 
+	})*/
 	.catch((err) => {
 		console.log(err);
 	});
@@ -63,10 +63,10 @@ let databaseCreateTestSurveys = fs.readFileSync('databasecreatetestsurveys.txt')
 
 
 app.use(express.json());
-app.listen(1234, () => console.log("Running on lokalhost: 1234"));
+app.listen(50000, () => console.log("Running on lokalhost: 50000"));
 
 
-CreateSurveyRoute(app, pool);
+initCreateSurveyroute(app, pool);
 
 
 app.post("/api/auth", (req, res) => {

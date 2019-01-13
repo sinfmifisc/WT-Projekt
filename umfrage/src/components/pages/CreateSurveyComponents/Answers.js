@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
+import {connect} from 'react-redux'
 import Answer from './Answer.js'
-
-
+import {addAnswer} from '../../../actions/surveycreation'
 
 
 
@@ -13,21 +13,24 @@ class Answers extends Component {
     constructor(props) {
         super(props);
         
-        this.state = {count: 1,
-                    answers: [<Answer id='0' key='0' />],
+        this.state = {count: 0,
+                    answers: [],
                     
                 
-            };
-
-            
+            }
+        
       }
 
 
-    onClick = () => {
+
+    addAnswer = () => {
         console.log(this.state.count);
-        let a = this.state.count;
-        this.setState({count : a + 1});
-        
+        let currentCount = this.state.count;
+
+        //Antwort im Store abspeichern
+        this.props.dispatch(addAnswer(currentCount));
+
+        this.setState({count : currentCount + 1},);        
         this.setState ({ answers: [...this.state.answers, 
             <Answer id={this.state.count} key={this.state.count}/>
         ]})
@@ -35,17 +38,22 @@ class Answers extends Component {
     }
 
 
+   componentDidMount(){
+        if(this.state.count === 0){
+        this.addAnswer();
+    }
+   }
     
 	render() {
-
-        let a = 0;
+        
+        
         return (
 
 		<div id='Answers'>
                 <h3>Antwortmöglichkeiten:</h3>        
                 {this.state.answers}
 
-                <Button primary onClick={this.onClick} >Zusätzliche Antwortmöglichkeit</Button>
+                <Button primary onClick={this.addAnswer} >Zusätzliche Antwortmöglichkeit</Button>
             
         
         </div>
@@ -54,4 +62,4 @@ class Answers extends Component {
 
 }
 
-export default Answers;
+export default connect() (Answers);

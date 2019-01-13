@@ -11,10 +11,16 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./rootReducer";
 
 
-const store = createStore(
+
+export const store = createStore(
 		  rootReducer,
 		    composeWithDevTools(applyMiddleware(thunk))
 		);
+
+
+
+		
+		
 
 ReactDOM.render(<BrowserRouter>
 		<Provider store={store}>
@@ -26,3 +32,4 @@ ReactDOM.render(<BrowserRouter>
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
