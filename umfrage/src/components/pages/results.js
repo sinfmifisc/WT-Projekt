@@ -39,4 +39,4 @@ class answers extends Component {
 
         </div>
     }
-}
+}export default results;

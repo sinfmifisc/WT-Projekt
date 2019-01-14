@@ -6,6 +6,8 @@ import CreateSurvey from './components/pages/CreateSurvey';
 import SurveyCreated from './components/pages/SurveyCreated';
 import Overlook from './components/pages/Overlook';
 import UserRoute from './components/routes/UserRoute';
+import Results from './components/pages/results';
+import Answer from './components/pages/answer';
 
 
 
@@ -23,6 +25,8 @@ class App extends Component {
 	   <Route path="/login" exact component={LoginPage}/>
      <Route path="/createsurvey" exact component={CreateSurvey}/>
      <Route path="/surveycreated" exact component={SurveyCreated}/>
+     <Route path="/results" exact component={Results}/>
+     <Route path="/answer" exact component={Answer}/>
      <UserRoute path="/overlook" exact component={Overlook}/>
 	 </div>
     );
