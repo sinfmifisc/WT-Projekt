@@ -1,7 +1,7 @@
-function initCreateSurveyRoute(expressApp, pool){
+const initCreateSurveyRoute = (app, pool) => {
 
     //holt sich user aus Datenbank und gibt sie zurück
-    expressApp.get('/alluser', (req, res) => {
+    app.get('/alluser', (req, res) => {
         pool.query('SELECT user_name FROM users')
         .then((result) => {
             console.log(result[0]);
@@ -12,7 +12,7 @@ function initCreateSurveyRoute(expressApp, pool){
     
 
     //Umfrage von Frontend empfangen, anschließend in Datenbank speichern
-    expressApp.post('/createsurvey', (req, res) => {
+    app.post('/createsurvey', (req, res) => {
         
         let survey = req.body.surveycreation;
         
@@ -33,7 +33,7 @@ function initCreateSurveyRoute(expressApp, pool){
             });
             
             survey.answers.forEach(answer => {
-                pool.query('INSERT INTO answers (content, survey_id) VALUES(?, ?)', [answer.content, surveyId])
+                pool.query('INSERT INTO answers (content, survey_id, id) VALUES(?, ?, ?)', [answer.content, surveyId, answer.id])
                 .then((result) => {console.log(result[0])
                     
                     })

@@ -2,13 +2,32 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
-import bcrypt from 'bcrypt';
-import initCreateSurveyroute from './Routes/CreateSurvey.js' ;
-import jwt from 'jsonwebtoken';
+import initCreateSurveyRoute from './Routes/CreateSurvey.js' ;
+import initLoadSurveysRoute from './Routes/LoadSurveys.js';
+import initLoginRoute from './Routes/Login.js';
+import initLoadSingleSurveyRoute from './Routes/LoadSingleSurvey';
+import initUnauthorizedRoute from './Routes/Unauthorized';
 
-const router = express.Router();
 const app = express();
 const host = 'localhost';
+
+
+
+const authChecker = (req, res, next) => {
+
+	//TODO: Checken ob User eingeloggt ist
+    if (req.path ==='/api/auth' || req.path === '/unauthorized') {
+		
+        next();
+    } else {
+	   res.redirect('/unauthorized');
+	   
+    }
+}
+
+//Wegen Entwicklungszwecken auskommentiert:
+//app.use(authChecker)
+
 
 //read SQL instructions for creating the tables
 let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
@@ -50,58 +69,13 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 
 console.log('##########');
 app.use(express.json());
-initCreateSurveyroute(app, pool);
+initLoginRoute(app,pool);
+initCreateSurveyRoute(app, pool);
+initLoadSurveysRoute(app,pool);
+initLoadSingleSurveyRoute(app, pool);
+initUnauthorizedRoute(app);
+
 app.listen(8080, () => console.log("Running on lokalhost: 8080"));
-
-app.post("/api/auth", (req, res) => {
-	let password = req.body.credentials.password;
-	let username = req.body.credentials.username;
-	let respond = res;
-
-
-	//Testen ob User überhaupt existiert
-	pool.query('SELECT COUNT(*) AS user_exists FROM users WHERE user_name = ?', [username])
-	.then((result) => {
-		if(result[0][0].user_exists === 1){
-			
-			//Gehashte Passwort aus Datenbank laden
-			pool.query('SELECT * FROM users WHERE user_name = ?', [username])	
-			.then((result) => {				
-				
-				//Checken ob User das richtige Passwort eingegeben hat
-				bcrypt.compare(password, result[0][0].password_hash)
-				.then(function(res) {
-
-					if(res == true){
-						console.log('Passwort ist korrekt');
-						let token = jwt.sign( { user: username },'secret');
-						respond.json({ user: {username: result[0][0].user_name, token: token } }); 
-					}
-					else if(res == false){
-						console.log('Falsches Passwort!');
-						respond.status(400).json({errors: {global: "Invalid credentials"} });
-					}		
-				})
-				.catch((err) => {
-					console.log(err);
-				})
-			})
-			.catch((err) => {	
-				console.log(err);		
-			})	
-		}
-		else{
-			console.log('User existiert nicht');
-			respond.status(400).json({errors: {global: "Invalid credentials"} });
-		}
-	})
-	.catch((err) => {console.log(err);})
-
-})
-
-
-
-
 
 
 
@@ -109,3 +83,5 @@ app.post("/api/auth", (req, res) => {
 app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
+
+

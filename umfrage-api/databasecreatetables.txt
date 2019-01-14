@@ -26,10 +26,11 @@ CREATE TABLE IF NOT EXISTS surveys(
 
 CREATE TABLE IF NOT EXISTS answers(
     content VARCHAR(50) NOT NULL,
+    id INT NOT NULL,
     survey_id INT NOT NULL,
     
     FOREIGN KEY (survey_id) REFERENCES surveys(id),
-    PRIMARY KEY (content, survey_id)
+    PRIMARY KEY (id, survey_id)
 
 );
 
@@ -57,12 +58,12 @@ CREATE TABLE IF NOT EXISTS group_memberships(
 
 CREATE TABLE IF NOT EXISTS user_has_voted_for(
     user_name VARCHAR(25) NOT NULL,
-    content VARCHAR(50) NOT NULL,
+    answer_id INT NOT NULL,
     survey INT NOT NULL,
     voted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_name) REFERENCES users(user_name),
-    FOREIGN KEY (content) REFERENCES answers(content),
-    FOREIGN KEY (survey) REFERENCES answers(survey_id),
-    PRIMARY KEY(user_name, content, survey)
+    FOREIGN KEY (answer_id) REFERENCES answers(id),
+    FOREIGN KEY (survey) REFERENCES surveys(id),
+    PRIMARY KEY(user_name, answer_id, survey)
 );
