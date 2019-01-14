@@ -3,10 +3,15 @@ import LoginForm from  "../forms/LoginForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
+import { withRouter } from "react-router";
+
 
 class LoginPage extends Component {
 
-  submit = data => this.props.login(data).then(() => this.history.push("/"));
+  submit = data => {
+   this.props.login(data).then(() => this.props.history.push("/overlook"))
+   //routet bei erneutem Laden
+  };
 
   render() {
     return (
@@ -19,11 +24,12 @@ class LoginPage extends Component {
 }
 LoginPage.propTypes = {
   history: PropTypes.shape({
-		  push: PropTypes.func.isRequired
-		}).isRequired,
+    push: PropTypes.func.isRequired
+  }).isRequired,
   login: PropTypes.func.isRequired
 };
 
-
-
-export default connect(null, {login})(LoginPage);
+export default withRouter( connect( null, { login } )(LoginPage));
+//import { compose } from 'redux'//geht nicht
+//export default compose( withRouter, connect( null, { login } )(LoginPage));//so gehts leider nicht(seite wird nicht geladen)
+//export default  connect( null, { login } )(LoginPage);

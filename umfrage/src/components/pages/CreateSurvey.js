@@ -26,7 +26,6 @@ class CreateSurvey extends Component {
 			errors: []
 		}
 
-
 		//Alle User aus der Datenbank laden und im state abspeichern
 		axios.get('/allUser')
 		.then((res) => {

@@ -4,13 +4,11 @@ import fs from 'fs';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
 import initCreateSurveyroute from './Routes/CreateSurvey.js' ;
+import jwt from 'jsonwebtoken';
 
+const router = express.Router();
 const app = express();
 const host = 'localhost';
-
-
-
-
 
 //read SQL instructions for creating the tables
 let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
@@ -50,21 +48,16 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	});
 	
 
-
-
-
-
+console.log('##########');
 app.use(express.json());
-app.listen(50000, () => console.log("Running on lokalhost: 50000"));
-
-
 initCreateSurveyroute(app, pool);
-
+app.listen(8080, () => console.log("Running on lokalhost: 8080"));
 
 app.post("/api/auth", (req, res) => {
 	let password = req.body.credentials.password;
 	let username = req.body.credentials.username;
 	let respond = res;
+
 
 	//Testen ob User überhaupt existiert
 	pool.query('SELECT COUNT(*) AS user_exists FROM users WHERE user_name = ?', [username])
@@ -80,9 +73,9 @@ app.post("/api/auth", (req, res) => {
 				.then(function(res) {
 
 					if(res == true){
-					console.log('Passwort ist korrekt');
-						//TODO Webtoken setzen und weiterleiten an den umfrage>seite
-						respond.status(400).json({ errors: { global: 'korrektes Passwort'} });
+						console.log('Passwort ist korrekt');
+						let token = jwt.sign( { user: username },'secret');
+						respond.json({ user: {username: result[0][0].user_name, token: token } }); 
 					}
 					else if(res == false){
 						console.log('Falsches Passwort!');
@@ -104,8 +97,8 @@ app.post("/api/auth", (req, res) => {
 	})
 	.catch((err) => {console.log(err);})
 
-	
-});
+})
+
 
 
 
@@ -116,9 +109,3 @@ app.post("/api/auth", (req, res) => {
 app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
-
-
-
-
-
-				

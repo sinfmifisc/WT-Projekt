@@ -3,12 +3,19 @@
 	margin-top: 100px;
 }
 
+#logout_btn{
+	position: absolute; 
+	right: 10%;
+	margin: 10px;
+	top: 20px;
+}
+
 #homepage_title {
 	font-size: 100px;
 	margin-bottom: 70px;
 	font-family: cursive;
 }
-#homepage_link{
+.link{
 	color: black;
 	border: solid 2px black;
 	border-radius: 15px;
@@ -16,7 +23,7 @@
 	font-size: 30px;
 
 }
-#homepage_link:hover{
+.link:hover{
 	background-color: #E7EEF1;
 }
 #root{
