@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import OverlookForm from '../forms/OverlookForm';
-import PropTypes from "prop-types";
-import { Table, Icon, Accordion, Tab, TableBody } from 'semantic-ui-react';
-import axios from 'react'
+import { Table, Icon, Accordion, TableBody } from 'semantic-ui-react';
 
 
 class Overlook extends Component {
