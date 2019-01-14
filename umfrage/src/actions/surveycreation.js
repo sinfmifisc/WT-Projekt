@@ -1,4 +1,13 @@
-import { UPDATE_ANSWER, ADD_ANSWER, DURATION } from "../types";
+import { UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA, UPDATE_ALLOWED_USER, SURVEYMATTER } from "../types";
+
+
+
+export const changeSurveyMatter = (matter) => {
+    return {
+        type: SURVEYMATTER,
+        matter
+    }
+}
 
 export const updateAnswer = (id, content) => {
     return { type: UPDATE_ANSWER,
@@ -14,10 +23,22 @@ export const addAnswer = (id) => {
     }
 }
 
-
 export const changeDuration = (duration) => {
     return { type: DURATION,
         duration
         
+    }
+}
+
+export const deleteSurveyData = () => {
+    return {
+        type: DELETE_SURVEY_DATA
+    }
+}
+
+export const updateAllowedUser = (users) => {
+    return {
+        type: UPDATE_ALLOWED_USER,
+        users
     }
 }

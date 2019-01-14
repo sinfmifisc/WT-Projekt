@@ -1,4 +1,4 @@
-import { SURVEYMATTER, ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from "../types";
+import { SURVEYMATTER, UPDATE_ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from "../types";
 
 const initialState = {surveymatter: '', allowedUser: [], answers: [], duration: 0};
 
@@ -7,13 +7,13 @@ export default function surveycreation(state = initialState, action){
 		case SURVEYMATTER:
 				
 			return Object.assign({}, state, {
-				surveymatter: action.text
+				surveymatter: action.matter
 			  })
 	
-		case ALLOWED_USER: 
+		case UPDATE_ALLOWED_USER: 
 
 			return Object.assign({}, state, {
-				allowedUser: action.user
+				allowedUser: action.users
 			  })
 
 		case ADD_ANSWER:

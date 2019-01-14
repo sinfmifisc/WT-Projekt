@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import Answer from './Answer.js'
 import {addAnswer} from '../../../actions/surveycreation'

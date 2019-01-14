@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { SURVEYMATTER } from '../../../types.js';
 import './Survey.css';
+import { changeSurveyMatter } from '../../../actions/surveycreation.js';
 
 
 
@@ -38,7 +36,7 @@ class Survey extends Component{
 
 
     componentDidUpdate(){
-        this.props.dispatch({type: SURVEYMATTER, text: this.state.matter});
+        this.props.dispatch(changeSurveyMatter(this.state.matter));
     }
     
     

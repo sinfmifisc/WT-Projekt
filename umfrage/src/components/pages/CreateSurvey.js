@@ -7,10 +7,10 @@ import SelectAllowedUsers from './CreateSurveyComponents/SelectAllowedUsers';
 import TimeSelection from './CreateSurveyComponents/TimeSelection';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {ALLOWED_USER, DELETE_SURVEY_DATA} from '../../types.js'
 import icon from './title1.ico'
 import './CreateSurvey.css'
 import {store} from '../../index.js'
+import { deleteSurveyData, updateAllowedUser } from '../../actions/surveycreation';
 
 
 
@@ -83,7 +83,7 @@ class CreateSurvey extends Component {
 
 
 	componentDidUpdate(){
-		this.props.dispatch({type: ALLOWED_USER, user: this.state.allowedUserList});
+		this.props.dispatch(updateAllowedUser(this.state.allowedUserList));
 		
 	}
 	
@@ -140,7 +140,7 @@ class CreateSurvey extends Component {
 			.then(response => {
 				if(response.status === 201){
 					console.log(response.status);
-					this.props.dispatch({type: DELETE_SURVEY_DATA});
+					this.props.dispatch(deleteSurveyData());
 					this.props.history.push('/surveycreated');
 					
 				}

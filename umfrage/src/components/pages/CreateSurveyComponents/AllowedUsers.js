@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, List, ListItem, Header } from 'semantic-ui-react';
+import { Button, List, ListItem, Header } from 'semantic-ui-react';
 import './AllowedUsers.css';
 
 class AllowedUsers extends Component{
