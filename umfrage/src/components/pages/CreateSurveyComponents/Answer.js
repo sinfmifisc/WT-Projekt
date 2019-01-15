@@ -35,9 +35,9 @@ class Answer extends Component{
         return <Form.Field>
         <input
             type='text'
-            key={'Antwort' + this.id}
-            id={'Antwort' + this.id}
-            name={'Antwort' + this.id}
+            key={'Antwort' + this.state.id}
+            id={'Antwort' + this.state.id}
+            name={'Antwort' + this.state.id}
             value={this.state.content}
             onChange={this.handleChange}
             placeholder='Antwort verfassen'

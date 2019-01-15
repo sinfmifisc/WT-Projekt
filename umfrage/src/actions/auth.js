@@ -1,9 +1,10 @@
 import api from "../api";
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../types";
 
-export const userLoggedIn = user => ({
+export const userLoggedIn = (user, username) => ({
 	  type: USER_LOGGED_IN,
-	  user
+	  user,
+	  username
 });
 export const userLoggedOut = () => ({
 	type: USER_LOGGED_OUT
@@ -12,8 +13,9 @@ export const userLoggedOut = () => ({
 
 export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
+	console.log(credentials);
 	   localStorage.current_token = user.token;
-	   dispatch(userLoggedIn(user))
+	   dispatch(userLoggedIn(user, credentials.username))
 	});
 
 export const logout = () => dispatch =>{
