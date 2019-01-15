@@ -5,7 +5,7 @@ class results extends Component {
 
     render() {
 		return(
-        <div class="semantic ui">
+        <div className="semantic ui">
             <h1>PinPoll - Results</h1>
             <Table color="orange">
                 <Table.Header>

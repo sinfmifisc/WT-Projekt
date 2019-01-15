@@ -5,7 +5,7 @@ class answer extends Component {
 
     render() {
 		return(
-        <div class="semantic ui">
+        <div className="semantic ui">
             <h1>PinPoll - Answer</h1>
            
             <Form color="blue">
