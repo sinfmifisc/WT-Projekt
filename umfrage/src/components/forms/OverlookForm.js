@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import '../../App.css';
+import { Link } from "react-router-dom";
 import { Table, Icon, Accordion, TableBody, Tab } from 'semantic-ui-react';
 import { logout } from '../../actions/auth'
 import axios from 'axios'
-//import * as actions from '../../actions/auth'
-// <button className="ui primary big button" id="new_btn" onClick={() => newPoll()} to="/">Neue Umfrage erstellen</button>
-//
+
 class OverlookForm extends Component {
 
     constructor(props) {
@@ -41,14 +40,13 @@ class OverlookForm extends Component {
                                        
                 }
 
-
-
                 this.setState({
                     mysurveys: msurv,
                     surveyList: list
                 })
             })
     }
+
 
     logout_handler = () => {
         this.props.logout();
@@ -70,6 +68,7 @@ class OverlookForm extends Component {
             <div className="semantic ui">
                 <h1>PinPoll - Polls</h1>
                 <button className="ui inverted secondary button" id="logout_btn" onClick={this.logout_handler} to="/">Logout</button>
+                <Link className='ui primary button' to='/createsurvey'>Neue Umfrage erstellen</Link>
                 <Accordion className="ui">
                     <Accordion.Title
                         active={activeIndex === 0}
