@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Table, TableHeader } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 
-class answers extends Component {
+class results extends Component {
 
     render() {
+		return(
         <div class="semantic ui">
             <h1>PinPoll - Results</h1>
             <Table color="orange">
@@ -38,5 +39,6 @@ class answers extends Component {
             </Table>
 
         </div>
+		)
     }
 }export default results;

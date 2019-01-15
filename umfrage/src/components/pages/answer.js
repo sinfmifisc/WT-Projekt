@@ -4,6 +4,7 @@ import { Form,} from 'semantic-ui-react'
 class answer extends Component {
 
     render() {
+		return(
         <div class="semantic ui">
             <h1>PinPoll - Answer</h1>
            
@@ -16,6 +17,7 @@ class answer extends Component {
                     Submit
                 </Form.Button>
             </Form>
-        </div>
+        </div>);
 }
 }
+export default answer;

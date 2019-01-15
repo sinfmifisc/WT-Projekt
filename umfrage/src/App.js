@@ -25,8 +25,8 @@ class App extends Component {
 	   <Route path="/login" exact component={LoginPage}/>
      <Route path="/createsurvey" exact component={CreateSurvey}/>
      <Route path="/surveycreated" exact component={SurveyCreated}/>
-     <Route path="/results" exact component={Results}/>
-     <Route path="/answer" exact component={Answer}/>
+     <UserRoute path="/results" exact component={Results}/>
+     <UserRoute path="/answer" exact component={Answer}/>
      <UserRoute path="/overlook" exact component={Overlook}/>
 	 </div>
     );
