@@ -2,12 +2,34 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import '../../App.css';
-import { Table, Icon, Accordion, TableBody } from 'semantic-ui-react';
+import { Table, Icon, Accordion, TableBody, Tab } from 'semantic-ui-react';
 import { logout } from '../../actions/auth'
+import axios from 'axios'
 //import * as actions from '../../actions/auth'
 // <button className="ui primary big button" id="new_btn" onClick={() => newPoll()} to="/">Neue Umfrage erstellen</button>
 //
-class OverlookForm extends Component{
+class OverlookForm extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            surveyList: [],
+        }
+
+        axios.get('/loadopensurveys/john/all')
+            .then((res) => {
+                let list = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    list[i] = res.data[i];
+                }
+                this.setState({
+
+                    surveyList: list
+                })
+            })
+    }
+
     logout_handler = () => {
         this.props.logout();
     };
@@ -21,11 +43,11 @@ class OverlookForm extends Component{
         this.setState({ activeIndex: newIndex })
     }
 
-   	render(){
+    render() {
         const { activeIndex } = this.state
-		return (
-                
-                <div class="semantic ui">
+        return (
+
+            <div className="semantic ui">
                 <h1>PinPoll - Polls</h1>
                 <button className="ui inverted secondary button" id="logout_btn" onClick={this.logout_handler} to="/">Logout</button>
                 <Accordion className="ui">
@@ -49,7 +71,7 @@ class OverlookForm extends Component{
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
                                     <Table.HeaderCell >Beantwortet</Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right">Teilnehnerzahlen</Table.HeaderCell>
+                                    <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                         </Table>
@@ -57,19 +79,21 @@ class OverlookForm extends Component{
                     <Accordion.Content active={activeIndex === 0}>
                         <Table color="orange" size="large" inverted selectable fixed width="100%">
                             <TableBody>
-                                <Table.Row >
-                                    <Table.Cell textAlign="left">Was ist der Sinn des Lebens?</Table.Cell>
-                                    <Table.Cell >Michael</Table.Cell>
-                                    <Table.Cell >05.01.2019</Table.Cell>
-                                    <Table.Cell >06.01.2019</Table.Cell>
-                                    <Table.Cell>Jup</Table.Cell>
-                                    <Table.Cell textAlign="right">42</Table.Cell>
-                                </Table.Row>
+                                    {this.state.surveyList.map((list ) => {
+                                        return <Table.Row>
+                                                    <Table.Cell>{list.matter}</Table.Cell>
+                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                    <Table.Cell>{list.created_at}</Table.Cell>
+                                                    <Table.Cell>{list.end_at}</Table.Cell>
+                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                </Table.Row>
+                                    })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
                 </Accordion>
-                
+
 
                 <Accordion className="ui">
                     <Accordion.Title
@@ -97,7 +121,7 @@ class OverlookForm extends Component{
                             </Table.Header>
                         </Table>
                     </Accordion.Title>
-                    <Accordion.Content active={activeIndex ===1}>
+                    <Accordion.Content active={activeIndex === 1}>
                         <Table color="olive" size="large" inverted selectable fixed width="100%">
                             <TableBody>
                                 <Table.Row >
@@ -154,16 +178,16 @@ class OverlookForm extends Component{
                         </Table>
                     </Accordion.Content>
                 </Accordion>
-            </div>    
-            
+            </div>
+
         );
     }
 }
 OverlookForm.propTypes = {
     login: PropTypes.func.isRequired
-  };
+};
 
 
-        
-    
+
+
 export default connect(null, { logout })(OverlookForm);
