@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
@@ -8,31 +8,27 @@ import Overlook from './components/pages/Overlook';
 import UserRoute from './components/routes/UserRoute';
 import Results from './components/pages/results';
 import Answer from './components/pages/answer';
+import PropTypes from "prop-types";
 
 
-
-class App extends Component {
-
-
-  
-
-  render() {
-     
-
-    return (
-     <div className="ui container">
-	     <Route path="/" exact component={HomePage}/>
-	     <Route path="/login" exact component={LoginPage}/>
-		 <UserRoute path="/createsurvey" exact component={CreateSurvey}/>
-		 <UserRoute path="/surveycreated" exact component={SurveyCreated}/>
-		 <UserRoute path="/results" exact component={Results}/>
-		 <UserRoute path="/answer" exact component={Answer}/>
-		 <UserRoute path="/overlook" exact component={Overlook}/>
+const App = ({ location} )=> (
+	<div className="ui container">
+	  <Route location={location} path="/" exact component={HomePage}/>
+	  <Route location={location} path="/login" exact component={LoginPage}/>
+	  <UserRoute location={location} path="/createsurvey" exact component={CreateSurvey}/>
+	  <UserRoute location={location} path="/surveycreated" exact component={SurveyCreated}/>
+	  <UserRoute location={location} path="/overlook" exact component={Overlook}/>
+    <UserRoute location={location} path="/results" exact component={Results}/>
+		<UserRoute location={location} path="/answer" exact component={Answer}/>
 	 </div>
-    );
-  }
+);
 
-}
+
+ App.propTypes = {
+  location: PropTypes.shape({
+	    pathname: PropTypes.string.isRequired
+	  }).isRequired
+	};
 
 
 export default App;

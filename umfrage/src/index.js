@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import "semantic-ui-css/semantic.min.css"
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -31,7 +31,7 @@ if (localStorage.current_token){
 
 ReactDOM.render(<BrowserRouter>
 		<Provider store={store}>
-		  <App />
+		  <Route component={App}/>
 		  </Provider>
 		</BrowserRouter>, document.getElementById('root'));
 
