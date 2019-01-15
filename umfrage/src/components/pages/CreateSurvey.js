@@ -141,7 +141,7 @@ class CreateSurvey extends Component {
 				if(response.status === 201){
 					console.log(response.status);
 					this.props.dispatch(deleteSurveyData());
-					this.props.history.push('/overlook');
+					this.props.history.push('/SurveyCreated');
 					
 				}
 			})

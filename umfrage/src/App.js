@@ -9,6 +9,7 @@ import UserRoute from './components/routes/UserRoute';
 import Results from './components/pages/results';
 import Answer from './components/pages/answer';
 import PropTypes from "prop-types";
+import AnswerSurvey from './components/pages/AnswerSurvey';
 
 
 const App = ({ location} )=> (
@@ -20,6 +21,7 @@ const App = ({ location} )=> (
 	  <UserRoute location={location} path="/overlook" exact component={Overlook}/>
     <UserRoute location={location} path="/results" exact component={Results}/>
 		<UserRoute location={location} path="/answer" exact component={Answer}/>
+		<UserRoute location={location} path='/answersurvey/:surveyid' exact component={AnswerSurvey}/>
 	 </div>
 );
 
