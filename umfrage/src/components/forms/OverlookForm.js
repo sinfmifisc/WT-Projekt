@@ -15,25 +15,36 @@ class OverlookForm extends Component {
 
         this.state = {
             surveyList: [],
+            mysurveys: [],
         }
 
         axios.get('/loadopensurveys/john/all')
             .then((res) => {
-                let list = [];
+                let list = []; //every open survey gets in here
+                let msurv = []; //surveys from user
+                //let expiredsurveys = []; //expired surveys
+                
+
                 for (let i = 0; i < res.data.length; i++) {
                     list[i] = res.data[i];
-                    if (list[i].answered != true) {
+
+                    //replace true/false in "answered-bracket" with icon depending on value
+                    if (list[i].answered == true) {
                         list[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
                         list[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
-                    
+                    //checks if user created open survey
+                    if(list[i].creator == "John"){
+                        msurv.push(list[i]);
+                    }
+                                       
                 }
 
 
 
                 this.setState({
-
+                    mysurveys: msurv,
                     surveyList: list
                 })
             })
@@ -112,7 +123,7 @@ class OverlookForm extends Component {
                     ><Table color="purple" styled fixed>
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left">Meine Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
@@ -133,14 +144,14 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 1}>
                         <Table size="large" selectable fixed width="100%">
                             <TableBody>
-                                    {this.state.surveyList.map((list ) => {
+                                    {this.state.mysurveys.map((msurv) => {
                                         return <Table.Row>
-                                                    <Table.Cell>{list.matter}</Table.Cell>
-                                                    <Table.Cell>{list.creator}</Table.Cell>
-                                                    <Table.Cell>{list.created_at}</Table.Cell>
-                                                    <Table.Cell>{list.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
-                                                    <Table.Cell>{list.count}</Table.Cell>
+                                                    <Table.Cell>{msurv.matter}</Table.Cell>
+                                                    <Table.Cell>{msurv.creator}</Table.Cell>
+                                                    <Table.Cell>{msurv.created_at}</Table.Cell>
+                                                    <Table.Cell>{msurv.end_at}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{msurv.answered}</Table.Cell>
+                                                    <Table.Cell>{msurv.count}</Table.Cell>
                                                 </Table.Row>
                                     })}
                             </TableBody>
@@ -156,7 +167,7 @@ class OverlookForm extends Component {
                     ><Table color="teal" styled fixed>
                          <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left">Beendete Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
