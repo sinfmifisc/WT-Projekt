@@ -22,7 +22,16 @@ class OverlookForm extends Component {
                 let list = [];
                 for (let i = 0; i < res.data.length; i++) {
                     list[i] = res.data[i];
+                    if (list[i].answered != true) {
+                        list[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    } else {
+                        list[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                    }
+                    
                 }
+
+
+
                 this.setState({
 
                     surveyList: list
@@ -55,7 +64,7 @@ class OverlookForm extends Component {
                         active={activeIndex === 0}
                         index={0}
                         onClick={this.handleClick}
-                    ><Table color="orange" styled fixed>
+                    ><Table color="yellow" styled fixed>
                             <Table.Header>
                                 <Table.Row>
                                     <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
@@ -63,21 +72,21 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='orange' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='yellow' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
-                                    <Table.HeaderCell >Beantwortet</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">Beantwortet</Table.HeaderCell>
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                         </Table>
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 0}>
-                        <Table color="orange" size="large" inverted selectable fixed width="100%">
+                        <Table size="large" selectable fixed width="100%">
                             <TableBody>
                                     {this.state.surveyList.map((list ) => {
                                         return <Table.Row>
@@ -85,8 +94,8 @@ class OverlookForm extends Component {
                                                     <Table.Cell>{list.creator}</Table.Cell>
                                                     <Table.Cell>{list.created_at}</Table.Cell>
                                                     <Table.Cell>{list.end_at}</Table.Cell>
-                                                    <Table.Cell>{list.creator}</Table.Cell>
-                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
+                                                    <Table.Cell>{list.count}</Table.Cell>
                                                 </Table.Row>
                                     })}
                             </TableBody>
@@ -100,38 +109,40 @@ class OverlookForm extends Component {
                         active={activeIndex === 1}
                         index={1}
                         onClick={this.handleClick}
-                    ><Table color="olive" styled fixed>
+                    ><Table color="purple" styled fixed>
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Meine Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='olive' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='purple' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
-                                    <Table.HeaderCell >Beantwortet</Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right">Teilnehnerzahlen</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">Beantwortet</Table.HeaderCell>
+                                    <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                         </Table>
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 1}>
-                        <Table color="olive" size="large" inverted selectable fixed width="100%">
+                        <Table size="large" selectable fixed width="100%">
                             <TableBody>
-                                <Table.Row >
-                                    <Table.Cell textAlign="left">Was ist der Sinn des Lebens?</Table.Cell>
-                                    <Table.Cell >Michael</Table.Cell>
-                                    <Table.Cell >05.01.2019</Table.Cell>
-                                    <Table.Cell >06.01.2019</Table.Cell>
-                                    <Table.Cell>Jup</Table.Cell>
-                                    <Table.Cell textAlign="right">42</Table.Cell>
-                                </Table.Row>
+                                    {this.state.surveyList.map((list ) => {
+                                        return <Table.Row>
+                                                    <Table.Cell>{list.matter}</Table.Cell>
+                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                    <Table.Cell>{list.created_at}</Table.Cell>
+                                                    <Table.Cell>{list.end_at}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
+                                                    <Table.Cell>{list.count}</Table.Cell>
+                                                </Table.Row>
+                                    })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
@@ -142,38 +153,40 @@ class OverlookForm extends Component {
                         active={activeIndex === 2}
                         index={2}
                         onClick={this.handleClick}
-                    ><Table color="blue" styled fixed>
-                            <Table.Header>
+                    ><Table color="teal" styled fixed>
+                         <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Abgelaufene Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='blue' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='teal' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
-                                    <Table.HeaderCell >Beantwortet</Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right">Teilnehnerzahlen</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">Beantwortet</Table.HeaderCell>
+                                    <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
                         </Table>
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 2}>
-                        <Table color="blue" size="large" inverted selectable fixed width="100%">
-                            <TableBody>
-                                <Table.Row >
-                                    <Table.Cell textAlign="left">Was ist der Sinn des Lebens?</Table.Cell>
-                                    <Table.Cell >Michael</Table.Cell>
-                                    <Table.Cell >05.01.2019</Table.Cell>
-                                    <Table.Cell >06.01.2019</Table.Cell>
-                                    <Table.Cell>Jup</Table.Cell>
-                                    <Table.Cell textAlign="right">42</Table.Cell>
-                                </Table.Row>
+                        <Table size="large" selectable fixed width="100%">
+                        <TableBody>
+                                    {this.state.surveyList.map((list ) => {
+                                        return <Table.Row>
+                                                    <Table.Cell>{list.matter}</Table.Cell>
+                                                    <Table.Cell>{list.creator}</Table.Cell>
+                                                    <Table.Cell>{list.created_at}</Table.Cell>
+                                                    <Table.Cell>{list.end_at}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
+                                                    <Table.Cell>{list.count}</Table.Cell>
+                                                </Table.Row>
+                                    })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
