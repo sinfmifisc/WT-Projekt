@@ -132,11 +132,12 @@ class CreateSurvey extends Component {
 
 		//Fehler im State speichern und ausgeben
 		this.setState({errors: tmpErrors})
-
+		let submitdata = {surveydata:survey, userinfo: localStorage.current_user}
+		console.log(submitdata);
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
-			axios.post("/createsurvey", survey)
+			axios.post("/createsurvey", submitdata)
 			.then(response => {
 				if(response.status === 201){
 					console.log(response.status);

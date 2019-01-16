@@ -59,7 +59,7 @@ class AnswerSurvey extends Component{
     }
 
     submitAnswer = () => {
-        let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: 'john'}
+        let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: localStorage.current_user}
         
         
         axios.post('/submitanswer', submitData)

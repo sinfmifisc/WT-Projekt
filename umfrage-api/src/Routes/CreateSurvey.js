@@ -14,10 +14,12 @@ const initCreateSurveyRoute = (app, pool) => {
     //Umfrage von Frontend empfangen, anschließend in Datenbank speichern
     app.post('/createsurvey', (req, res) => {
         
-        let survey = req.body.surveycreation;
+        let survey = req.body.surveydata.surveycreation;
+        let user = req.body.userinfo;
+        console.log(survey);
         
-        pool.query('INSERT INTO surveys (matter, end_at, number_of_answers, creator) VALUES ( ?, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL ? HOUR) , 1, "John")', 
-        [survey.surveymatter, survey.duration])
+        pool.query('INSERT INTO surveys (matter, end_at, number_of_answers, creator) VALUES ( ?, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL ? HOUR) , 1, ?)', 
+        [survey.surveymatter, survey.duration, user])
 
         .then((result) => {
             console.log(result[0]);
