@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect } from "react-redux"
 import '../../App.css';
-import { Link } from 'react-router-dom';
-import { Table, Icon, Accordion, TableBody} from 'semantic-ui-react';
-import { logout } from '../../actions/auth';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import { Table, Icon, Accordion, TableBody, Button, ButtonGroup, Grid } from 'semantic-ui-react';
+import { logout } from '../../actions/auth'
+import axios from 'axios'
 
 class OverlookForm extends Component {
 
@@ -13,58 +12,104 @@ class OverlookForm extends Component {
         super(props)
 
         this.state = {
-            surveyList: [],
-            mysurveys: [],
+            opensurveys: [],
+            myopensurveys: [],
+            myclosedsurveys: [],
             closedsurveys: []
         }
-
-axios.get('/loadclosedsurveys/john/all')
-.then((resclosed) =>{
-    let listclosed = [];
-
-    for (let index = 0; index < resclosed.data.length; index++) {
-        listclosed[index] = resclosed.data[index];
-
-        //replace true/false in "answered-bracket" with icon depending on value
-
-        if (listclosed[index].answered === true) {
-            listclosed[index].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
-        } else {
-            listclosed[index].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
-        }
-    }
-    this.setState({
-        closedsurveys: listclosed
-    })
-})
-
-        axios.get('/loadopensurveys/john/all')
+        //First Table "All Surveys"
+        axios.get('/loadopensurveys/' + localStorage.current_user + '/all')
             .then((res) => {
-                let list = []; //every open survey gets in here
-                let msurv = []; //surveys from user
-                //let expiredsurveys = []; //expired surveys
-                
-
+                let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {
-                    list[i] = res.data[i];
-
+                    surveys[i] = res.data[i];
                     //replace true/false in "answered-bracket" with icon depending on value
-                    if (list[i].answered === true) {
-                        list[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    if (surveys[i].answered === "true") {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
-                        list[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].id = "/answersurvey/" + res.data[i].id; //link to the answer site
                     }
-                    //checks if user created open survey
-                    if(list[i].creator === "John"){
-                        msurv.push(list[i]);
-                    }
-                                       
+
+                    surveys[i].id = "/overlook"; //reload if clicked and user hase answered
                 }
 
                 this.setState({
-                    mysurveys: msurv,
-                    surveyList: list
+                    opensurveys: surveys
                 })
+            })
+
+        //Second Table "My Surveys"
+        axios.get('/loadopensurveys/' + localStorage.current_user + '/own')
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
+
+                    //replace true/false in "answered-bracket" with icon depending on value
+                    if (surveys[i].answered === "true") {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                        surveys[i].id = "/overlook";
+                    } else {
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].id = "/answersurvey/" + res.data[i].id;
+                    }
+
+                    //if the user is allowed to vote we create a link to the answer site
+                    if (surveys[i].allowed_to_vote === "false") {
+                        surveys[i].answered = <Icon className="chess queen" color="yellow" size="big"></Icon>
+                        surveys[i].id = "/overlook";
+                    }
+
+                }
+
+                this.setState({
+                    myopensurveys: surveys
+                })
+            })
+
+        //Third Table my closed surveys
+        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own')
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
+
+                    //replace true/false in "answered-bracket" with icon depending on value
+                    if (surveys[i].answered === "true") {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    } else {
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                    }
+
+                    surveys[i].id = "/results/" + res.data[i].id;
+                }
+                this.setState({
+                    myclosedsurveys: surveys
+                })
+            })
+
+
+        //fourth table all closed table
+        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all')
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
+
+                    //replace true/false in "answered-bracket" with icon depending on value
+                    if (surveys[i].answered === "true") {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    } else {
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                    }
+
+                    surveys[i].id = "/results/" + res.data[i].id;
+                }
+                this.setState({
+                    closedsurveys: surveys
+                })
+
             })
     }
 
@@ -82,31 +127,54 @@ axios.get('/loadclosedsurveys/john/all')
         this.setState({ activeIndex: newIndex })
     }
 
+
     render() {
         const { activeIndex } = this.state
         return (
 
             <div className="semantic ui">
-                <h1>PinPoll - Polls</h1>
-                <button className="ui inverted secondary button" id="logout_btn" onClick={this.logout_handler} to="/">Logout</button>
-                <Link className='ui primary button' to='/createsurvey'>Neue Umfrage erstellen</Link>
+                <Grid key={2} columns='equal'>
+                    <Grid.Column width="12">
+                        <h1>PinPolls</h1>
+                    </Grid.Column>
+                    <Grid.Column floated="right">
+                        <ButtonGroup size="small">
+                            <Button color="green" as={Link} to='/createsurvey'>
+                                Neu Umfrage Erstellen
+                    </Button>
+                            <Button color="grey" onClick={this.logout_handler} to="/">
+                                Logout
+                    </Button>
+                        </ButtonGroup>
+                    </Grid.Column>
+
+                </Grid>
+
+
+
                 <Accordion className="ui">
                     <Accordion.Title
                         active={activeIndex === 0}
                         index={0}
                         onClick={this.handleClick}
-                    ><Table color="yellow" styled fixed>
+                    ><Table color="yellow" className="styled fixed">
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Aktuelle Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="6">Aktuelle Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='yellow' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='yellow' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 0}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -114,21 +182,17 @@ axios.get('/loadclosedsurveys/john/all')
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 0}>
-                        <Table size="large" selectable fixed width="100%">
                             <TableBody>
-                                    {this.state.surveyList.map((list ) => {
-                                        return <Table.Row>
-                                                    <Table.Cell>{list.matter}</Table.Cell>
-                                                    <Table.Cell>{list.creator}</Table.Cell>
-                                                    <Table.Cell>{list.created_at}</Table.Cell>
-                                                    <Table.Cell>{list.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
-                                                    <Table.Cell>{list.count}</Table.Cell>
-                                                </Table.Row>
-                                    })}
+                                {this.state.opensurveys.map((list, index) => {
+                                    return <Table.Row key={index}>
+                                        <Table.Cell width="5"><i><b>{list.matter}</b></i></Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" className="selectable"><a href={list.id}>{list.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
+                                    </Table.Row>
+                                })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
@@ -140,18 +204,24 @@ axios.get('/loadclosedsurveys/john/all')
                         active={activeIndex === 1}
                         index={1}
                         onClick={this.handleClick}
-                    ><Table color="purple" styled fixed>
+                    ><Table color="purple" className="styled fixed">
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Meine Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Meine Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='purple' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='purple' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 1}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -159,21 +229,17 @@ axios.get('/loadclosedsurveys/john/all')
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 1}>
-                        <Table size="large" selectable fixed width="100%">
                             <TableBody>
-                                    {this.state.mysurveys.map((msurv) => {
-                                        return <Table.Row>
-                                                    <Table.Cell>{msurv.matter}</Table.Cell>
-                                                    <Table.Cell>{msurv.creator}</Table.Cell>
-                                                    <Table.Cell>{msurv.created_at}</Table.Cell>
-                                                    <Table.Cell>{msurv.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{msurv.answered}</Table.Cell>
-                                                    <Table.Cell>{msurv.count}</Table.Cell>
-                                                </Table.Row>
-                                    })}
+                                {this.state.myopensurveys.map((mysurv, index) => {
+                                    return <Table.Row key={index}>
+                                        <Table.Cell width="5"><b><i>{mysurv.matter}</i></b></Table.Cell>
+                                        <Table.Cell>{mysurv.creator}</Table.Cell>
+                                        <Table.Cell>{mysurv.created_at}</Table.Cell>
+                                        <Table.Cell>{mysurv.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" className="selectable"><a href={mysurv.id}>{mysurv.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{mysurv.count}</Table.Cell>
+                                    </Table.Row>
+                                })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
@@ -184,18 +250,24 @@ axios.get('/loadclosedsurveys/john/all')
                         active={activeIndex === 2}
                         index={2}
                         onClick={this.handleClick}
-                    ><Table color="teal" styled fixed>
-                         <Table.Header>
+                    ><Table color="violet" className="styled fixed">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Beendete Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Meine abgeschlossenen Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='teal' name='angle double down' /></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='violet' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 2}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -203,21 +275,63 @@ axios.get('/loadclosedsurveys/john/all')
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
+                            <TableBody>
+                                {this.state.myclosedsurveys.map((list, index) => {
+                                    return <Table.Row key={index}>
+                                        <Table.Cell width="5"><b><i>{list.matter}</i></b></Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" className="selectable"><a href={list.id}>{list.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
+                                    </Table.Row>
+                                })}
+                            </TableBody>
+                        </Table>
+                    </Accordion.Content>
+                </Accordion>
+
+                <Accordion className="ui">
+                    <Accordion.Title
+                        active={activeIndex === 3}
+                        index={3}
+                        onClick={this.handleClick}
+                    ><Table color="teal" className="styled fixed">
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell textAlign="left" width="5">Abgeschlossene Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell ></Table.HeaderCell>
+                                    <Table.HeaderCell ></Table.HeaderCell>
+                                    <Table.HeaderCell ></Table.HeaderCell>
+                                    <Table.HeaderCell ></Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='teal' name='angle double down' /></Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
                         </Table>
                     </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 2}>
-                        <Table size="large" selectable fixed width="100%">
-                        <TableBody>
-                                    {this.state.closedsurveys.map((listclosed ) => {
-                                        return <Table.Row>
-                                                    <Table.Cell>{listclosed.matter}</Table.Cell>
-                                                    <Table.Cell>{listclosed.creator}</Table.Cell>
-                                                    <Table.Cell>{listclosed.created_at}</Table.Cell>
-                                                    <Table.Cell>{listclosed.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{listclosed.answered}</Table.Cell>
-                                                    <Table.Cell>{listclosed.count}</Table.Cell>
-                                                </Table.Row>
-                                    })}
+                    <Accordion.Content active={activeIndex === 3}>
+                        <Table size="large" className="selectable fixed" width="100%">
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell >Ersteller</Table.HeaderCell>
+                                    <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
+                                    <Table.HeaderCell >Datum</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">Beantwortet</Table.HeaderCell>
+                                    <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <TableBody>
+                                {this.state.closedsurveys.map((list, index) => {
+                                    return <Table.Row key={index}>
+                                        <Table.Cell width="5">{list.matter}</Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" className="selectable"><a href={list.id}>{list.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
+                                    </Table.Row>
+                                })}
                             </TableBody>
                         </Table>
                     </Accordion.Content>
@@ -227,11 +341,5 @@ axios.get('/loadclosedsurveys/john/all')
         );
     }
 }
-OverlookForm.propTypes = {
-    login: PropTypes.func.isRequired
-};
-
-
-
 
 export default connect(null, { logout })(OverlookForm);
