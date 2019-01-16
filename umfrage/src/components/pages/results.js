@@ -4,10 +4,17 @@ import randomColor from "randomcolor";
 
 let data = [];
 let question= "Foo";
+const array = [
+    {title: "Data 1", value: 100},
+    {title: "Data 2", value: 60},
+    {title: "Data 3", value: 30},
+    {title: "Data 4", value: 20},
+    {title: "Data 5", value: 10},
+]
 
-for(let i =0; i<10; i++){
-    let title_var="Foo";
-    let value_var=i+1;
+for(let i =0; i<array.length; i++){
+    let title_var=array[i].title;
+    let value_var=array[i].value;
     data.push({ title: title_var, value: value_var, color: randomColor() },);
 };
 console.log(data[0].title);
