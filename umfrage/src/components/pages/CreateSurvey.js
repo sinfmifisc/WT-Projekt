@@ -7,7 +7,7 @@ import SelectAllowedUsers from './CreateSurveyComponents/SelectAllowedUsers';
 import TimeSelection from './CreateSurveyComponents/TimeSelection';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import icon from './title1.ico'
+import TopHeader from '../Header/LoginHeader';
 import './CreateSurvey.css'
 import {store} from '../../index.js'
 import { deleteSurveyData, updateAllowedUser } from '../../actions/surveycreation';
@@ -157,6 +157,7 @@ class CreateSurvey extends Component {
 
     return (
 		<div>
+			<TopHeader/>
 		<Form >
 			{this.state.errors.length !== 0 && 
 			<Message negative>

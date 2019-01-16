@@ -3,6 +3,7 @@ import PieChart from 'react-svg-piechart';
 import randomColor from 'randomcolor'; 
 import axios from 'axios'; 
 import { Link } from 'react-router-dom';
+import TopHeader from '../Header/LoginHeader';
 
 class results extends Component {
     constructor(props) {
@@ -34,7 +35,9 @@ class results extends Component {
     
     render() {
 		return(
+            
         <div className="semantic ui">
+        <TopHeader/>
             <h1> {this.state.question}</h1> 
             <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>
             <div className="question">
