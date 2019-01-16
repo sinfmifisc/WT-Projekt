@@ -7,7 +7,11 @@ const initLoadSurveysRoute = (app, pool) => {
         let param = req.params.param;
         
         if(param === 'all'){
-            pool.query(`SELECT distinct id, matter, created_at, end_at, creator, IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
+            pool.query(`SELECT distinct id, matter,
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                creator, 
+                IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
                 counted_answers.count
                 FROM surveys LEFT JOIN user_has_voted_for ON surveys.id = user_has_voted_for.survey
                 LEFT JOIN (SELECT survey, COUNT(*) AS count FROM user_has_voted_for GROUP BY survey) AS counted_answers ON surveys.id = counted_answers.survey
@@ -20,8 +24,12 @@ const initLoadSurveysRoute = (app, pool) => {
         }
 
         else if(param === 'own'){
-            pool.query(`SELECT distinct id, matter, created_at, end_at, creator, IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
-            IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 
+            pool.query(`SELECT distinct id, matter, 
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                creator,
+                IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
+                IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 
                 counted_answers.count
                 FROM surveys LEFT JOIN user_has_voted_for ON surveys.id = user_has_voted_for.survey
                 LEFT JOIN (SELECT survey, COUNT(*) AS count FROM user_has_voted_for GROUP BY survey) AS counted_answers ON surveys.id = counted_answers.survey
@@ -44,7 +52,11 @@ const initLoadSurveysRoute = (app, pool) => {
         let param = req.params.param;
         
         if(param === 'all'){
-            pool.query(`SELECT distinct id, matter, created_at, end_at, creator, IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
+            pool.query(`SELECT distinct id, matter, 
+            DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
+            DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+            creator,
+            IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
             counted_answers.count
             FROM surveys LEFT JOIN user_has_voted_for ON surveys.id = user_has_voted_for.survey
             LEFT JOIN (SELECT survey, COUNT(*) AS count FROM user_has_voted_for GROUP BY survey) AS counted_answers ON surveys.id = counted_answers.survey
@@ -57,8 +69,12 @@ const initLoadSurveysRoute = (app, pool) => {
         }
 
         else if(param === 'own'){
-            pool.query(`SELECT distinct id, matter, created_at, end_at, creator, IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
-            IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 
+            pool.query(`SELECT distinct id, matter,
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                creator,
+                IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
+                IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 
                 counted_answers.count
                 FROM surveys LEFT JOIN user_has_voted_for ON surveys.id = user_has_voted_for.survey
                 LEFT JOIN (SELECT survey, COUNT(*) AS count FROM user_has_voted_for GROUP BY survey) AS counted_answers ON surveys.id = counted_answers.survey
