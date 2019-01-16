@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import PropTypes from "prop-types";
-import InlineError from "../messages/InlineError";
+import PropTypes from 'prop-types';
+import InlineError from '../messages/InlineError';
 
 
 class LoginForm extends Component {
@@ -35,8 +35,8 @@ class LoginForm extends Component {
 
 	validate = data => {
 		const errors = {};
-	    if (!data.username) errors.username = "Can't be blank";
-	    if (!data.password) errors.password = "Can't be blank";
+	    if (!data.username) errors.username = "Bitte füllen";
+	    if (!data.password) errors.password = "Bitte füllen";
 	    return errors;
 	}
 
@@ -46,12 +46,12 @@ class LoginForm extends Component {
 		<Form onSubmit={this.onSubmit} loading={loading}>
 		  { errors.global && (
 			<Message negative>
-			  <Message.Header>Something went wrong</Message.Header>
+			  <Message.Header>Leider ist etwas schief gelaufen</Message.Header>
 			  <p> {errors.global} </p>
 		    </Message>
 		  )}
 		  <Form.Field error={!!errors.username}>
-		    <label htmlFor="username">Username</label>
+		    <label htmlFor="username">Benutzername</label>
 			<input
 			  type="text"
 			  id="username"
@@ -63,7 +63,7 @@ class LoginForm extends Component {
 		  {errors.username && <InlineError text={errors.username} />}
 		  </Form.Field>
 		  <Form.Field error={!!errors.password}>
-		    <label htmlFor="password">Password</label>
+		    <label htmlFor="password">Passwort</label>
 			<input
 			  type="password"
 			  id="password"

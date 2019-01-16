@@ -29,7 +29,7 @@ const initLoginRoute = (app, pool) => {
                         }
                         else if(res == false){
                             console.log('Falsches Passwort!');
-                            respond.status(400).json({errors: {global: "Invalid credentials"} });
+                            respond.status(400).json({errors: {global: "Ungültige Eingabe"} });
                         }		
                     })
                     .catch((err) => {
@@ -42,7 +42,7 @@ const initLoginRoute = (app, pool) => {
             }
             else{
                 console.log('User existiert nicht');
-                respond.status(400).json({errors: {global: "Invalid credentials"} });
+                respond.status(400).json({errors: {global: "Ungültige Eingabe"} });
             }
         })
         .catch((err) => {console.log(err);})

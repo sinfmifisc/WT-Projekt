@@ -1,4 +1,4 @@
-import { SURVEYMATTER, UPDATE_ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from "../types";
+import { SURVEYMATTER, UPDATE_ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from '../types';
 
 const initialState = {surveymatter: '', allowedUser: [], answers: [], duration: 0};
 

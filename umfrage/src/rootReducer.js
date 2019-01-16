@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import user from "./reducers/user"; 
+import { combineReducers } from 'redux';
+import user from './reducers/user'; 
 import surveycreation from './reducers/surveycreation';
 
 

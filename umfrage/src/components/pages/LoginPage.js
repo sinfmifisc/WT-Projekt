@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import LoginForm from  "../forms/LoginForm";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { login } from "../../actions/auth";
-import { withRouter } from "react-router";
+import LoginForm from  '../forms/LoginForm';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login } from '../../actions/auth';
+import { withRouter } from 'react-router';
 
 
 class LoginPage extends Component {
 
   submit = data => {
-   this.props.login(data).then(() => this.props.history.push("/overlook"))
+   this.props.login(data).then(() => this.props.history.push('/overlook'))
    //routet bei erneutem Laden
   };
 
