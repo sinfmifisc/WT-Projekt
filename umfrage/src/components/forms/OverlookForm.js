@@ -20,21 +20,21 @@ class OverlookForm extends Component {
 
 axios.get('/loadclosedsurveys/john/all')
 .then((resclosed) =>{
-    let listcloesd = [];
+    let listclosed = [];
 
     for (let index = 0; index < resclosed.data.length; index++) {
-        listcloesd[index] = resclosed.data[index];
+        listclosed[index] = resclosed.data[index];
 
         //replace true/false in "answered-bracket" with icon depending on value
 
         if (listclosed[index].answered === true) {
-            listcloesd[index].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+            listclosed[index].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
         } else {
-            listcloesd[index].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+            listclosed[index].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
         }
     }
     this.setState({
-        closedsurveys: listcloesd
+        closedsurveys: listclosed
     })
 })
 
@@ -208,14 +208,14 @@ axios.get('/loadclosedsurveys/john/all')
                     <Accordion.Content active={activeIndex === 2}>
                         <Table size="large" selectable fixed width="100%">
                         <TableBody>
-                                    {this.state.closedsurveys.map((listcloesd ) => {
+                                    {this.state.closedsurveys.map((listclosed ) => {
                                         return <Table.Row>
-                                                    <Table.Cell>{listcloesd.matter}</Table.Cell>
-                                                    <Table.Cell>{listcloesd.creator}</Table.Cell>
-                                                    <Table.Cell>{listcloesd.created_at}</Table.Cell>
-                                                    <Table.Cell>{listcloesd.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{listcloesd.answered}</Table.Cell>
-                                                    <Table.Cell>{listcloesd.count}</Table.Cell>
+                                                    <Table.Cell>{listclosed.matter}</Table.Cell>
+                                                    <Table.Cell>{listclosed.creator}</Table.Cell>
+                                                    <Table.Cell>{listclosed.created_at}</Table.Cell>
+                                                    <Table.Cell>{listclosed.end_at}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{listclosed.answered}</Table.Cell>
+                                                    <Table.Cell>{listclosed.count}</Table.Cell>
                                                 </Table.Row>
                                     })}
                             </TableBody>
