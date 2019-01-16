@@ -39,7 +39,7 @@ class SurveyCreated extends Component{
 
         
     }
-    //doubleanswer
+    
     
 
     render(){

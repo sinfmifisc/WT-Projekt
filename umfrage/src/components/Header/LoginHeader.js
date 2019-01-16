@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
 import icon from '../pages/title1.ico';
 import { Link } from 'react-router-dom';
+import { deleteSurveyData} from '../../actions/surveycreation';
+import {connect} from 'react-redux';
 import '../../App.css';
 
 class LoginHeader extends Component{ 
+
+    constructor(props){
+        super(props);
+
+        this.props.dispatch(deleteSurveyData());
+    }
 
     render(){
       return (          
@@ -19,4 +27,4 @@ class LoginHeader extends Component{
 }
 
 
-export default LoginHeader;
+export default connect() (LoginHeader);
