@@ -42,71 +42,66 @@ class OverlookForm extends Component {
 
         //Second Table "My Surveys"
         axios.get('/loadopensurveys/' + localStorage.current_user + '/own')
-            .then((mres) => {
-                let mysurv = [];
-
-                for (let i = 0; i < mres.data.lenght; i++) {
-                    mysurv[i] = mres.data[i];
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
 
                     //replace true/false in "answered-bracket" with icon depending on value
-                    if (mysurv[i].answered === true) {
-                        mysurv[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    if (surveys[i].answered === true) {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
-                        mysurv[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
 
-                    mysurv[i].id = "/answersurvey/" + mres.data[i].id;
+                    surveys[i].id = "/answersurvey/" + res.data[i].id;
                 }
 
                 this.setState({
-                    myopensurveys: mysurv
+                    myopensurveys: surveys
                 })
             })
-        
+
         //Third Table my closed surveys
         axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own')
-            .then((mclres) => {
-                let myclsurv = [];
-
-                for (let i = 0; i < mclres.data.lenght; i++) {
-                    myclsurv[i] = mclres.data[i];
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
 
                     //replace true/false in "answered-bracket" with icon depending on value
-                    if (myclsurv[i].answered === true) {
-                        myclsurv[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    if (surveys[i].answered === true) {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
-                        myclsurv[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
 
-                    myclsurv[i].id = "/answersurvey/" + mclres.data[i].id;
+                    surveys[i].id = "/answersurvey/" + res.data[i].id;
                 }
-
                 this.setState({
-                    myclosedsurveys: myclsurv
+                    myclosedsurveys: surveys
                 })
             })
 
 
         //fourth table all closed table
         axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all')
-            .then((clres) => {
-                let clsurv = [];
-
-                for (let i = 0; i < clres.data.lenght; i++) {
-                    clsurv[i] = clres.data[i];
+            .then((res) => {
+                let surveys = []; //every open survey gets in here
+                for (let i = 0; i < res.data.length; i++) {
+                    surveys[i] = res.data[i];
 
                     //replace true/false in "answered-bracket" with icon depending on value
-                    if (clsurv[i].answered === true) {
-                        clsurv[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                    if (surveys[i].answered === true) {
+                        surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
-                        clsurv[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+                        surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
 
-                    clsurv[i].id = "/answersurvey/" + clres.data[i].id;
+                    surveys[i].id = "/answersurvey/" + res.data[i].id;
                 }
-
                 this.setState({
-                    closedsurveys: clsurv
+                    closedsurveys: surveys
                 })
 
             })
@@ -227,7 +222,7 @@ class OverlookForm extends Component {
                             <TableBody>
                                 {this.state.myopensurveys.map((mysurv) => {
                                     return <Table.Row>
-                                        <Table.Cell width="5">{mysurv.matter}</Table.Cell>
+                                        <Table.Cell width="5"><b><i>{mysurv.matter}</i></b></Table.Cell>
                                         <Table.Cell>{mysurv.creator}</Table.Cell>
                                         <Table.Cell>{mysurv.created_at}</Table.Cell>
                                         <Table.Cell>{mysurv.end_at}</Table.Cell>
