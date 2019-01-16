@@ -3,7 +3,8 @@ import PieChart from 'react-svg-piechart';
 import randomColor from 'randomcolor'; 
 import axios from 'axios'; 
 import { Link } from 'react-router-dom';
-import TopHeader from '../Header/LoginHeader';
+import TopHeader from '../../Header/LoginHeader';
+import ListItem from './ListItems';
 
 class results extends Component {
     constructor(props) {
@@ -22,8 +23,6 @@ class results extends Component {
                 array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
             };
             this.setState({allresults: array});
-            console.log(res.data.length);
-            console.log(this.state.allresults)  
         })    
         
         axios.get('/loadsurvey/' + this.state.resultid)
@@ -32,19 +31,22 @@ class results extends Component {
         })
         
     }
+   
     
     render() {
 		return(
             
-        <div className="semantic ui">
+        <div className='semantic ui'>
         <TopHeader/>
             <h1> {this.state.question}</h1> 
-            <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>
-            <div className="question">
+            
+            <div className='question'>
             </div>
+            <ListItem contacts={this.state.allresults}/>  
             <PieChart
                    data={this.state.allresults}
-               />                                                          
+            /> 
+           <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>                                                       
                   
         </div>);
 }

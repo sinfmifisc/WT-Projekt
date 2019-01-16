@@ -29,6 +29,9 @@
 	font-size: 30px;
 
 }
+.list{
+	font-size: 25px;
+}
 .link:hover{
 	background-color: #E7EEF1;
 }
