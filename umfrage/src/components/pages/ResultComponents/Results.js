@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import TopHeader from '../../Header/LoginHeader';
 import ListItem from './ListItems';
 
+
 class results extends Component {
     constructor(props) {
         super(props)
@@ -23,6 +24,7 @@ class results extends Component {
                 array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
             };
             this.setState({allresults: array});
+            
         })    
         
         axios.get('/loadsurvey/' + this.state.resultid)
@@ -31,23 +33,18 @@ class results extends Component {
         })
         
     }
-   
-    
+
     render() {
 		return(
             
         <div className='semantic ui'>
         <TopHeader/>
             <h1> {this.state.question}</h1> 
-            
-            <div className='question'>
-            </div>
-            <ListItem contacts={this.state.allresults}/>  
-            <PieChart
+            <ListItem contacts={this.state.allresults}/>
+            <PieChart id="foo" viewBoxSize={ 2}
                    data={this.state.allresults}
             /> 
-           <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>                                                       
-                  
+           <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>
         </div>);
 }
 }

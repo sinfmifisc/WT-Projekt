@@ -21,6 +21,7 @@
 	margin-bottom: 70px;
 	font-family: cursive;
 }
+
 .link{
 	color: black;
 	border: solid 2px black;
@@ -31,6 +32,7 @@
 }
 .list{
 	font-size: 25px;
+	margin: 10px;
 }
 .link:hover{
 	background-color: #E7EEF1;
