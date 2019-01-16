@@ -8,8 +8,8 @@ const initLoadSurveysRoute = (app, pool) => {
         
         if(param === 'all'){
             pool.query(`SELECT distinct id, matter,
-                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
-                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i') as created_at,
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i') as end_at,
                 creator, 
                 IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
                 counted_answers.count
@@ -25,8 +25,8 @@ const initLoadSurveysRoute = (app, pool) => {
 
         else if(param === 'own'){
             pool.query(`SELECT distinct id, matter, 
-                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
-                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i') AS created_at,
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i') AS end_at,
                 creator,
                 IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
                 IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 
@@ -53,8 +53,8 @@ const initLoadSurveysRoute = (app, pool) => {
         
         if(param === 'all'){
             pool.query(`SELECT distinct id, matter, 
-            DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
-            DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+            DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i') AS created_at,
+            DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i') AS end_at,
             creator,
             IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
             counted_answers.count
@@ -70,8 +70,8 @@ const initLoadSurveysRoute = (app, pool) => {
 
         else if(param === 'own'){
             pool.query(`SELECT distinct id, matter,
-                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i'),
-                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i'),
+                DATE_FORMAT(surveys.created_at,'%d.%m.%Y %H:%i') AS created_at,
+                DATE_FORMAT(surveys.end_at,'%d.%m.%Y %H:%i') AS end_at,
                 creator,
                 IF(user_has_voted_for.user_name IS NULL, 'false', 'true') AS answered, 
                 IF((SELECT COUNT(*) AS test FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = id) = 0, 'false', 'true') AS allowed_to_vote, 

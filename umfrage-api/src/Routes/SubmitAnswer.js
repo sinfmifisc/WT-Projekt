@@ -6,14 +6,32 @@ const initSubmitAnswerRoute = (app, pool) => {
         let surveyid = req.body.surveyid;
         let username = req.body.username;
         console.log(username);
-        pool.query('INSERT INTO user_has_voted_for (user_name, answer_id, survey) VALUES (?, ?, ?)', [username, answerid, surveyid])
+        pool.query('SELECT COUNT(*) AS user_already_answered FROM user_has_voted_for WHERE user_name = ? AND survey = ?', [username, surveyid])
         .then((result) => {
-            res.sendStatus(201);
+            
+            if(result[0][0].user_already_answered >= 1){
+                res.json({error: 'doubleanswer'});
+            }
+            else {
+                pool.query('SELECT *, IF(end_at < CURRENT_TIMESTAMP, true, false) AS surveyended FROM surveys WHERE id= ? ', [surveyid])
+                .then((result) => {
+                    console.log(result[0][0].surveyended);
+                    if(result[0][0].surveyended === 1)
+                        res.json({error: 'surveyended'});
+                })
+
+                pool.query('INSERT INTO user_has_voted_for (user_name, answer_id, survey) VALUES (?, ?, ?)', [username, answerid, surveyid])
+                .then((result) => {
+                    res.sendStatus(201);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.sendStatus(500);
+                })
+            }
         })
-        .catch((err) => {
-            console.log(err);
-            res.sendStatus(500);
-        })
+
+        
     })
 
    

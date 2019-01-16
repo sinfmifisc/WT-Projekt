@@ -9,20 +9,34 @@ class SurveyCreated extends Component{
 
         this.state = {
             text: '',
+            error: true
             
         }
 
-        if(this.props.match.params.obj === 'survey'){
+
+        switch(this.props.match.params.obj){
+        case 'survey':
             console.log(this.props.match.params.obj);
-            this.state.text = 'Umfrage wurde erfolgreich erstellt'
-        }
-        else if(this.props.match.params.obj === 'answer'){
-            this.state.text = 'Antwort erfolgreich abgesendet'
+            this.state.text = 'Umfrage wurde erfolgreich erstellt';
+            this.state.error = true;
+            break;
+        case 'answer':
+            this.state.text = 'Antwort erfolgreich abgesendet';
+            this.state.error = true;
+            break;
+        case 'doubleanswer':
+            this.state.text = 'Antworten fehlgeschlagen. Du hast diese Frage bereits beantwortet!';
+            this.state.error = false;
+            break;
+        case 'surveyended':
+            this.state.text = 'Antworten fehlgeschlagen. Diese Umfrage ist bereits zuende!';
+            this.state.error = false;
+            break;
         }
 
         
     }
-
+    //doubleanswer
     
 
     render(){
@@ -32,9 +46,12 @@ class SurveyCreated extends Component{
 
         return <div>
             <Link to='/overlook'>Zurück zur Homepage</Link>
-            <Message positive>
+            {this.state.error && <Message positive>
                 <Message.Header>{this.state.text}</Message.Header>
-            </Message>
+            </Message>}
+            {!this.state.error && <Message negative>
+                <Message.Header>{this.state.text}</Message.Header>
+            </Message>}
         </div>
         
     }

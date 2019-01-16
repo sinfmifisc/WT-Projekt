@@ -67,15 +67,20 @@ class AnswerSurvey extends Component{
             if(response.status === 201){
                 this.props.history.push('/surveycreated/answer');
             }
+            else if(response.status === 200){
+                this.props.history.push('/surveycreated/' + response.data.error)
+            }
+            
         } )
     }
     
-   
+    
 
     render(){
 
         
         return <div>
+            
             <List >
             <Header>{this.state.surveymatter}</Header>
                 {this.state.answers.map((answer, index) => <ListItem key={answer.id}>
