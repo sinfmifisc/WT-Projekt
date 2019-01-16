@@ -146,7 +146,7 @@ class CreateSurvey extends Component {
 					
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => this.props.history.push('/surveycreated/error'));
 		}	
 	}
 

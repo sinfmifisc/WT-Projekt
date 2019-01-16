@@ -19,6 +19,8 @@ const initSubmitAnswerRoute = (app, pool) => {
                     if(result[0][0].surveyended === 1)
                         res.json({error: 'surveyended'});
                 })
+                .catch((err) => {console.log(err);
+                    res.sendStatus(500)})
 
                 pool.query('INSERT INTO user_has_voted_for (user_name, answer_id, survey) VALUES (?, ?, ?)', [username, answerid, surveyid])
                 .then((result) => {
@@ -30,6 +32,8 @@ const initSubmitAnswerRoute = (app, pool) => {
                 })
             }
         })
+        .catch((err) => {console.log(err);
+            res.sendStatus(500);})
 
         
     })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Message } from 'semantic-ui-react';
-
+import TopHeader from '../Header/LoginHeader'
 
 class SurveyCreated extends Component{
     constructor(props){
@@ -32,6 +32,9 @@ class SurveyCreated extends Component{
             this.state.text = 'Antworten fehlgeschlagen. Diese Umfrage ist bereits zuende!';
             this.state.error = false;
             break;
+        case 'error':
+            this.state.text = 'Es ist ein Fehler aufgetreten. Bitte versuche es später nochmal';
+            this.state.error = false;
         }
 
         
@@ -45,13 +48,15 @@ class SurveyCreated extends Component{
         
 
         return <div>
-            <Link to='/overlook'>Zurück zur Homepage</Link>
+            <TopHeader/>
+            
             {this.state.error && <Message positive>
                 <Message.Header>{this.state.text}</Message.Header>
             </Message>}
             {!this.state.error && <Message negative>
                 <Message.Header>{this.state.text}</Message.Header>
             </Message>}
+            <Link to='/overlook'>Zurück zur Homepage</Link>
         </div>
         
     }
