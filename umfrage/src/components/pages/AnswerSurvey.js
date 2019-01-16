@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Checkbox, List, Header, ListItem, Button}   from 'semantic-ui-react'; 
 import axios from 'axios';
+import TopHeader from '../Header/LoginHeader';
 
 class AnswerSurvey extends Component{
 
@@ -76,6 +77,7 @@ class AnswerSurvey extends Component{
 
         
         return <div>
+            <TopHeader/>
             <List >
             <Header>{this.state.surveymatter}</Header>
                 {this.state.answers.map((answer, index) => <ListItem key={answer.id}>
