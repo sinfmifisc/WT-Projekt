@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import AnswerSurvey from './components/pages/AnswerSurvey';
 
 
+
 const App = ({ location} )=> (
 	<div className="ui container">
 	  <Route location={location} path="/" exact component={HomePage}/>
@@ -18,7 +19,7 @@ const App = ({ location} )=> (
 	  <UserRoute location={location} path="/createsurvey" exact component={CreateSurvey}/>
 	  <UserRoute location={location} path="/surveycreated/:obj" exact component={SurveyCreated}/>
 	  <UserRoute location={location} path="/overlook" exact component={Overlook}/>
-    <UserRoute location={location} path="/results" exact component={Results}/>
+    <UserRoute location={location} path="/results/:resultid" exact component={Results}/>
 		<UserRoute location={location} path="/answersurvey/:surveyid" exact component={AnswerSurvey}/>
 	 </div>
 );
