@@ -58,13 +58,12 @@ class OverlookForm extends Component {
                     mysurv[i].id = "/answersurvey/" + mres.data[i].id;
                 }
 
-                
-
                 this.setState({
                     myopensurveys: mysurv
                 })
             })
-
+        
+        //Third Table my closed surveys
         axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own')
             .then((mclres) => {
                 let myclsurv = [];
@@ -87,6 +86,8 @@ class OverlookForm extends Component {
                 })
             })
 
+
+        //fourth table all closed table
         axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all')
             .then((clres) => {
                 let clsurv = [];
@@ -179,14 +180,14 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 0}>
                         <Table size="large" fixed width="100%">
                             <TableBody>
-                                {this.state.opensurveys.map((surveys) => {
+                                {this.state.opensurveys.map((list) => {
                                     return <Table.Row>
-                                        <Table.Cell width="5"><i><b>{surveys.matter}</b></i></Table.Cell>
-                                        <Table.Cell>{surveys.creator}</Table.Cell>
-                                        <Table.Cell>{surveys.created_at}</Table.Cell>
-                                        <Table.Cell>{surveys.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={surveys.id}>{surveys.answered}</a></Table.Cell>
-                                        <Table.Cell textAlign="center">{surveys.count}</Table.Cell>
+                                        <Table.Cell width="5"><i><b>{list.matter}</b></i></Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" selectable><a href={list.id}>{list.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
                                     </Table.Row>
                                 })}
                             </TableBody>
@@ -268,14 +269,14 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 2}>
                         <Table size="large" fixed width="100%">
                             <TableBody>
-                                {this.state.myclosedsurveys.map((myclsurv) => {
+                                {this.state.myclosedsurveys.map((list) => {
                                     return <Table.Row>
-                                        <Table.Cell width="5">{myclsurv.matter}</Table.Cell>
-                                        <Table.Cell>{myclsurv.creator}</Table.Cell>
-                                        <Table.Cell>{myclsurv.created_at}</Table.Cell>
-                                        <Table.Cell>{myclsurv.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={myclsurv.id}>{myclsurv.answered}<Label>Beanworten</Label></a></Table.Cell>
-                                        <Table.Cell textAlign="center">{myclsurv.count}</Table.Cell>
+                                        <Table.Cell width="5">{list.matter}</Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" selectable><a href={list.id}>{list.answered}<Label>Beanworten</Label></a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
                                     </Table.Row>
                                 })}
                             </TableBody>
@@ -312,14 +313,14 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 3}>
                         <Table size="large" selectable fixed width="100%">
                             <TableBody>
-                                {this.state.closedsurveys.map((closedsurveys) => {
+                                {this.state.closedsurveys.map((list) => {
                                     return <Table.Row>
-                                        <Table.Cell width="5">{closedsurveys.matter}</Table.Cell>
-                                        <Table.Cell>{closedsurveys.creator}</Table.Cell>
-                                        <Table.Cell>{closedsurveys.created_at}</Table.Cell>
-                                        <Table.Cell>{closedsurveys.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={closedsurveys.id}>{closedsurveys.answered}</a></Table.Cell>
-                                        <Table.Cell textAlign="center">{closedsurveys.count}</Table.Cell>
+                                        <Table.Cell width="5">{list.matter}</Table.Cell>
+                                        <Table.Cell>{list.creator}</Table.Cell>
+                                        <Table.Cell>{list.created_at}</Table.Cell>
+                                        <Table.Cell>{list.end_at}</Table.Cell>
+                                        <Table.Cell textAlign="center" selectable><a href={list.id}>{list.answered}</a></Table.Cell>
+                                        <Table.Cell textAlign="center">{list.count}</Table.Cell>
                                     </Table.Row>
                                 })}
                             </TableBody>
