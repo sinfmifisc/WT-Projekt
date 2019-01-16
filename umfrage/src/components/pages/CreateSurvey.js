@@ -33,6 +33,7 @@ class CreateSurvey extends Component {
 			let list = [];
 			for(let a = 0; a < res.data.length; a++){
 				list[a] = res.data[a].user_name;
+				
 			}
 			this.setState({
 				
@@ -140,7 +141,7 @@ class CreateSurvey extends Component {
 				if(response.status === 201){
 					console.log(response.status);
 					this.props.dispatch(deleteSurveyData());
-					this.props.history.push('/surveycreated');
+					this.props.history.push('/SurveyCreated');
 					
 				}
 			})
@@ -160,7 +161,7 @@ class CreateSurvey extends Component {
 			<Message negative>
 			<Message.Header>Fehlerhafte Eingaben!</Message.Header>
 			<ul> {this.state.errors.map((error) => {
-			return <li key={error}>{error}</li> })}</ul> 
+			return <li key={error}>{error}</li> })} </ul> 
 		  </Message>}
 		<h2 id='surveyheadline'>Was möchtest du fragen? </h2>
             <Button primary onClick={this.createSurvey} id='submit_survey_button'>Umfrage erstellen </Button>

@@ -7,7 +7,7 @@ class SurveyCreated extends Component{
 
     render(){
         return <div>
-            <Link to='/createsurvey'>Zurück zur Homepage</Link>
+            <Link to='/overlook'>Zurück zur Homepage</Link>
             <Message positive>
                 <Message.Header>Umfrage erfolgreich erstellt!</Message.Header>
             </Message>
