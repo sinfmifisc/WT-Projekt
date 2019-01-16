@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import '../../App.css';
 import { Link } from "react-router-dom";
-import { Table, Icon, Accordion, TableBody, Tab } from 'semantic-ui-react';
+import { Table, Icon, Accordion, TableBody} from 'semantic-ui-react';
 import { logout } from '../../actions/auth'
 import axios from 'axios'
 
@@ -15,7 +15,28 @@ class OverlookForm extends Component {
         this.state = {
             surveyList: [],
             mysurveys: [],
+            closedsurveys: []
         }
+
+axios.get('/loadclosedsurveys/john/all')
+.then((resclosed) =>{
+    let listcloesd = [];
+
+    for (let index = 0; index < resclosed.data.length; index++) {
+        listcloesd[index] = resclosed.data[index];
+
+        //replace true/false in "answered-bracket" with icon depending on value
+
+        if (listclosed[index].answered === true) {
+            listcloesd[index].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+        } else {
+            listcloesd[index].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
+        }
+    }
+    this.setState({
+        closedsurveys: listcloesd
+    })
+})
 
         axios.get('/loadopensurveys/john/all')
             .then((res) => {
@@ -28,13 +49,13 @@ class OverlookForm extends Component {
                     list[i] = res.data[i];
 
                     //replace true/false in "answered-bracket" with icon depending on value
-                    if (list[i].answered == true) {
+                    if (list[i].answered === true) {
                         list[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
                     } else {
                         list[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
                     //checks if user created open survey
-                    if(list[i].creator == "John"){
+                    if(list[i].creator === "John"){
                         msurv.push(list[i]);
                     }
                                        
@@ -187,14 +208,14 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 2}>
                         <Table size="large" selectable fixed width="100%">
                         <TableBody>
-                                    {this.state.surveyList.map((list ) => {
+                                    {this.state.closedsurveys.map((listcloesd ) => {
                                         return <Table.Row>
-                                                    <Table.Cell>{list.matter}</Table.Cell>
-                                                    <Table.Cell>{list.creator}</Table.Cell>
-                                                    <Table.Cell>{list.created_at}</Table.Cell>
-                                                    <Table.Cell>{list.end_at}</Table.Cell>
-                                                    <Table.Cell textAlign="center">{list.answered}</Table.Cell>
-                                                    <Table.Cell>{list.count}</Table.Cell>
+                                                    <Table.Cell>{listcloesd.matter}</Table.Cell>
+                                                    <Table.Cell>{listcloesd.creator}</Table.Cell>
+                                                    <Table.Cell>{listcloesd.created_at}</Table.Cell>
+                                                    <Table.Cell>{listcloesd.end_at}</Table.Cell>
+                                                    <Table.Cell textAlign="center">{listcloesd.answered}</Table.Cell>
+                                                    <Table.Cell>{listcloesd.count}</Table.Cell>
                                                 </Table.Row>
                                     })}
                             </TableBody>
