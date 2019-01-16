@@ -10,6 +10,7 @@
     "nodemon": "^1.18.9",
     "path": "^0.12.7",
     "prop-types": "^15.6.2",
+    "randomcolor": "^0.5.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",

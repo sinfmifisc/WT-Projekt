@@ -2,11 +2,13 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
+import bodyParser from 'body-parser';
 import initCreateSurveyRoute from './Routes/CreateSurvey.js' ;
 import initLoadSurveysRoute from './Routes/LoadSurveys.js';
 import initLoginRoute from './Routes/Login.js';
 import initLoadSingleSurveyRoute from './Routes/LoadSingleSurvey';
 import initUnauthorizedRoute from './Routes/Unauthorized';
+import initSubmitAnswerRoute from './Routes/SubmitAnswer';
 
 const app = express();
 const host = 'localhost';
@@ -69,11 +71,14 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 
 console.log('##########');
 app.use(express.json());
+//app.use(bodyParser.urlencoded());
+
 initLoginRoute(app,pool);
 initCreateSurveyRoute(app, pool);
 initLoadSurveysRoute(app,pool);
 initLoadSingleSurveyRoute(app, pool);
 initUnauthorizedRoute(app);
+initSubmitAnswerRoute(app, pool);
 
 app.listen(8080, () => console.log("Running on lokalhost: 8080"));
 

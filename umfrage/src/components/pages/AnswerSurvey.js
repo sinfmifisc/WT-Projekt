@@ -11,6 +11,7 @@ class AnswerSurvey extends Component{
             surveymatter: '',
             surveyid: this.props.match.params.surveyid,
             answers: [],
+            currentChecked: null
             
         }
 
@@ -58,10 +59,14 @@ class AnswerSurvey extends Component{
     }
 
     submitAnswer = () => {
-        let submitData = {survey_id: this.state.surveyid, answer_id: this.currentChecked}
+        let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: 'john'}
+        
+        
         axios.post('/submitanswer', submitData)
         .then((response) =>{
-
+            if(response.status === 201){
+                this.props.history.push('/surveycreated/answer');
+            }
         } )
     }
     

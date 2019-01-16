@@ -17,7 +17,7 @@ const App = ({ location} )=> (
 	  <Route location={location} path="/" exact component={HomePage}/>
 	  <Route location={location} path="/login" exact component={LoginPage}/>
 	  <UserRoute location={location} path="/createsurvey" exact component={CreateSurvey}/>
-	  <UserRoute location={location} path="/surveycreated" exact component={SurveyCreated}/>
+	  <UserRoute location={location} path="/surveycreated/:obj" exact component={SurveyCreated}/>
 	  <UserRoute location={location} path="/overlook" exact component={Overlook}/>
     <UserRoute location={location} path="/results" exact component={Results}/>
 		<UserRoute location={location} path="/answer" exact component={Answer}/>
