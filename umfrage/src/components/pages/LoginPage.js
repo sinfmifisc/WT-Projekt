@@ -9,8 +9,9 @@ import { withRouter } from 'react-router';
 class LoginPage extends Component {
 
   submit = data => {
-   this.props.login(data).then(() => this.props.history.push('/overlook'))
+  return this.props.login(data).then(() => this.props.history.push('/overlook'))
    //routet bei erneutem Laden
+  
   };
 
   render() {
