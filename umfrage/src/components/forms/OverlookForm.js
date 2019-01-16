@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Table, Icon, Accordion, TableBody, Button, ButtonGroup, Grid } from 'semantic-ui-react';
 import { logout } from '../../actions/auth'
 import axios from 'axios'
-
+import TopHeader from '../Header/LoginHeader';
 class OverlookForm extends Component {
 
     constructor(props) {
@@ -133,9 +133,10 @@ class OverlookForm extends Component {
         return (
 
             <div className="semantic ui">
+
                 <Grid key={2} columns='equal'>
                     <Grid.Column width="12">
-                        <h1>PinPolls</h1>
+                        <TopHeader/>
                     </Grid.Column>
                     <Grid.Column floated="right">
                         <ButtonGroup size="small">
