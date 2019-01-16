@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux"
 import '../../App.css';
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { Table, Icon, Accordion, TableBody, Button, Label, ButtonGroup, Grid } from 'semantic-ui-react';
-=======
-import { Table, Icon, Accordion, TableBody, Button, Label, ButtonGroup, Grid, GridColumn } from 'semantic-ui-react';
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
 import { logout } from '../../actions/auth'
 import axios from 'axios'
 
@@ -17,24 +13,15 @@ class OverlookForm extends Component {
         super(props)
 
         this.state = {
-<<<<<<< HEAD
             opensurveys: [],
             myopensurveys: [],
             myclosedsurveys: [],
             closedsurveys: []
-=======
-            surveyList: [],
-            mysurveys: [],
-            closedsurveys: [],
-            myclsurveys: []
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
         }
         //First Table "All Surveys"
         axios.get('/loadopensurveys/' + localStorage.current_user + '/all')
             .then((res) => {
                 let surveys = []; //every open survey gets in here
-
-<<<<<<< HEAD
                 for (let i = 0; i < res.data.length; i++) {
                     surveys[i] = res.data[i];
 
@@ -72,42 +59,6 @@ class OverlookForm extends Component {
                 }
 
                 
-=======
-        axios.get('/loadclosedsurveys/john/all')
-            .then((resclosed) => {
-                let listclosed = []; //all closed surveys
-                let mylistclosed = []; //all closed surveys from curren user
-
-                for (let index = 0; index < resclosed.data.length; index++) {
-                    listclosed[index] = resclosed.data[index];
-
-                    //replace true/false in "answered-bracket" with icon depending on value
-                    if (listclosed[index].answered === true) {
-                        listclosed[index].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
-                    } else {
-                        listclosed[index].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
-                    }
-
-                    //checks if user created open survey
-                    if (listclosed[index].creator === localStorage.current_user) {
-                        mylistclosed.push(listclosed[index]);
-                        mylistclosed[index].id = "/results/" + resclosed.data[index].id;
-                    }
-                    listclosed[index] = "/results/" + resclosed.data[index];
-                }
-                this.setState({
-                    closedsurveys: listclosed,
-                    myclsurveys: mylistclosed
-                })
-            })
-
-        axios.get('/loadopensurveys/john/all')
-            .then((res) => {
-                let list = []; //every open survey gets in here
-                let msurv = []; //surveys from user
-                //let expiredsurveys = []; //expired surveys
-
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
 
                 this.setState({
                     myopensurveys: mysurv
@@ -127,7 +78,6 @@ class OverlookForm extends Component {
                     } else {
                         myclsurv[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                     }
-<<<<<<< HEAD
 
                     myclsurv[i].id = "/answersurvey/" + mclres.data[i].id;
                 }
@@ -152,15 +102,6 @@ class OverlookForm extends Component {
                     }
 
                     clsurv[i].id = "/answersurvey/" + clres.data[i].id;
-=======
-                    //checks if user created open survey
-                    if (list[i].creator === localStorage.current_user) {
-                        msurv.push(list[i]);
-                        msurv[i].id = "/answersurvey/" + res.data[i].id;
-                    }
-                    list[i].id = "/answersurvey/" + res.data[i].id;
-
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
                 }
 
                 this.setState({
@@ -190,7 +131,6 @@ class OverlookForm extends Component {
         return (
 
             <div className="semantic ui">
-<<<<<<< HEAD
                 <Grid key={2} columns='equal'>
                     <Grid.Column width="12">
                         <h1>PinPolls - Polls</h1>
@@ -209,26 +149,6 @@ class OverlookForm extends Component {
                 </Grid>
 
 
-=======
-            <Grid key={2} columns='equal'>
-            <Grid.Column width="12">
-            <h1>PinPolls - Polls</h1>
-            </Grid.Column>
-             <Grid.Column floated="right">
-             <ButtonGroup size="small">
-                    <Button color="green" as={Link} to='/createsurvey'>
-                        Neu Umfrage Erstellen
-                    </Button>
-                    <Button color="grey"  onClick={this.logout_handler} to="/">
-                        Logout
-                    </Button>
-                </ButtonGroup>  
-            </Grid.Column>   
-
-            </Grid>
-                    
-                                    
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
 
                 <Accordion className="ui">
                     <Accordion.Title
@@ -259,7 +179,6 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 0}>
                         <Table size="large" fixed width="100%">
                             <TableBody>
-<<<<<<< HEAD
                                 {this.state.opensurveys.map((surveys) => {
                                     return <Table.Row>
                                         <Table.Cell width="5"><i><b>{surveys.matter}</b></i></Table.Cell>
@@ -268,16 +187,6 @@ class OverlookForm extends Component {
                                         <Table.Cell>{surveys.end_at}</Table.Cell>
                                         <Table.Cell textAlign="center" selectable><a href={surveys.id}>{surveys.answered}</a></Table.Cell>
                                         <Table.Cell textAlign="center">{surveys.count}</Table.Cell>
-=======
-                                {this.state.surveyList.map((list) => {
-                                    return <Table.Row>
-                                        <Table.Cell width="5"><i><b>{list.matter}</b></i></Table.Cell>
-                                        <Table.Cell>{list.creator}</Table.Cell>
-                                        <Table.Cell>{list.created_at}</Table.Cell>
-                                        <Table.Cell>{list.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={list.id}>{list.answered}</a></Table.Cell>
-                                        <Table.Cell>{list.count}</Table.Cell>
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
                                     </Table.Row>
                                 })}
                             </TableBody>
@@ -315,7 +224,6 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 1}>
                         <Table size="large" fixed width="100%">
                             <TableBody>
-<<<<<<< HEAD
                                 {this.state.myopensurveys.map((mysurv) => {
                                     return <Table.Row>
                                         <Table.Cell width="5">{mysurv.matter}</Table.Cell>
@@ -324,60 +232,6 @@ class OverlookForm extends Component {
                                         <Table.Cell>{mysurv.end_at}</Table.Cell>
                                         <Table.Cell textAlign="center" selectable><a href={mysurv.id}>{mysurv.answered}</a></Table.Cell>
                                         <Table.Cell textAlign="center">{mysurv.count}</Table.Cell>
-=======
-                                {this.state.mysurveys.map((msurv) => {
-                                    return <Table.Row>
-                                        <Table.Cell width="5">{msurv.matter}</Table.Cell>
-                                        <Table.Cell>{msurv.creator}</Table.Cell>
-                                        <Table.Cell>{msurv.created_at}</Table.Cell>
-                                        <Table.Cell>{msurv.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={msurv.id}>{msurv.answered}<Label>Beanworten</Label></a></Table.Cell>
-                                        <Table.Cell>{msurv.count}</Table.Cell>
-                                    </Table.Row>
-                                })}
-                            </TableBody>
-                        </Table>
-                    </Accordion.Content>
-                </Accordion>
-
-                <Accordion className="ui">
-                    <Accordion.Title
-                        active={activeIndex === 3}
-                        index={3}
-                        onClick={this.handleClick}
-                    ><Table color="violet" styled fixed>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell textAlign="left" width="5">Meine abgeschlossenen Umfragen:</Table.HeaderCell>
-                                    <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell ></Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="right"><Icon circular inverted color='violet' name='angle double down' /></Table.HeaderCell>
-                                </Table.Row>
-                                <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
-                                    <Table.HeaderCell >Ersteller</Table.HeaderCell>
-                                    <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
-                                    <Table.HeaderCell >Datum</Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="center">Beantwortet</Table.HeaderCell>
-                                    <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 3}>
-                        <Table size="large" fixed width="100%">
-                            <TableBody>
-                                {this.state.myclsurveys.map((mylistclosed) => {
-                                    return <Table.Row>
-                                        <Table.Cell width="5">{mylistclosed.matter}</Table.Cell>
-                                        <Table.Cell>{mylistclosed.creator}</Table.Cell>
-                                        <Table.Cell>{mylistclosed.created_at}</Table.Cell>
-                                        <Table.Cell>{mylistclosed.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={mylistclosed.id}>{mylistclosed.answered}<Label>Beanworten</Label></a></Table.Cell>
-                                        <Table.Cell>{mylistclosed.count}</Table.Cell>
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
                                     </Table.Row>
                                 })}
                             </TableBody>
@@ -458,7 +312,6 @@ class OverlookForm extends Component {
                     <Accordion.Content active={activeIndex === 3}>
                         <Table size="large" selectable fixed width="100%">
                             <TableBody>
-<<<<<<< HEAD
                                 {this.state.closedsurveys.map((closedsurveys) => {
                                     return <Table.Row>
                                         <Table.Cell width="5">{closedsurveys.matter}</Table.Cell>
@@ -467,16 +320,6 @@ class OverlookForm extends Component {
                                         <Table.Cell>{closedsurveys.end_at}</Table.Cell>
                                         <Table.Cell textAlign="center" selectable><a href={closedsurveys.id}>{closedsurveys.answered}</a></Table.Cell>
                                         <Table.Cell textAlign="center">{closedsurveys.count}</Table.Cell>
-=======
-                                {this.state.closedsurveys.map((listclosed) => {
-                                    return <Table.Row>
-                                        <Table.Cell width="5">{listclosed.matter}</Table.Cell>
-                                        <Table.Cell>{listclosed.creator}</Table.Cell>
-                                        <Table.Cell>{listclosed.created_at}</Table.Cell>
-                                        <Table.Cell>{listclosed.end_at}</Table.Cell>
-                                        <Table.Cell textAlign="center" selectable><a href={listclosed.id}>{listclosed.answered}</a></Table.Cell>
-                                        <Table.Cell>{listclosed.count}</Table.Cell>
->>>>>>> d871e9641547eb3f530fb5c2db636d6d450655ee
                                     </Table.Row>
                                 })}
                             </TableBody>
