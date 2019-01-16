@@ -10,11 +10,15 @@
 	top: 20px;
 }
 
-.header{
+.headerSchrift{
 	color: black;
-	font-size: 40px;
+	font-size: 50px;
 	font-family: cursive;
-	padding-bottom: 20px;
+}
+
+.header{
+
+	padding-bottom: 25px;
 }
 #homepage_title {
 	font-size: 100px;

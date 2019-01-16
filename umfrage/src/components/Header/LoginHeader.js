@@ -7,10 +7,10 @@ class LoginHeader extends Component{
 
     render(){
       return (          
-     <div className="semenic ui">
-         <Link to="/overlook">
-          <span className="header">PinPoll </span>
-          <img src={ icon } width="55" height="35" alt="logo" />
+     <div className='header'>
+         <Link to='/overlook'>
+          <span className='headerSchrift'>PinPoll </span>
+          <img src={ icon } width='65' height='45' alt='logo' />
       
       </Link>
       </div>
