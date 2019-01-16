@@ -57,10 +57,10 @@ class OverlookForm extends Component {
 
                     //if the user is allowed to vote we create a link to the answer site
                     if (surveys[i].allowed_to_vote === "false") {
-                        surveys[i].answered = <Icon className="chess queen" color="yellow" size="big"></Icon>  
-                        surveys[i].id = "/overlook";                    
+                        surveys[i].answered = <Icon className="chess queen" color="yellow" size="big"></Icon>
+                        surveys[i].id = "/overlook";
                     }
-                        
+
                 }
 
                 this.setState({
@@ -160,15 +160,21 @@ class OverlookForm extends Component {
                     ><Table color="yellow" className="styled fixed">
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left" width="5">Aktuelle Umfragen:</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="6">Aktuelle Umfragen:</Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='yellow' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 0}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -176,13 +182,9 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 0}>
-                        <Table size="large" className="fixed" width="100%">
                             <TableBody>
                                 {this.state.opensurveys.map((list, index) => {
-                                    return <Table.Row key={index}> 
+                                    return <Table.Row key={index}>
                                         <Table.Cell width="5"><i><b>{list.matter}</b></i></Table.Cell>
                                         <Table.Cell>{list.creator}</Table.Cell>
                                         <Table.Cell>{list.created_at}</Table.Cell>
@@ -212,8 +214,14 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='purple' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 1}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -221,10 +229,6 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 1}>
-                        <Table size="large" className="fixed" width="100%">
                             <TableBody>
                                 {this.state.myopensurveys.map((mysurv, index) => {
                                     return <Table.Row key={index}>
@@ -256,8 +260,14 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='violet' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 2}>
+                        <Table size="large" className="fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -265,10 +275,6 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 2}>
-                        <Table size="large" className="fixed" width="100%">
                             <TableBody>
                                 {this.state.myclosedsurveys.map((list, index) => {
                                     return <Table.Row key={index}>
@@ -300,8 +306,14 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell ></Table.HeaderCell>
                                     <Table.HeaderCell textAlign="right"><Icon className="circular inverted" color='teal' name='angle double down' /></Table.HeaderCell>
                                 </Table.Row>
+                            </Table.Header>
+                        </Table>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 3}>
+                        <Table size="large" className="selectable fixed" width="100%">
+                            <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell textAlign="left">Frage</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="left" width="5">Frage</Table.HeaderCell>
                                     <Table.HeaderCell >Ersteller</Table.HeaderCell>
                                     <Table.HeaderCell >Erstelldatum</Table.HeaderCell>
                                     <Table.HeaderCell >Datum</Table.HeaderCell>
@@ -309,10 +321,6 @@ class OverlookForm extends Component {
                                     <Table.HeaderCell >Teilnehnerzahlen</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
-                        </Table>
-                    </Accordion.Title>
-                    <Accordion.Content active={activeIndex === 3}>
-                        <Table size="large" className="selectable fixed" width="100%">
                             <TableBody>
                                 {this.state.closedsurveys.map((list, index) => {
                                     return <Table.Row key={index}>
