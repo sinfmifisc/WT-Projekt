@@ -23,6 +23,7 @@ class results extends Component {
                 array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
             };
             this.setState({allresults: array});
+            
         })    
         
         axios.get('/loadsurvey/' + this.state.resultid)

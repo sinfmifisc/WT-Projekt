@@ -4,6 +4,7 @@ import '../../../App.css'
 
 function List(props) {
 
+
   return (
     <li className="list" style={{color: props.color}}>{props.name}</li>
   );
