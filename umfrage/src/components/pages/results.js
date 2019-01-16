@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PieChart from "react-svg-piechart";
-import randomColor from "randomcolor";  
+import PieChart from 'react-svg-piechart';
+import randomColor from 'randomcolor';  
 
 let data = [];
 let question= "Foo";
@@ -24,7 +24,7 @@ class results extends Component {
     render() {
 		return(
         <div className="semantic ui">
-            <h1>PinPoll - Answer</h1> 
+            <h1>PinPoll Ergebnis</h1> 
             <div className="question">
             <h2>{question}</h2>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import icon from './title1.ico';
 import '../../App.css';
 import { connect } from 'react-redux';

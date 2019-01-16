@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
-import { connect } from "react-redux"
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import '../../App.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { Table, Icon, Accordion, TableBody} from 'semantic-ui-react';
-import { logout } from '../../actions/auth'
-import axios from 'axios'
+import { logout } from '../../actions/auth';
+import axios from 'axios';
 
 class OverlookForm extends Component {
 
