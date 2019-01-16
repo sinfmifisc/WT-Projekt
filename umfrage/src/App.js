@@ -6,7 +6,7 @@ import CreateSurvey from './components/pages/CreateSurvey';
 import SurveyCreated from './components/pages/SurveyCreated';
 import Overlook from './components/pages/Overlook';
 import UserRoute from './components/routes/UserRoute';
-import Results from './components/pages/results';
+import Results from './components/pages/ResultComponents/Results';
 import PropTypes from 'prop-types';
 import AnswerSurvey from './components/pages/AnswerSurvey';
 
