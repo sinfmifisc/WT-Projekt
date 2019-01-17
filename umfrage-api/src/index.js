@@ -97,8 +97,8 @@ initSubmitAnswerRoute(app, pool);
 	
 
   https.createServer({
-	key: fs.readFileSync('sslCertificates/server.key'),
-	cert: fs.readFileSync('sslCertificates/server.cert')
+	key: fs.readFileSync('Encryption/server.key'),
+	cert: fs.readFileSync('Encryption/server.cert')
   }, app)
   .listen(8443,  () => {
 	console.log('https Server listen on port 8443');
