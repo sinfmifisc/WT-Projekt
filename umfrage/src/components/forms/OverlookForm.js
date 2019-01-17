@@ -26,12 +26,13 @@ class OverlookForm extends Component {
                     //replace true/false in "answered-bracket" with icon depending on value
                     if (surveys[i].answered === "true") {
                         surveys[i].answered = <Icon className="check circle outline" color="green" size="big"></Icon>
+                        surveys[i].id = "/overlook"; //reload if clicked and user hase answered
                     } else {
                         surveys[i].answered = <Icon className="times circle outline" color="red" size="big"></Icon>
                         surveys[i].id = "/answersurvey/" + res.data[i].id; //link to the answer site
                     }
 
-                    surveys[i].id = "/overlook"; //reload if clicked and user hase answered
+                    
                 }
 
                 this.setState({
