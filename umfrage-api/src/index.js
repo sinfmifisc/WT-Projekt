@@ -9,6 +9,8 @@ import initLoginRoute from './Routes/Login.js';
 import initLoadSingleSurveyRoute from './Routes/LoadSingleSurvey';
 import initUnauthorizedRoute from './Routes/Unauthorized';
 import initSubmitAnswerRoute from './Routes/SubmitAnswer';
+import https from 'https';
+import http from 'http';
 
 const app = express();
 const host = 'localhost';
@@ -69,7 +71,19 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	});
 	
 
-console.log('##########');
+	app.use((req, res, next) => {
+	
+    	if (req.secure) {
+			
+        	next();
+    	} else {
+			console.log('http Anfrage auf https umgeleitet');
+			res.redirect('https://localhost:8443' + req.url);
+			
+    	}
+	});
+
+
 app.use(express.json());
 //app.use(bodyParser.urlencoded());
 
@@ -80,9 +94,22 @@ initLoadSingleSurveyRoute(app, pool);
 initUnauthorizedRoute(app);
 initSubmitAnswerRoute(app, pool);
 
-app.listen(8080, () => console.log("Running on lokalhost: 8080"));
+	
+
+  https.createServer({
+	key: fs.readFileSync('sslCertificates/server.key'),
+	cert: fs.readFileSync('sslCertificates/server.cert')
+  }, app)
+  .listen(8443,  () => {
+	console.log('https Server listen on port 8443');
+  })
 
 
+  http.createServer(app).listen(8080, () => {
+	console.log('https Server listen on port 8080');
+  })
+  
+  
 
 
 app.get("/*", (req, res) => {
