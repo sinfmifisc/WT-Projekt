@@ -22,5 +22,6 @@ export const login = credentials => dispatch =>
 export const logout = () => dispatch =>{
 	localStorage.removeItem('current_token');
 	localStorage.removeItem('current_user');
+
 	dispatch(userLoggedOut());
 };

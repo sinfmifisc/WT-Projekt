@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const initLoginRoute = (app, pool) => {
 
@@ -24,7 +24,9 @@ const initLoginRoute = (app, pool) => {
     
                         if(res == true){
                             console.log('Passwort ist korrekt');
-                            let token = jwt.sign( { user: username },'secret');
+                            let token = jwt.sign( { user: username },'secret', {expiresIn: '24h'});
+                            
+                            
                             respond.json({ user: {username: result[0][0].user_name, token: token } }); 
                         }
                         else if(res == false){

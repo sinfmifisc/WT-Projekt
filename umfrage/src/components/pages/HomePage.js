@@ -4,7 +4,7 @@ import icon from './title1.ico';
 import '../../App.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import {verifyToken} from '../routes/UserRoute'
 
 const HomePage =({ isAuth }) => (
   
@@ -22,7 +22,7 @@ HomePage.protoTypes = {
 }
 function mapStateToProps(state){
 	return {
-		isAuth: !!state.user.token
+		isAuth: verifyToken(state.user.token)
 	};
 }
 

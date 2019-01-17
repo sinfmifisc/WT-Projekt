@@ -26,8 +26,10 @@ class CreateSurvey extends Component {
 			errors: []
 		}
 
+
 		//Alle User aus der Datenbank laden und im state abspeichern
-		axios.get('/allUser')
+		const header = 'Authorization: Bearer ' + localStorage.current_token;
+		axios.get('/allUser', { headers: {header}})
 		.then((res) => {
 
 			let list = [];
@@ -133,7 +135,7 @@ class CreateSurvey extends Component {
 		//Fehler im State speichern und ausgeben
 		this.setState({errors: tmpErrors})
 		let submitdata = {surveydata:survey, userinfo: localStorage.current_user}
-		console.log(submitdata);
+		
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){

@@ -2,21 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom';
+import { userLoggedOut} from '../../actions/auth'
+import jwt from 'jsonwebtoken'
+import {store} from '../../index.js'
 
-const UserRouter = ({ isAuth, component: Component, ...rest }) => (
+const UserRouter = ({ isAuth, component: Component, ...rest }) => { return (
     <Route 
     {...rest} 
     render={props => 
         isAuth ? <Component {...props}/> :<Redirect to="/" />} 
     />
-);
+)};
 UserRouter.propTypes ={
     component: PropTypes.func.isRequired,
     isAuth: PropTypes.bool.isRequired
 }
+
+export const verifyToken = (token) => 
+    jwt.verify(token, 'secret', (err, decoded) => {
+        if(err) {
+            
+            return false;
+        }
+        else{
+            
+            return true;
+        }
+    
+    })
+
+
 function mapsStateToProps(state) {
+     
     return {
-        isAuth: !!state.user.token
+        isAuth: verifyToken(state.user.token)
     }
 }
 

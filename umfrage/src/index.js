@@ -9,8 +9,8 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './rootReducer';
-import { userLoggedIn } from './actions/auth';
-
+import { userLoggedIn, userLoggedOut } from './actions/auth';
+import {verifyToken} from './components/routes/UserRoute'
 
 
 
@@ -20,8 +20,19 @@ export const store = createStore(
 );
 
 if (localStorage.current_token){
-	const user = { token: localStorage.current_token };
-	store.dispatch(userLoggedIn(user));
+	const auth = verifyToken(localStorage.current_token);
+	if(auth){
+		const user = { token: localStorage.current_token};
+		const name = localStorage.current_user;
+		store.dispatch(userLoggedIn(user, name));
+	}
+	else{
+		localStorage.removeItem('current_token');
+		localStorage.removeItem('current_user');
+
+		store.dispatch(userLoggedOut());
+	}
+	
 }
 
 
