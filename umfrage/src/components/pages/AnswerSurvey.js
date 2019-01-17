@@ -74,7 +74,7 @@ class AnswerSurvey extends Component{
             
         })
         .catch((err) => {
-            this.props.history.push('surveycreated/error');
+            this.props.history.push('/surveycreated/error');
         })
     }
     
