@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Icon } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import {updateAnswer} from '../../../redux/actions/surveycreation'
 import './Answers.css';
-
-
-
 
 class Answer extends Component{
 
@@ -29,20 +26,29 @@ class Answer extends Component{
         this.props.dispatch(updateAnswer(this.state.id, this.state.content));
     }
 
+    removeAnswer(id){
+        const id_current="ganzeAntwort" + id;
+        console.log(id_current);
+        document.getElementById(id_current).remove();
+    }
 
     render(){
 
         return <Form.Field>
+            <div id={'ganzeAntwort' + this.state.id}>
         <input
             type='text'
             key={'Antwort' + this.state.id}
             id={'Antwort' + this.state.id}
             name={'Antwort' + this.state.id}
-            value={this.state.content}
+      q      value={this.state.content}
             onChange={this.handleChange}
             placeholder='Antwort verfassen'
-    />
-    
+           />
+         <Icon
+           className="trash alternate"
+           onClick={()=>this.removeAnswer(this.state.id)}/>
+    </div>
     </Form.Field>
     }
 }
