@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TopHeader from '../../Header/LoginHeader';
 import ListItem from './ListItems';
+import '../../../App.css'
 
 
 class results extends Component {
@@ -41,10 +42,12 @@ class results extends Component {
         <TopHeader/>
             <h1> {this.state.question}</h1> 
             <ListItem contacts={this.state.allresults}/>
-            <PieChart id="foo" viewBoxSize={ 2}
+            <div id="pie">
+            <PieChart 
                    data={this.state.allresults}
             /> 
            <Link className='ui primary button' to='/overlook'>Zurück zur übersicht</Link>
+           </div>
         </div>);
 }
 }

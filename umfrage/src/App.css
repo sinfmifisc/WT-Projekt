@@ -3,8 +3,6 @@
 	margin-top: 100px;
 }
 
-
-
 .headerSchrift{
 	color: black;
 	font-size: 50px;
@@ -12,7 +10,6 @@
 }
 
 .header{
-
 	padding-bottom: 25px;
 }
 
@@ -42,4 +39,7 @@
 }
 .login{
 	text-align: center;
+}
+#pie{
+	margin-right: 40%;
 }
