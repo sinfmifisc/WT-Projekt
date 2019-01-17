@@ -6,7 +6,7 @@ function List(props) {
 
 
   return (
-    <li className="list" style={{color: props.color}}>{props.name}</li>
+    <li className="list" style={{color: props.color}}> {props.name} (abgegebene Stimmen {props.num})</li>
   );
 }
 

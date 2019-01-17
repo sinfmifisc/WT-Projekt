@@ -6,7 +6,7 @@ function ListItem(props) {
   
   return (
     <ul>
-      {props.contacts.map((c, index ) => {return <List key={index} color={c.color} name={c.title} />})}
+      {props.contacts.map((c, index ) => {return <List key={index} num={c.value} color={c.color} name={c.title} />})}
      </ul> 
   ); 
 } 
