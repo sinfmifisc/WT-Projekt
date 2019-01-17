@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom';
-import { userLoggedOut} from '../../actions/auth'
+
 import jwt from 'jsonwebtoken'
-import {store} from '../../index.js'
+
 
 const UserRouter = ({ isAuth, component: Component, ...rest }) => { return (
     <Route 

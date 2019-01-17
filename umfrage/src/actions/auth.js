@@ -13,7 +13,7 @@ export const userLoggedOut = () => ({
 
 export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
-	console.log(credentials);
+	
 	   localStorage.current_token = user.token;
 	   localStorage.current_user = user.username;
 	   dispatch(userLoggedIn(user, credentials.username))

@@ -5,7 +5,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TopHeader from '../../Header/LoginHeader';
 import ListItem from './ListItems';
+import {authHeader} from '../../../App.js'
 import '../../../App.css'
+
 
 
 class results extends Component {
@@ -18,7 +20,7 @@ class results extends Component {
             question: '',
         }
 
-        axios.get('/surveyevaluation/'+ this.state.resultid)
+        axios.get('/surveyevaluation/'+ this.state.resultid, authHeader)
         .then((res) => {
             let array = [];
             for(let i =0; i < res.data.length; i++){
@@ -28,7 +30,7 @@ class results extends Component {
             
         })    
         
-        axios.get('/loadsurvey/' + this.state.resultid)
+        axios.get('/loadsurvey/' + this.state.resultid, authHeader)
         .then((res) => {
             this.setState({question: res.data[0].matter})
         })

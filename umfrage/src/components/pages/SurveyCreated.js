@@ -35,9 +35,11 @@ class SurveyCreated extends Component{
         case 'error':
             this.state.text = 'Es ist ein Fehler aufgetreten. Bitte versuche es später nochmal';
             this.state.error = false;
+            break;
+        default:
+            this.state.text = 'Du solltest eigentlich nicht hier sein';
+            this.state.error = false;
         }
-
-        
     }
     
     

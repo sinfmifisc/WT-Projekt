@@ -10,7 +10,7 @@ class LoginPage extends Component {
 
   submit = data => {
   return this.props.login(data).then(() => this.props.history.push('/overlook'))
-   //routet bei erneutem Laden
+   
   
   };
 

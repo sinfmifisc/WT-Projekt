@@ -25,6 +25,10 @@ const App = ({ location} )=> (
 );
 
 
+//Header für alle axios Aufrufe, zur Autorisierung beim Backend
+export const authHeader = { 'headers': { 'Authorization': localStorage.current_token } }
+
+
  App.propTypes = {
   location: PropTypes.shape({
 	    pathname: PropTypes.string.isRequired

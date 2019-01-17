@@ -6,6 +6,7 @@ import { Table, Icon, Accordion, TableBody, Button, ButtonGroup, Grid } from 'se
 import { logout } from '../../actions/auth'
 import axios from 'axios'
 import TopHeader from '../Header/LoginHeader';
+import {authHeader} from '../../App.js'
 class OverlookForm extends Component {
 
     constructor(props) {
@@ -18,7 +19,7 @@ class OverlookForm extends Component {
             closedsurveys: []
         }
         //First Table "All Surveys"
-        axios.get('/loadopensurveys/' + localStorage.current_user + '/all')
+        axios.get('/loadopensurveys/' + localStorage.current_user + '/all', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {
@@ -41,7 +42,7 @@ class OverlookForm extends Component {
             })
 
         //Second Table "My Surveys"
-        axios.get('/loadopensurveys/' + localStorage.current_user + '/own')
+        axios.get('/loadopensurveys/' + localStorage.current_user + '/own', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {
@@ -70,7 +71,7 @@ class OverlookForm extends Component {
             })
 
         //Third Table my closed surveys
-        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own')
+        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {
@@ -92,7 +93,7 @@ class OverlookForm extends Component {
 
 
         //fourth table all closed table
-        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all')
+        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {

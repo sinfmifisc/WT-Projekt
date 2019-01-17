@@ -10,6 +10,7 @@ import {connect} from 'react-redux'
 import TopHeader from '../Header/LoginHeader';
 import './CreateSurvey.css'
 import {store} from '../../index.js'
+import {authHeader} from '../../App.js'
 import { deleteSurveyData, updateAllowedUser } from '../../actions/surveycreation';
 
 
@@ -26,10 +27,10 @@ class CreateSurvey extends Component {
 			errors: []
 		}
 
-
+		
 		//Alle User aus der Datenbank laden und im state abspeichern
-		const header = 'Authorization: Bearer ' + localStorage.current_token;
-		axios.get('/allUser', { headers: {header}})
+		
+		axios.get('/allUser',  authHeader)
 		.then((res) => {
 
 			let list = [];
@@ -139,7 +140,7 @@ class CreateSurvey extends Component {
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
-			axios.post("/createsurvey", submitdata)
+			axios.post("/createsurvey", submitdata, authHeader)
 			.then(response => {
 				if(response.status === 201){
 					console.log(response.status);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Checkbox, List, Header, ListItem, Button}   from 'semantic-ui-react'; 
 import axios from 'axios';
 import TopHeader from '../Header/LoginHeader';
+import {authHeader} from '../../App.js'
 
 class AnswerSurvey extends Component{
 
@@ -16,7 +17,7 @@ class AnswerSurvey extends Component{
             
         }
 
-        axios.get('/loadanswers/'+ this.state.surveyid)
+        axios.get('/loadanswers/'+ this.state.surveyid, authHeader)
         .then((res) => {
             let array = [];
             for(let i = 0; i < res.data.length; i++){
@@ -30,7 +31,7 @@ class AnswerSurvey extends Component{
 
         
         
-        axios.get('/loadsurvey/' + this.state.surveyid)
+        axios.get('/loadsurvey/' + this.state.surveyid, authHeader)
         .then((res) => {
             
             this.setState({surveymatter: res.data[0].matter})
@@ -63,7 +64,7 @@ class AnswerSurvey extends Component{
         let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: localStorage.current_user}
         
         
-        axios.post('/submitanswer', submitData)
+        axios.post('/submitanswer', submitData, authHeader)
         .then((response) =>{
             if(response.status === 201){
                 this.props.history.push('/surveycreated/answer');

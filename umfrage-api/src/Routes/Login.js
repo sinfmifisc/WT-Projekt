@@ -1,7 +1,6 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const initLoginRoute = (app, pool) => {
+const initLoginRoute = (app, pool, jwt) => {
 
     app.post("/api/auth", (req, res) => {
         let password = req.body.credentials.password;

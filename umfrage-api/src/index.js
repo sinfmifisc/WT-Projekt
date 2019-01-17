@@ -9,6 +9,7 @@ import initLoginRoute from './Routes/Login.js';
 import initLoadSingleSurveyRoute from './Routes/LoadSingleSurvey';
 import initUnauthorizedRoute from './Routes/Unauthorized';
 import initSubmitAnswerRoute from './Routes/SubmitAnswer';
+import jwt from 'jsonwebtoken';
 import https from 'https';
 import http from 'http';
 
@@ -19,18 +20,32 @@ const host = 'localhost';
 
 const authChecker = (req, res, next) => {
 
-	//TODO: Checken ob User eingeloggt ist
+	//TODO: Checken ob User eingeloggt istdfas
+	
+	let tokenVerified = false;
+	jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
+        if(decoded) {
+            
+            tokenVerified = true;
+        }       
+    
+    })
+
     if (req.path ==='/api/auth' || req.path === '/unauthorized') {
-		
+	
         next();
-    } else {
+	} 
+	else if(tokenVerified){
+		next();
+	} 
+	else {
 	   res.redirect('/unauthorized');
 	   
     }
 }
 
 //Wegen Entwicklungszwecken auskommentiert:
-//app.use(authChecker)
+app.use(authChecker)
 
 
 //read SQL instructions for creating the tables
@@ -87,7 +102,7 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 app.use(express.json());
 //app.use(bodyParser.urlencoded());
 
-initLoginRoute(app,pool);
+initLoginRoute(app,pool, jwt);
 initCreateSurveyRoute(app, pool);
 initLoadSurveysRoute(app,pool);
 initLoadSingleSurveyRoute(app, pool);
