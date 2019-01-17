@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
 import CreateSurvey from './components/pages/CreateSurvey';
-import SurveyCreated from './components/pages/SurveyCreated';
+import MessagePage from './components/pages/MessagePage';
 import Overlook from './components/pages/Overlook';
 import UserRoute from './components/routes/UserRoute';
 import Results from './components/pages/ResultComponents/Results';
@@ -13,14 +13,14 @@ import AnswerSurvey from './components/pages/AnswerSurvey';
 
 
 const App = ({ location} )=> (
-	<div className="ui container">
-	  <Route location={location} path="/" exact component={HomePage}/>
-	  <Route location={location} path="/login" exact component={LoginPage}/>
-	  <UserRoute location={location} path="/createsurvey" exact component={CreateSurvey}/>
-	  <UserRoute location={location} path="/surveycreated/:obj" exact component={SurveyCreated}/>
-	  <UserRoute location={location} path="/overlook" exact component={Overlook}/>
-    <UserRoute location={location} path="/results/:resultid" exact component={Results}/>
-		<UserRoute location={location} path="/answersurvey/:surveyid" exact component={AnswerSurvey}/>
+	<div className='ui container'>
+	  <Route location={location} path='/' exact component={HomePage}/>
+	  <Route location={location} path='/login' exact component={LoginPage}/>
+	  <UserRoute location={location} path='/createsurvey' exact component={CreateSurvey}/>
+	  <UserRoute location={location} path='/message/:obj' exact component={MessagePage}/>
+	  <UserRoute location={location} path='/overlook' exact component={Overlook}/>
+    <UserRoute location={location} path='/results/:resultid' exact component={Results}/>
+		<UserRoute location={location} path='/answersurvey/:surveyid' exact component={AnswerSurvey}/>
 	 </div>
 );
 

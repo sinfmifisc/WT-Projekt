@@ -1,5 +1,5 @@
-import api from '../api';
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../types';
+import api from '../../api.js';
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../types.js';
 
 export const userLoggedIn = (user, username) => ({
 	  type: USER_LOGGED_IN,

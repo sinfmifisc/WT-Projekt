@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import user from './reducers/user'; 
-import surveycreation from './reducers/surveycreation';
+import user from './user.js'; 
+import surveycreation from './surveycreation';
 
 
 export default combineReducers({

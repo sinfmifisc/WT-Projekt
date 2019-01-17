@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Message } from 'semantic-ui-react';
-import TopHeader from '../Header/LoginHeader'
+import TopHeader from '../header/Header'
 
-class SurveyCreated extends Component{
+class MessagePage extends Component{
     constructor(props){
         super(props)
 
@@ -64,4 +64,4 @@ class SurveyCreated extends Component{
     }
 }
 
-export default SurveyCreated;
+export default MessagePage;

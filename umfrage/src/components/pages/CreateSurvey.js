@@ -7,11 +7,11 @@ import SelectAllowedUsers from './CreateSurveyComponents/SelectAllowedUsers';
 import TimeSelection from './CreateSurveyComponents/TimeSelection';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import TopHeader from '../Header/LoginHeader';
+import TopHeader from '../header/Header.js';
 import './CreateSurvey.css'
 import {store} from '../../index.js'
 import {authHeader} from '../../App.js'
-import { deleteSurveyData, updateAllowedUser } from '../../actions/surveycreation';
+import { deleteSurveyData, updateAllowedUser } from '../../redux/actions/surveycreation';
 
 
 
@@ -29,7 +29,7 @@ class CreateSurvey extends Component {
 
 		
 		//Alle User aus der Datenbank laden und im state abspeichern
-		
+		this.props.dispatch(deleteSurveyData());
 		axios.get('/allUser',  authHeader)
 		.then((res) => {
 
@@ -44,7 +44,7 @@ class CreateSurvey extends Component {
 			})
 		})
 
-
+		
 		this.allowUser = this.allowUser.bind(this);
 		this.removeUser = this.removeUser.bind(this);
 		this.allowAllUser = this.allowAllUser.bind(this);
@@ -140,16 +140,16 @@ class CreateSurvey extends Component {
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
-			axios.post("/createsurvey", submitdata, authHeader)
+			axios.post('/createsurvey', submitdata, authHeader)
 			.then(response => {
 				if(response.status === 201){
-					console.log(response.status);
+					
 					this.props.dispatch(deleteSurveyData());
-					this.props.history.push('/SurveyCreated/survey');
+					this.props.history.push('/message/survey');
 					
 				}
 			})
-			.catch((err) => this.props.history.push('/surveycreated/error'));
+			.catch((err) => this.props.history.push('/message/error'));
 		}	
 	}
 

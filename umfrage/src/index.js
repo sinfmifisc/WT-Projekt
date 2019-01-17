@@ -8,8 +8,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './rootReducer';
-import { userLoggedIn, userLoggedOut } from './actions/auth';
+import rootReducer from './redux/reducers/rootReducer';
+import { userLoggedIn, userLoggedOut } from './redux/actions/auth.js';
 import {verifyToken} from './components/routes/UserRoute'
 
 

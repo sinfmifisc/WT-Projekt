@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 
 const initLoginRoute = (app, pool, jwt) => {
 
-    app.post("/api/auth", (req, res) => {
+    app.post('/api/auth', (req, res) => {
         let password = req.body.credentials.password;
         let username = req.body.credentials.username;
         let respond = res;

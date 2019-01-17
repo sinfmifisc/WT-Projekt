@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import Answer from './Answer.js'
-import {addAnswer} from '../../../actions/surveycreation'
+import {addAnswer} from '../../../redux/actions/surveycreation'
 
 
 

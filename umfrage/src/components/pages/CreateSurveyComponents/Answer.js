@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'semantic-ui-react';
 import {connect} from 'react-redux'
-import {updateAnswer} from '../../../actions/surveycreation.js'
+import {updateAnswer} from '../../../redux/actions/surveycreation'
 import './Answers.css';
 
 

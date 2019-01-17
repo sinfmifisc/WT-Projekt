@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Checkbox, List, Header, ListItem, Button}   from 'semantic-ui-react'; 
 import axios from 'axios';
-import TopHeader from '../Header/LoginHeader';
+import TopHeader from '../header/Header';
 import {authHeader} from '../../App.js'
 
 class AnswerSurvey extends Component{
@@ -67,15 +67,15 @@ class AnswerSurvey extends Component{
         axios.post('/submitanswer', submitData, authHeader)
         .then((response) =>{
             if(response.status === 201){
-                this.props.history.push('/surveycreated/answer');
+                this.props.history.push('/message/answer');
             }
             else if(response.status === 200){
-                this.props.history.push('/surveycreated/' + response.data.error)
+                this.props.history.push('/message/' + response.data.error)
             }
             
         })
         .catch((err) => {
-            this.props.history.push('/surveycreated/error');
+            this.props.history.push('/message/error');
         })
     }
     

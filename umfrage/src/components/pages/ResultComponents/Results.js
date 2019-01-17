@@ -3,7 +3,7 @@ import PieChart from 'react-svg-piechart';
 import randomColor from 'randomcolor'; 
 import axios from 'axios'; 
 import { Link } from 'react-router-dom';
-import TopHeader from '../../Header/LoginHeader';
+import TopHeader from '../../header/Header';
 import ListItem from './ListItems';
 import {authHeader} from '../../../App.js'
 import '../../../App.css'
@@ -44,7 +44,7 @@ class results extends Component {
         <TopHeader/>
             <h1> {this.state.question}</h1> 
             <ListItem contacts={this.state.allresults}/>
-            <div id="pie">
+            <div id='pie'>
             <PieChart 
                    data={this.state.allresults}
             /> 

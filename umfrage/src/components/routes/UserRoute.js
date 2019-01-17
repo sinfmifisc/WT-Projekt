@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom';
-
 import jwt from 'jsonwebtoken'
 
 
@@ -10,7 +9,7 @@ const UserRouter = ({ isAuth, component: Component, ...rest }) => { return (
     <Route 
     {...rest} 
     render={props => 
-        isAuth ? <Component {...props}/> :<Redirect to="/" />} 
+        isAuth ? <Component {...props}/> :<Redirect to='/' />} 
     />
 )};
 UserRouter.propTypes ={

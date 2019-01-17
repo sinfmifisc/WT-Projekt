@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Survey.css';
-import { changeSurveyMatter } from '../../../actions/surveycreation.js';
+import { changeSurveyMatter } from '../../../redux/actions/surveycreation';
 
 
 

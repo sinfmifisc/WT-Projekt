@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Button, FormField} from 'semantic-ui-react';
 import {connect} from 'react-redux'
-import { changeDuration } from '../../../actions/surveycreation';
+import { changeDuration } from '../../../redux/actions/surveycreation';
 import './TimeSelection.css';
 
 

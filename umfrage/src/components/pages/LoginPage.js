@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import LoginForm from  '../forms/LoginForm';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../../actions/auth';
+import { login } from '../../redux/actions/auth';
 import { withRouter } from 'react-router';
 
 
 class LoginPage extends Component {
+
+  
 
   submit = data => {
   return this.props.login(data).then(() => this.props.history.push('/overlook'))
@@ -17,7 +19,7 @@ class LoginPage extends Component {
   render() {
     return (
 		<div>
-		 <h1 className="login"> Login </h1>
+		 <h1 className='login'> Login </h1>
 		 <LoginForm submit={this.submit} />
 		</div>
     );
