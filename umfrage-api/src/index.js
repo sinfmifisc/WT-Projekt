@@ -45,7 +45,7 @@ const authChecker = (req, res, next) => {
 }
 
 //Wegen Entwicklungszwecken auskommentiert:
-//app.use(authChecker)
+app.use(authChecker)
 
 
 //read SQL instructions for creating the tables
