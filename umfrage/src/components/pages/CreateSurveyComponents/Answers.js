@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import Answer from './Answer.js'
 import {addAnswer} from '../../../redux/actions/surveycreation'
+import {removeAnswer} from '../../../redux/actions/surveycreation'
 
 
 
@@ -19,12 +20,13 @@ class Answers extends Component {
                 
             }
         
+        this.removeAnswer = this.removeAnswer.bind(this);
       }
 
 
 
     addAnswer = () => {
-        console.log(this.state.count);
+        
         let currentCount = this.state.count;
 
         //Antwort im Store abspeichern
@@ -32,9 +34,20 @@ class Answers extends Component {
 
         this.setState({count : currentCount + 1},);        
         this.setState ({ answers: [...this.state.answers, 
-            <Answer id={this.state.count} key={this.state.count}/>
+            <Answer removeAnswer={this.removeAnswer} id={this.state.count} key={this.state.count}/>
         ]})
         
+    }
+
+    removeAnswer = (e) => {
+        
+        let newAnswers = this.state.answers.filter((answer) => {
+            if(e.currentTarget.id !== answer.key)
+                return answer;
+        }) 
+        
+        this.setState({answers: newAnswers});
+        this.props.dispatch((removeAnswer(e.currentTarget.id)));
     }
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import {updateAnswer} from '../../../redux/actions/surveycreation'
 import './Answers.css';
@@ -29,10 +29,11 @@ class Answer extends Component{
         this.props.dispatch(updateAnswer(this.state.id, this.state.content));
     }
 
+    
 
     render(){
 
-        return <Form.Field>
+        return <Form.Field >
         <input
             type='text'
             key={'Antwort' + this.state.id}
@@ -42,6 +43,7 @@ class Answer extends Component{
             onChange={this.handleChange}
             placeholder='Antwort verfassen'
     />
+    <Button id={this.state.id} onClick={this.props.removeAnswer}> x</Button>
     
     </Form.Field>
     }

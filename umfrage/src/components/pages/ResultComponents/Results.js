@@ -4,7 +4,7 @@ import randomColor from 'randomcolor';
 import axios from 'axios'; 
 import { Link } from 'react-router-dom';
 import TopHeader from '../../header/Header';
-import ListItem from './ListItems';
+import ListItem from './ListItem';
 import {authHeader} from '../../../App.js'
 import '../../../App.css'
 

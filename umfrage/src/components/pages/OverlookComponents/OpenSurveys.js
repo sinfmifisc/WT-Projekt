@@ -30,7 +30,7 @@ class OpenSurveys extends Component {
                     
                 }
                 
-                this.state.surveys = surveys;
+                this.setState({surveys: surveys});
                     
                     
                 

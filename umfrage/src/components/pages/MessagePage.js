@@ -37,7 +37,7 @@ class MessagePage extends Component{
             this.state.error = false;
             break;
         default:
-            this.state.text = 'Du solltest eigentlich nicht hier sein';
+            this.state.text = 'Hör auf die URL zu manipulieren!!!';
             this.state.error = false;
         }
     }

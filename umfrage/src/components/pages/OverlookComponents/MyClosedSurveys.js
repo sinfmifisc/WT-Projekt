@@ -28,7 +28,7 @@ class MyClosedSurveys extends Component {
 
                     surveys[i].id = '/results/' + res.data[i].id;
                 }
-                this.state.surveys = surveys;
+                this.setState({surveys: surveys});
                     
                 
             })

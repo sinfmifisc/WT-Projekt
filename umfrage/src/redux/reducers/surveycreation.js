@@ -1,4 +1,4 @@
-import { SURVEYMATTER, UPDATE_ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA} from '../types';
+import { SURVEYMATTER, UPDATE_ALLOWED_USER, UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA, REMOVE_ANSWER} from '../types';
 
 const initialState = {surveymatter: '', allowedUser: [], answers: [], duration: 0};
 
@@ -20,7 +20,14 @@ export default function surveycreation(state = initialState, action){
 
 			  return Object.assign({}, state, {
 				answers: [...state.answers, {id: action.id, content: ''}]
-			  })
+				})
+				
+		case REMOVE_ANSWER:
+					
+				return Object.assign({}, state, {
+					answers: state.answers.filter(answer => answer.id != action.id)
+					})
+				
 		
 		case UPDATE_ANSWER:
 

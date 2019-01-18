@@ -1,4 +1,4 @@
-import { UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA, UPDATE_ALLOWED_USER, SURVEYMATTER } from '../types.js';
+import { UPDATE_ANSWER, ADD_ANSWER, DURATION, DELETE_SURVEY_DATA, UPDATE_ALLOWED_USER, SURVEYMATTER, REMOVE_ANSWER } from '../types.js';
 
 
 
@@ -19,6 +19,12 @@ export const updateAnswer = (id, content) => {
 
 export const addAnswer = (id) => {
     return { type: ADD_ANSWER,
+        id
+    }
+}
+
+export const removeAnswer = (id) => {
+    return { type: REMOVE_ANSWER,
         id
     }
 }
