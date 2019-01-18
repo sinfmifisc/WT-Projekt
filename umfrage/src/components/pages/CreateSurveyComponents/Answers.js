@@ -39,15 +39,13 @@ class Answers extends Component {
         
     }
 
-    removeAnswer = (e) => {
+    removeAnswer = (key) => {
         
-        let newAnswers = this.state.answers.filter((answer) => {
-            if(e.currentTarget.id !== answer.key)
-                return answer;
-        }) 
+        let newAnswers = this.state.answers.filter((answer) => key !== Number(answer.key))
+            
         
         this.setState({answers: newAnswers});
-        this.props.dispatch((removeAnswer(e.currentTarget.id)));
+        this.props.dispatch((removeAnswer(key)));
     }
 
 

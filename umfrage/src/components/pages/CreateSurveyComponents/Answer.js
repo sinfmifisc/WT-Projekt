@@ -43,7 +43,7 @@ class Answer extends Component{
             onChange={this.handleChange}
             placeholder='Antwort verfassen'
     />
-    <Button id={this.state.id} onClick={this.props.removeAnswer}> x</Button>
+    <Button  onClick={this.props.removeAnswer.bind(this, this.state.id)}> x</Button>
     
     </Form.Field>
     }

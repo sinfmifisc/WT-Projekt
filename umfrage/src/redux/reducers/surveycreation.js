@@ -25,20 +25,20 @@ export default function surveycreation(state = initialState, action){
 		case REMOVE_ANSWER:
 					
 				return Object.assign({}, state, {
-					answers: state.answers.filter(answer => answer.id != action.id)
+					answers: state.answers.filter(answer => answer.id !== Number(action.id))
 					})
 				
 		
 		case UPDATE_ANSWER:
 
 			return Object.assign({}, state, {
-				answers: state.answers.map((answers, id) => {
-				  if (id === action.id) {
-					return Object.assign({}, answers, {
+				answers: state.answers.map((answer, id) => {
+				  if (answer.id === action.id) {
+					return Object.assign({}, answer, {
 					  content: action.content
 					})
 				  }
-				  return answers
+				  return answer
 				})
 			  })
 				  
