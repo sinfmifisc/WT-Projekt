@@ -20,22 +20,39 @@ class results extends Component {
             question: '',
         }
 
-        axios.get('/surveyevaluation/'+ this.state.resultid, authHeader)
-        .then((res) => {
-            let array = [];
-            for(let i =0; i < res.data.length; i++){
-                array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
-            };
-            this.setState({allresults: array});
-            
-        })    
+
+
+    }
         
+
+    componentDidMount(){
+
         axios.get('/loadsurvey/' + this.state.resultid, authHeader)
         .then((res) => {
-            this.setState({question: res.data[0].matter})
-        })
-        
+            const allowed = !res.data.error;
+            if(!allowed){
+                this.props.history.push('/message/' + res.data.error);
+            }
+            else {
+                this.setState({question: res.data[0].matter})
+            }
+            
+            if(allowed){
+                axios.get('/surveyevaluation/'+ this.state.resultid, authHeader)
+                .then((res) => {
+                    let array = [];
+                    for(let i =0; i < res.data.length; i++){
+                        array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
+                    };
+                    this.setState({allresults: array});
+                    })  
+                }
+            })
+
     }
+
+        
+    
 
     render() {
 		return(

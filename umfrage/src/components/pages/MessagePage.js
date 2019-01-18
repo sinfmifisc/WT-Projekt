@@ -32,6 +32,10 @@ class MessagePage extends Component{
             this.state.text = 'Antworten fehlgeschlagen. Diese Umfrage ist bereits zuende!';
             this.state.error = false;
             break;
+        case 'notallowed':
+            this.state.text = 'Du darfst an dieser Umfrage nicht teilnehmen!'
+            this.state.error = false;
+            break;
         case 'error':
             this.state.text = 'Es ist ein Fehler aufgetreten. Bitte versuche es später nochmal';
             this.state.error = false;

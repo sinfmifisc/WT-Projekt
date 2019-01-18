@@ -13,7 +13,10 @@ class MyOpenSurveys extends Component {
             
         }
 
-        axios.get('/loadopensurveys/' + localStorage.current_user + '/own', authHeader)
+    }
+        
+        componentDidMount(){
+            axios.get('/loadopensurveys/' + localStorage.current_user + '/own', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {

@@ -13,7 +13,11 @@ class MyClosedSurveys extends Component {
             
         }
 
-        axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own', authHeader)
+
+    }
+
+        componentDidMount(){
+            axios.get('/loadclosedsurveys/' + localStorage.current_user + '/own', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {
@@ -24,6 +28,10 @@ class MyClosedSurveys extends Component {
                         surveys[i].answered = <Icon className='check circle outline' color='green' size='big'></Icon>
                     } else {
                         surveys[i].answered = <Icon className='times circle outline' color='red' size='big'></Icon>
+                    }
+                    if (surveys[i].allowed_to_vote === 'false') {
+                        surveys[i].answered = <Icon className='chess queen' color='yellow' size='big'></Icon>
+                        
                     }
 
                     surveys[i].id = '/results/' + res.data[i].id;

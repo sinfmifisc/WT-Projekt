@@ -20,7 +20,7 @@ const host = 'localhost';
 
 const authChecker = (req, res, next) => {
 
-	//TODO: Checken ob User eingeloggt istdfas
+	
 	
 	let tokenVerified = false;
 	jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
@@ -45,7 +45,7 @@ const authChecker = (req, res, next) => {
 }
 
 //Wegen Entwicklungszwecken auskommentiert:
-app.use(authChecker)
+//app.use(authChecker)
 
 
 //read SQL instructions for creating the tables
@@ -105,7 +105,7 @@ app.use(express.json());
 initLoginRoute(app,pool, jwt);
 initCreateSurveyRoute(app, pool);
 initLoadSurveysRoute(app,pool);
-initLoadSingleSurveyRoute(app, pool);
+initLoadSingleSurveyRoute(app, pool, jwt);
 initUnauthorizedRoute(app);
 initSubmitAnswerRoute(app, pool);
 

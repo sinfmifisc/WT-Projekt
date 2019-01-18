@@ -30,19 +30,7 @@ class CreateSurvey extends Component {
 		
 		//Alle User aus der Datenbank laden und im state abspeichern
 		this.props.dispatch(deleteSurveyData());
-		axios.get('/allUser',  authHeader)
-		.then((res) => {
 
-			let list = [];
-			for(let a = 0; a < res.data.length; a++){
-				list[a] = res.data[a].user_name;
-				
-			}
-			this.setState({
-				
-				userList: list
-			})
-		})
 
 		
 		this.allowUser = this.allowUser.bind(this);
@@ -89,7 +77,23 @@ class CreateSurvey extends Component {
 		this.props.dispatch(updateAllowedUser(this.state.allowedUserList));
 		
 	}
-	
+
+
+	componentDidMount(){
+		axios.get('/allUser',  authHeader)
+		.then((res) => {
+
+			let list = [];
+			for(let a = 0; a < res.data.length; a++){
+				list[a] = res.data[a].user_name;
+				
+			}
+			this.setState({
+				
+				userList: list
+			})
+		})
+	}
 
 
 
