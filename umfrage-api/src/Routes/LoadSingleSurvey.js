@@ -33,6 +33,7 @@ const initLoadSingleSurveyRoute = (app, pool, jwt) => {
               }
 
             })
+            .catch((err) => res.sendStatus(500))
 
         })
 

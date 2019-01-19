@@ -7,7 +7,7 @@ import TopHeader from '../../header/Header';
 import ListItem from './ListItem';
 import {authHeader} from '../../../App.js';
 import '../../../App.css';
-
+import './Results.css';
 
 
 
@@ -52,6 +52,7 @@ class results extends Component {
                     })  
                 }
             })
+        .catch((err) => this.props.history.push('/message/error'))
 
     }
    
@@ -87,7 +88,10 @@ class results extends Component {
             <h1> {this.state.question}</h1> 
             <ListItem contacts={this.state.allresults}/>
             <div id='pie'>
-            {this.state.showToolTip && <h1> {(this.state.value / this.state.sum * 100).toFixed(2)} % stimmten für {this.state.title} is </h1> }
+            {this.state.showToolTip && <div id='Hovertext' style={{zIndex: '5', position: 'absolute',
+    background: 'white', 
+    border: 'solid'}}>
+             {(this.state.value / this.state.sum * 100).toFixed(2)} % stimmten für {this.state.title} </div> }
             <PieChart size={400}
                     data={this.state.allresults}
                     mouseOverHandler={this.mouseOverHandler.bind(this)}
