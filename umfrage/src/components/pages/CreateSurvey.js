@@ -15,6 +15,7 @@ import { deleteSurveyData, updateAllowedUser } from '../../redux/actions/surveyc
 
 
 
+
 class CreateSurvey extends Component {
 	
 	constructor(props){
@@ -28,10 +29,11 @@ class CreateSurvey extends Component {
 		}
 
 		
-		//Alle User aus der Datenbank laden und im state abspeichern
+		
 		this.props.dispatch(deleteSurveyData());
-
-
+		
+		
+		
 		
 		this.allowUser = this.allowUser.bind(this);
 		this.removeUser = this.removeUser.bind(this);
@@ -80,7 +82,7 @@ class CreateSurvey extends Component {
 
 
 	componentDidMount(){
-		axios.get('/allUser',  authHeader)
+		axios.get('https://localhost:8443/alluser', authHeader)
 		.then((res) => {
 
 			let list = [];
@@ -137,6 +139,11 @@ class CreateSurvey extends Component {
 			tmpErrors = tmpErrors.concat('Eine Antwort darf nicht leer sein');
 		}
 
+		if(survey.surveycreation.answers.length <= 1){
+			tmpErrors = tmpErrors.concat('Es muss mindestens zwei Antwortmöglichkeiten geben');
+			dataValidated = false;
+		}
+
 		//Fehler im State speichern und ausgeben
 		this.setState({errors: tmpErrors})
 		let submitdata = {surveydata:survey, userinfo: localStorage.current_user}
@@ -144,7 +151,7 @@ class CreateSurvey extends Component {
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
-			axios.post('/createsurvey', submitdata, authHeader)
+			axios.post('https://localhost:8443/createsurvey' ,submitdata ,authHeader)
 			.then(response => {
 				if(response.status === 201){
 					

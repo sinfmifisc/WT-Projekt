@@ -18,7 +18,7 @@ class ClosedSurveys extends Component {
         }
         
         componentDidMount(){
-            axios.get('/loadclosedsurveys/' + localStorage.current_user + '/all', authHeader)
+            axios.get('https://localhost:8443/loadclosedsurveys/' + localStorage.current_user + '/all', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {

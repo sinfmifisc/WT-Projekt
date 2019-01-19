@@ -26,7 +26,7 @@ class AnswerSurvey extends Component{
     }
 
     componentDidMount(){
-        axios.get('/loadsurvey/' + this.state.surveyid, authHeader)
+        axios.get('https://localhost:8443/loadsurvey/' + this.state.surveyid, authHeader)
         .then((res) => {
             const allowed = !res.data.error;
             if(!allowed){
@@ -39,7 +39,7 @@ class AnswerSurvey extends Component{
             }
 
             if(allowed){
-                axios.get('/loadanswers/'+ this.state.surveyid, authHeader)
+                axios.get('https://localhost:8443/loadanswers/'+ this.state.surveyid, authHeader)
                 .then((res) => {
                     if(res.data.error){
                         this.props.history.push('/message/' + res.data.error);
@@ -82,7 +82,7 @@ class AnswerSurvey extends Component{
         let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: localStorage.current_user}
         
         
-        axios.post('/submitanswer', submitData, authHeader)
+        axios.post('https://localhost:8443/submitanswer', submitData, authHeader)
         .then((response) =>{
             if(response.status === 201){
                 this.props.history.push('/message/answer');

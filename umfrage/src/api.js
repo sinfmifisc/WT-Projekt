@@ -4,6 +4,6 @@ import axios from 'axios';
 export default {
   user: {
     login: credentials =>
-      axios.post('/api/auth', { credentials }).then(res => res.data.user),
+      axios.post('https://localhost:8443/api/auth', { credentials }).then(res => res.data.user),
   }
 }

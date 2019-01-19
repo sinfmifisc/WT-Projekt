@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import mysql from 'mysql2/promise';
-import bodyParser from 'body-parser';
 import initCreateSurveyRoute from './Routes/CreateSurvey.js' ;
 import initLoadSurveysRoute from './Routes/LoadSurveys.js';
 import initLoginRoute from './Routes/Login.js';
@@ -12,40 +11,12 @@ import initSubmitAnswerRoute from './Routes/SubmitAnswer';
 import jwt from 'jsonwebtoken';
 import https from 'https';
 import http from 'http';
+import cors from 'cors';
 
 const app = express();
 const host = 'localhost';
 
 
-
-const authChecker = (req, res, next) => {
-
-	
-	
-	let tokenVerified = false;
-	jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
-        if(decoded) {
-            
-            tokenVerified = true;
-        }       
-    
-    })
-
-    if (req.path ==='/api/auth' || req.path === '/unauthorized') {
-	
-        next();
-	} 
-	else if(tokenVerified){
-		next();
-	} 
-	else {
-	   res.redirect('/unauthorized');
-	   
-    }
-}
-
-//Wegen Entwicklungszwecken auskommentiert:
-app.use(authChecker)
 
 
 //read SQL instructions for creating the tables
@@ -99,8 +70,40 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	});
 
 
+
+const authChecker = (req, res, next) => {
+	
+	let tokenVerified = false;
+	jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
+		if(decoded) {
+			
+			tokenVerified = true;
+		}       
+		
+	})
+	
+	if (req.path ==='/api/auth' || req.path === '/unauthorized') {
+		next();
+	} 
+	else if(tokenVerified){
+		next();
+	} 
+	else {
+		 res.redirect('/unauthorized');
+		   
+	}
+}
+		
+//Enable cors, da proxy im production mode nicht funktioniert
+app.use(cors());
+app.options('*', cors())
+
+
 app.use(express.json());
-//app.use(bodyParser.urlencoded());
+app.use(express.urlencoded({ extended: false }));
+app.use(authChecker)
+
+
 
 initLoginRoute(app,pool, jwt);
 initCreateSurveyRoute(app, pool);
@@ -121,7 +124,7 @@ initSubmitAnswerRoute(app, pool);
 
 
   http.createServer(app).listen(8080, () => {
-	console.log('https Server listen on port 8080');
+	console.log('http Server listen on port 8080');
   })
   
   

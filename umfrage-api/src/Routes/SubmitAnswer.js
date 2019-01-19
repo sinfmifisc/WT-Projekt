@@ -1,7 +1,7 @@
 const initSubmitAnswerRoute = (app, pool) => {
 
     app.post('/submitanswer', (req, res) => {
-    
+        
         let answerid = req.body.answerid;
         let surveyid = req.body.surveyid;
         let username = req.body.username;

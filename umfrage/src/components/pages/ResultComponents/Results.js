@@ -29,7 +29,7 @@ class results extends Component {
 
     componentDidMount(){
 
-        axios.get('/loadsurvey/' + this.state.resultid, authHeader)
+        axios.get('https://localhost:8443/loadsurvey/' + this.state.resultid, authHeader)
         .then((res) => {
             const allowed = !res.data.error;
             if(!allowed){
@@ -40,7 +40,7 @@ class results extends Component {
             }
             
             if(allowed){
-                axios.get('/surveyevaluation/'+ this.state.resultid, authHeader)
+                axios.get('https://localhost:8443/surveyevaluation/'+ this.state.resultid, authHeader)
                 .then((res) => {
                     let array = [];
                     let sum = 0;
@@ -89,7 +89,7 @@ class results extends Component {
             <ListItem contacts={this.state.allresults}/>
             <div id='pie'>
             {this.state.showToolTip && <div id='Hovertext' >
-             {(this.state.value / this.state.sum * 100).toFixed(2)} % stimmten für {this.state.title} </div> }
+             {(this.state.value / this.state.sum * 100).toFixed(2)} % stimmten für: {this.state.title} </div> }
             <PieChart size={400}
                     data={this.state.allresults}
                     mouseOverHandler={this.mouseOverHandler.bind(this)}

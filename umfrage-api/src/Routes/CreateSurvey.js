@@ -13,7 +13,7 @@ const initCreateSurveyRoute = (app, pool) => {
 
     //Umfrage von Frontend empfangen, anschließend in Datenbank speichern
     app.post('/createsurvey', (req, res) => {
-        
+       
         let survey = req.body.surveydata.surveycreation;
         let user = req.body.userinfo;
         console.log(survey);
@@ -22,33 +22,50 @@ const initCreateSurveyRoute = (app, pool) => {
         [survey.surveymatter, survey.duration, user])
 
         .then((result) => {
-            console.log(result[0]);
+            
 
             //Insertid holen, dann Antworten und ausgewählte User abspeichern
             let surveyId = result[0].insertId;
-            survey.allowedUser.forEach(user => {
-                pool.query('INSERT INTO user_is_allowed_to_vote_for (user_name, survey) VALUES (?, ?)', [user, surveyId])
-                .then((result) => console.log(result[0]))
-                .catch((err) => {console.log(err)
-                    res.sendStatus(500);
-                })
-            });
-            
-            survey.answers.forEach(answer => {
-                pool.query('INSERT INTO answers (content, survey_id, id) VALUES(?, ?, ?)', [answer.content, surveyId, answer.id])
-                .then((result) => {console.log(result[0])
-                    
-                    })
-                .catch((err) => {console.log(err)
-                    res.sendStatus(500);
-                })
-                
-            });
 
-            //TODO: Status code 201 erst senden, wenn alle Anfragen erfolgreich ausgeführt wurden
-            res.sendStatus(201);
+
+            //SQL Statement für erlaubte User zusammenbauen
+            let queryString = 'INSERT INTO user_is_allowed_to_vote_for (user_name, survey) VALUES ';
+            let i = 0;
+            for(; i < survey.allowedUser.length - 1; i++){
+           
+                queryString = queryString + '(' + pool.escape(survey.allowedUser[i]) + ', ' + pool.escape(surveyId) + '), ';
+                
+            }
+            queryString =  queryString + '(' + pool.escape(survey.allowedUser[i]) + ', ' + pool.escape(surveyId) + ')';
+            
+
+            pool.query(queryString)
+            .then((result) => {
+                //SQL Statement für Antworten zusammenbauen
+                let i = 0;                
+                queryString = 'INSERT INTO answers (content, survey_id, id) VALUES '
+                for(; i < survey.answers.length - 1; i++){
+               
+                    queryString = queryString + '(' + pool.escape(survey.answers[i].content) + ', ' + pool.escape(surveyId) + ', ' + pool.escape(survey.answers[i].id) + '), ';
+                    
+                }
+                queryString = queryString + '(' + pool.escape(survey.answers[i].content) + ', ' + pool.escape(surveyId) + ', ' + pool.escape(survey.answers[i].id) + ')'
+
+
+                pool.query(queryString)
+                .then((result) => res.sendStatus(201))
+                .catch((err) => {
+                    console.log(err);
+                    res.sendStatus(500);
+                })
+            })
+            .catch((err) =>{
+                console.log(err);
+                res.sendStatus(500);
+            })           
         })
-        .catch((err) => {console.log(err);
+        .catch((err) => {
+            console.log(err);
             res.sendStatus(500);
         })
         
