@@ -1,0 +1,8 @@
+#Hovertext{
+    font-size: 30px;
+    padding: 10px;
+    background: white;
+    z-index: 5;
+    position: absolute;
+    border: solid;
+}
