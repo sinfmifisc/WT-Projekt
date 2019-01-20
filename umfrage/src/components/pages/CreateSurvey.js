@@ -10,7 +10,7 @@ import {connect} from 'react-redux'
 import TopHeader from '../header/Header.js';
 import './CreateSurvey.css'
 import {store} from '../../index.js'
-import {authHeader} from '../../App.js'
+import {authHeader, backendUrl} from '../../App.js'
 import { deleteSurveyData, updateAllowedUser } from '../../redux/actions/surveycreation';
 
 
@@ -82,7 +82,7 @@ class CreateSurvey extends Component {
 
 
 	componentDidMount(){
-		axios.get('https://localhost:8443/alluser', authHeader)
+		axios.get(backendUrl + '/alluser', authHeader)
 		.then((res) => {
 
 			let list = [];
@@ -151,7 +151,7 @@ class CreateSurvey extends Component {
 
 		//Daten sind alle gültig eingegeben -> Post der Daten an Backend
 		if(dataValidated){
-			axios.post('https://localhost:8443/createsurvey' ,submitdata ,authHeader)
+			axios.post(backendUrl + '/createsurvey' ,submitdata ,authHeader)
 			.then(response => {
 				if(response.status === 201){
 					

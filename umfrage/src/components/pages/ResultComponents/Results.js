@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import TopHeader from '../../header/Header';
 import ListItem from './ListItem';
-import {authHeader} from '../../../App.js';
+import {authHeader, backendUrl} from '../../../App.js';
 import '../../../App.css';
 import './Results.css';
 
@@ -29,7 +29,7 @@ class results extends Component {
 
     componentDidMount(){
 
-        axios.get('https://localhost:8443/loadsurvey/' + this.state.resultid, authHeader)
+        axios.get(backendUrl + '/loadsurvey/' + this.state.resultid, authHeader)
         .then((res) => {
             const allowed = !res.data.error;
             if(!allowed){
@@ -40,7 +40,7 @@ class results extends Component {
             }
             
             if(allowed){
-                axios.get('https://localhost:8443/surveyevaluation/'+ this.state.resultid, authHeader)
+                axios.get(backendUrl + '/surveyevaluation/'+ this.state.resultid, authHeader)
                 .then((res) => {
                     let array = [];
                     let sum = 0;

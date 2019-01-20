@@ -1,0 +1,29 @@
+version: '3.6'
+
+services:
+    mysql_database:
+      image: mysql:5.5
+      restart: always
+      ports:
+        - '3306:3306'
+      volumes:
+        - my-datavolume:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: 'my-secret-pw'
+        MYSQL_DATABASE: 'mydb'
+      
+    umfrage_frontend:
+      build: ./umfrage
+      ports:
+        - '3000:3000'
+      restart: always
+
+    umfrage_backend:
+      build: ./umfrage-api
+      ports:
+        - '8443:8443'
+      restart: always
+
+
+volumes:
+ my-datavolume:

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Table, Icon, TableBody} from 'semantic-ui-react';
 import axios from 'axios';
-import {authHeader} from '../../../App.js'
+import {authHeader, backendUrl} from '../../../App.js'
 
 class ClosedSurveys extends Component {
 
@@ -18,7 +18,7 @@ class ClosedSurveys extends Component {
         }
         
         componentDidMount(){
-            axios.get('https://localhost:8443/loadclosedsurveys/' + localStorage.current_user + '/all', authHeader)
+            axios.get(backendUrl + '/loadclosedsurveys/' + localStorage.current_user + '/all', authHeader)
             .then((res) => {
                 let surveys = []; //every open survey gets in here
                 for (let i = 0; i < res.data.length; i++) {

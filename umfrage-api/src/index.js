@@ -14,7 +14,7 @@ import http from 'http';
 import cors from 'cors';
 
 const app = express();
-const host = 'localhost';
+const host = '192.168.99.100';
 
 
 
@@ -29,8 +29,8 @@ let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toS
 	const pool = mysql.createPool({
 		host: host,
 		user: 'root',
-		password: '',
-		database: 'test',
+		password: 'my-secret-pw',
+		database: 'mydb',
 		waitForConnections: true,
 		connectionLimit: 10,
 		queueLimit: 0,

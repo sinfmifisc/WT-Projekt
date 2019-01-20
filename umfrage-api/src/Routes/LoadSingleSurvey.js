@@ -20,20 +20,23 @@ const initLoadSingleSurveyRoute = (app, pool, jwt) => {
         pool.query(`SELECT COUNT(*) AS allowed FROM user_is_allowed_to_vote_for WHERE user_name = ? AND survey = ? 
         UNION SELECT COUNT(*) AS allowed From surveys WHERE creator = ? AND id = ?`, [user, survey, user, survey])
           .then((result) => {
-              if(result[0][0].allowed === 1 || result[0][1].allowed === 1){
+          
+              if(result[0][0].allowed === 1 || result[0][1]){
 
                 pool.query('SELECT * FROM surveys WHERE id=?', [survey])
                 .then((result) => {
                   res.json(result[0]);
                 })
-                .catch(err => console.log(err))
+                .catch(err => {console.log(err);
+                    res.sendStatus(500)})
               }
               else{
                 res.json({error: 'notallowed'});
               }
 
             })
-            .catch((err) => res.sendStatus(500))
+            .catch((err) => {console.log(err);
+                res.sendStatus(500)})
 
         })
 

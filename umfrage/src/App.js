@@ -26,8 +26,10 @@ const App = ({ location} )=> (
 
 
 //Header für alle axios Aufrufe, zur Autorisierung beim Backend
-export const authHeader = { 'headers': { 'Authorization': localStorage.current_token } }
-
+export const authHeader = { 'headers': { 'Authorization': localStorage.current_token } };
+//Für Docker IP= 192.168.99.100:8443
+//Sonst localhost:8443
+export const backendUrl = 'https://192.168.99.100:8443';
 
  App.propTypes = {
   location: PropTypes.shape({
