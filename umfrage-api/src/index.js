@@ -1,137 +1,75 @@
 import express from 'express';
-import path from 'path';
-import fs from 'fs';
 import mysql from 'mysql2/promise';
-import initCreateSurveyRoute from './Routes/CreateSurvey.js' ;
-import initLoadSurveysRoute from './Routes/LoadSurveys.js';
-import initLoginRoute from './Routes/Login.js';
-import initLoadSingleSurveyRoute from './Routes/LoadSingleSurvey';
-import initUnauthorizedRoute from './Routes/Unauthorized';
-import initSubmitAnswerRoute from './Routes/SubmitAnswer';
-import jwt from 'jsonwebtoken';
+import initCreateSurveyRoute from './Routes/CreateSurveyRoute.js' ;
+import initLoadSurveysRoute from './Routes/LoadSurveysRoute.js';
+import initLoginRoute from './Routes/LoginRoute.js';
+import initLoadSingleSurveyRoute from './Routes/LoadSingleSurveyRoute';
+import initUnauthorizedRoute from './Routes/UnauthorizedRoute';
+import initSubmitAnswerRoute from './Routes/SubmitAnswerRoute';
 import https from 'https';
 import http from 'http';
 import cors from 'cors';
+import fs from 'fs';
+import {redirecter, authChecker} from './Middleware.js';
+import { initDatabase } from './InitDatabase.js';
 
 const app = express();
+//Wenn Datenbank auf Docker läuft = 192.168.99.100
+//Über Xampp oder ähnliches = localhost
 const host = '192.168.99.100';
 
 
-
-
-//read SQL instructions for creating the tables
-let databaseTableCreating = fs.readFileSync('databasecreatetables.txt').toString();
-
-//read SQL instructions for filling up data
-let databaseCreateTestUsers = fs.readFileSync('databasecreatetestusers.txt').toString();
-
-
-	const pool = mysql.createPool({
-		host: host,
-		user: 'root',
-		password: 'my-secret-pw',
-		database: 'mydb',
-		waitForConnections: true,
-		connectionLimit: 10,
-		queueLimit: 0,
-		multipleStatements: true
-	  });
+//Baue Datenbankpool auf
+export const pool = mysql.createPool({
+	host: host,
+	user: 'root',
+	password: 'my-secret-pw',
+	database: 'mydb',
+	waitForConnections: true,
+	connectionLimit: 10,
+	queueLimit: 0,
+	multipleStatements: true
+});
 	
-	
-	pool.query(databaseTableCreating) 
-	
-	 .then((result) => {
-		 console.log(result);
-		 console.log('Database and table created');
-	 })
-	
-	.then(() => {
-	pool.query(databaseCreateTestUsers)
-	})
-	.then((result) => {
-		console.log(result);
-		console.log('Testuser created');
-	})
-	.catch((err) => {
-		console.log(err);
-	});
-	
-
-	app.use((req, res, next) => {
-	
-    	if (req.secure) {
-			
-        	next();
-    	} else {
-			console.log('http Anfrage auf https umgeleitet');
-			res.redirect('https://localhost:8443' + req.url);
-			
-    	}
-	});
+//Erstelle Tabellen und Fülle Testuser auf wenn Sie noch nicht existieren
+initDatabase(pool, fs);
 
 
-
-const authChecker = (req, res, next) => {
-	
-	let tokenVerified = false;
-	jwt.verify(req.headers.authorization, 'secret', (err, decoded) => {
-		if(decoded) {
-			
-			tokenVerified = true;
-		}       
-		
-	})
-	
-	if (req.path ==='/api/auth' || req.path === '/unauthorized') {
-		next();
-	} 
-	else if(tokenVerified){
-		next();
-	} 
-	else {
-		 res.redirect('/unauthorized');
-		   
-	}
-}
 		
 //Enable cors, da proxy im production mode nicht funktioniert
 app.use(cors());
 app.options('*', cors())
 
-
+//Leite http Anfragen auf https um
+app.use(redirecter)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(authChecker)
 
 
-
-initLoginRoute(app,pool, jwt);
-initCreateSurveyRoute(app, pool);
-initLoadSurveysRoute(app,pool);
-initLoadSingleSurveyRoute(app, pool, jwt);
+//Initialisiere alle Routen
+initLoginRoute(app);
+initCreateSurveyRoute(app);
+initLoadSurveysRoute(app);
+initLoadSingleSurveyRoute(app);
 initUnauthorizedRoute(app);
-initSubmitAnswerRoute(app, pool);
+initSubmitAnswerRoute(app);
 
 	
 
-  https.createServer({
+https.createServer({
 	key: fs.readFileSync('Encryption/server.key'),
 	cert: fs.readFileSync('Encryption/server.cert')
-  }, app)
-  .listen(8443,  () => {
+}, app)
+.listen(8443,  () => {
 	console.log('https Server listen on port 8443');
-  })
-
-
-  http.createServer(app).listen(8080, () => {
-	console.log('http Server listen on port 8080');
-  })
-  
-  
-
-
-app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
 })
+
+
+http.createServer(app).listen(8080, () => {
+	console.log('http Server listen on port 8080');
+})
+  
+  
 
 

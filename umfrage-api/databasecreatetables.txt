@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS surveys(
 );
 
 CREATE TABLE IF NOT EXISTS answers(
-    content VARCHAR(50) NOT NULL,
+    content VARCHAR(150) NOT NULL,
     id INT NOT NULL,
     survey_id INT NOT NULL,
     
