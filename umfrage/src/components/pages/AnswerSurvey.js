@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Checkbox, List, Header, ListItem, Button, Message}   from 'semantic-ui-react'; 
+import {Checkbox, List, ListItem, Button, Message}   from 'semantic-ui-react'; 
 import axios from 'axios';
 import TopHeader from '../header/Header';
-import {authHeader, backendUrl} from '../../App.js'
-
+import {authHeader, backendUrl} from '../../App.js';
+import './AnswerSurvey.css';
 
 class AnswerSurvey extends Component{
 
@@ -120,15 +120,16 @@ class AnswerSurvey extends Component{
             {this.state.error.length > 0 && 
 			<Message negative>
 			<Message.Header>{this.state.error}</Message.Header>
-		  </Message>}
-            <List >
-            <Header>{this.state.surveymatter}</Header>
+          </Message>}
+          <h2 id='answerSurveyHeader'>{this.state.surveymatter}</h2>
+            <List selection  >
+            
                 {this.state.answers.map((answer) => <ListItem key={answer.id}>
                 <Checkbox label={answer.content} key={answer.id}
                  onChange={() => this.handleChange(answer.id, answer.content)} checked={answer.checked}></Checkbox> 
                 </ListItem> )}
             </List>
-            <Button primary onClick={this.submitAnswer} id='submit_answer_button'>Antwort absenden </Button>
+            <Button positive onClick={this.submitAnswer} id='submit_answer_button'>Antwort absenden </Button>
         </div>
         
     }

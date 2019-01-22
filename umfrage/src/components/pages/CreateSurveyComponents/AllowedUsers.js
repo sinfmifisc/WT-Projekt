@@ -16,7 +16,7 @@ class AllowedUsers extends Component{
     render(){
 
         return <div id='allowedusercontainer'>
-            <Button onClick={() => {this.removeAllUser()}}>Liste leeren</Button>
+            <Button negative onClick={() => {this.removeAllUser()}}>Liste leeren</Button>
             <List id='alloweduserlist' selection divided>
                 <Header>Teilnehmen dürfen:</Header>
                 {this.props.userList.map((user) => {

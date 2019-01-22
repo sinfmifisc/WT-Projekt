@@ -179,8 +179,8 @@ class CreateSurvey extends Component {
 			<ul> {this.state.errors.map((error) => {
 			return <li key={error}>{error}</li> })} </ul> 
 		  </Message>}
-		<h2 id='surveyheadline'>Was möchtest du fragen? </h2>
-            <Button primary onClick={this.createSurvey} id='submit_survey_button'>Umfrage erstellen </Button>
+		<h1 id='surveyheadline'>Was möchtest du fragen? </h1>
+			<Button positive size='big' onClick={this.createSurvey} id='submit_survey_button'>Umfrage erstellen </Button>
 			<Survey />
 			<div id='leftcontainer'>
 				<TimeSelection/>

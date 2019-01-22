@@ -64,7 +64,7 @@ class Answers extends Component {
                 <h3>Antwortmöglichkeiten:</h3>        
                 {this.state.answers}
 
-                <Button primary onClick={this.addAnswer} >Zusätzliche Antwortmöglichkeit</Button>
+                <Button positive onClick={this.addAnswer} >Zusätzliche Antwortmöglichkeit</Button>
             
         
         </div>

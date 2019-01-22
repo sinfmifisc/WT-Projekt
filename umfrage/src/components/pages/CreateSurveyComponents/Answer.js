@@ -35,6 +35,7 @@ class Answer extends Component{
 
         return <Form.Field >
         <input
+            class='AnswersInput'
             type='text'
             key={'Antwort' + this.state.id}
             id={'Antwort' + this.state.id}
@@ -42,8 +43,9 @@ class Answer extends Component{
             value={this.state.content}
             onChange={this.handleChange}
             placeholder='Antwort verfassen'
+            style={{width: '91%'}}
     />
-    <Button  onClick={this.props.removeAnswer.bind(this, this.state.id)}> x</Button>
+    <Button negative onClick={this.props.removeAnswer.bind(this, this.state.id)}> x</Button>
     
     </Form.Field>
     }

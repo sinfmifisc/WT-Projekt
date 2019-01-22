@@ -17,7 +17,7 @@ class SelectAllowedUsers extends Component{
     render(){
 
         return <div id='selectusercontainer' >
-            <Button onClick={() => {this.allowAllUser() }}>Alle hinzufügen</Button>
+            <Button positive onClick={() => {this.allowAllUser() }}>Alle hinzufügen</Button>
             
             <List id='selectuserlist' selection divided>
                 <Header>Zur Auswahl User anklicken</Header>

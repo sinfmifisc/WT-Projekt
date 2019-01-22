@@ -50,8 +50,8 @@ class TimeSelection extends Component{
                 readOnly
                 value={this.state.hours}
               />
-            <Button id='dechours' onClick={this.decreaseHours}>-</Button>
-            <Button id='inchours' onClick={this.increaseHours}>+</Button>
+            <Button negative id='dechours' onClick={this.decreaseHours}>-</Button>
+            <Button positive id='inchours' onClick={this.increaseHours}>+</Button>
             
 
 
@@ -63,8 +63,8 @@ class TimeSelection extends Component{
                 readOnly
                 value={this.state.days}
               />
-            <Button id='decdays' onClick={this.decreaseDays}>-</Button>
-            <Button id='incdays' onClick={this.increaseDays}>+</Button>
+            <Button negative id='decdays' onClick={this.decreaseDays}>-</Button>
+            <Button positive id='incdays' onClick={this.increaseDays}>+</Button>
             
 
 

@@ -6,9 +6,15 @@
 #surveyheadline{
     width: 65%;
     float: left;
+    
+    
 }
 
 
 #surveyhead{
     margin-bottom: 50px;
+}
+
+#Frage{
+    margin-top: 10px;
 }
