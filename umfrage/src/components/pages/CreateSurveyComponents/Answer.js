@@ -35,7 +35,7 @@ class Answer extends Component{
 
         return <Form.Field >
         <input
-            class='AnswersInput'
+            
             type='text'
             key={'Antwort' + this.state.id}
             id={'Antwort' + this.state.id}

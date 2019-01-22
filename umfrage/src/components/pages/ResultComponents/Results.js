@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {PieChart} from 'react-easy-chart';
-import randomColor from 'randomcolor'; 
 import axios from 'axios'; 
 import { Link } from 'react-router-dom';
 import TopHeader from '../../header/Header';
@@ -8,6 +7,7 @@ import ListItem from './ListItem';
 import {authHeader, backendUrl} from '../../../App.js';
 import '../../../App.css';
 import './Results.css';
+import {colors} from './Colors.js';
 
 
 
@@ -46,7 +46,7 @@ class results extends Component {
                     let sum = 0;
                     for(let i =0; i < res.data.length; i++){
                         sum = sum + res.data[i].count;
-                        array.push({ title: res.data[i].content, value: res.data[i].count, color: randomColor() },);
+                        array.push({ title: res.data[i].content, value: res.data[i].count, color: colors[i % 10] },);
                     };
                     this.setState({allresults: array, sum: sum});
                     })  
