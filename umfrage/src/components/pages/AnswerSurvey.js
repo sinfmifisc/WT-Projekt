@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Checkbox, List, Header, ListItem, Button}   from 'semantic-ui-react'; 
+import {Checkbox, List, Header, ListItem, Button, Message}   from 'semantic-ui-react'; 
 import axios from 'axios';
 import TopHeader from '../header/Header';
 import {authHeader, backendUrl} from '../../App.js'
@@ -14,8 +14,8 @@ class AnswerSurvey extends Component{
             surveymatter: '',
             surveyid: this.props.match.params.surveyid,
             answers: [],
-            currentChecked: null
-            
+            currentChecked: null,
+            error: ''
         }
 
         
@@ -62,7 +62,12 @@ class AnswerSurvey extends Component{
 
     
     handleChange = (i, c) =>{
-        this.setState({currentChecked: i})
+        if(this.state.currentChecked === i){
+            this.setState({currentChecked: null})
+        }
+        else{
+            this.setState({currentChecked: i})
+        }
         this.setState(state => {
             const answers = state.answers.map((item) => {
               if (item.id === i) {
@@ -79,22 +84,30 @@ class AnswerSurvey extends Component{
     }
 
     submitAnswer = () => {
-        let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: localStorage.current_user}
-        
-        
-        axios.post(backendUrl + '/submitanswer', submitData, authHeader)
-        .then((response) =>{
-            if(response.status === 201){
-                this.props.history.push('/message/answer');
-            }
-            else if(response.status === 200){
-                this.props.history.push('/message/' + response.data.error)
-            }
+        this.setState({error: ''})
+        if(this.state.currentChecked !== null){
             
-        })
-        .catch((err) => {
-            this.props.history.push('/message/error');
-        })
+
+            let submitData = {surveyid: this.state.surveyid, answerid: this.state.currentChecked, username: localStorage.current_user}
+        
+        
+            axios.post(backendUrl + '/submitanswer', submitData, authHeader)
+            .then((response) =>{
+                if(response.status === 201){
+                    this.props.history.push('/message/answer');
+                }
+                else if(response.status === 200){
+                    this.props.history.push('/message/' + response.data.error)
+                }
+            
+            })
+            .catch((err) => {
+                this.props.history.push('/message/error');
+            })
+        }
+        else{
+            this.setState({error: 'Du musst eine Antwort ankreuzen!'});
+        }
     }
     
     
@@ -104,7 +117,10 @@ class AnswerSurvey extends Component{
         
         return <div>
             <TopHeader/>
-
+            {this.state.error.length > 0 && 
+			<Message negative>
+			<Message.Header>{this.state.error}</Message.Header>
+		  </Message>}
             <List >
             <Header>{this.state.surveymatter}</Header>
                 {this.state.answers.map((answer) => <ListItem key={answer.id}>
